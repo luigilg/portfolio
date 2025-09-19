@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Thunder'; 
+  src: url('../fonts/Thunder.woff2') format('woff2'); 
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'Heming';
+  src: url('../fonts/Heming.woff2') format('woff2');
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'FunnelDisplay';
+  src: url('../fonts/FunnelDisplay.woff2') format('woff2');
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'Urbanist';
+  src: url('../fonts/Urbanist.woff2') format('woff2');
+  font-weight: 100 900;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  body {
+
+    background-color: #282d38;
+
+    color: #E5E7EB; 
+    
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.thunder{
+    font-family: 'Thunder';
+}
+
+.textMenu {
+  font-weight: 700;
+  user-select: none;
+  cursor: pointer;
+  letter-spacing: 0px;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  font-style: normal;
+}
+.textMenu:hover {
+  font-weight: 200;
+  letter-spacing: 10px;
+}
+.textMenu:active {
+  font-weight: 100;
+  /* transform: scale(0.90); */
+  /* font-size: 5em; */
+  letter-spacing: 0px;
+}
