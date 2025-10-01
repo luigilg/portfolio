@@ -4,6 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
+        'pu': '#A23DD4',
+        'bl': '#4F52BE',
+        'cy': '#32A1B8',
+        'b': {
+          light: '#E4E1D5',
+          dark: '#282E32',
+        },
         'danger': '#EA3939',
         'danger-light': '#FF5858',
         'success': '#2FC44F',

@@ -27,9 +27,9 @@
 @layer base {
   body {
 
-    background-color: #282d38;
+    /* background-color: #282d38;
 
-    color: #E5E7EB; 
+    color: #E5E7EB;  */
     
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -38,6 +38,14 @@
 
 .thunder{
     font-family: 'Thunder';
+}
+
+.heming{
+  font-family: 'Heming';
+}
+
+.funnel{
+  font-family: 'FunnelDisplay';
 }
 
 .textMenu {
