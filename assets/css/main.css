@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 @font-face {
   font-family: 'Thunder'; 
   src: url('../fonts/Thunder.woff2') format('woff2'); 
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'Reflow'; 
+  src: url('../fonts/Reflow.woff2') format('woff2'); 
   font-weight: 100 900;
 }
 @font-face {
@@ -19,6 +27,7 @@
   font-weight: 100 900;
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -36,6 +45,10 @@
   }
 }
 
+.raleway{
+    font-family: 'Raleway', sans-serif;
+}
+
 .thunder{
     font-family: 'Thunder';
 }
@@ -44,8 +57,15 @@
   font-family: 'Heming';
 }
 
+.urbanist{
+  font-family: 'Urbanist';
+}
+
 .funnel{
   font-family: 'FunnelDisplay';
+}
+.reflow{
+  font-family: 'Reflow';
 }
 
 .textMenu {

@@ -14,25 +14,21 @@
 import { ref, onBeforeUpdate, onMounted, computed } from 'vue';
 import { gsap } from 'gsap';
 
-// --- Estado ---
 const isMouseDown = ref(false);
 const gridContainer = ref(null);
 let lastMouseEvent = null;
 
-// Arrays para guardar funções e dados otimizados
 let arrowPositions = [], colorTimelines = [], idleAnimation = null;
 let quickRotators = [], quickMoversX = [], quickMoversY = [];
 
-// --- Configurações do Grid e Efeitos ---
-const rows = ref(8);
-const cols = ref(20);
+const rows = ref(6);
+const cols = ref(16);
 const horizontalRadius = 200;
 const verticalRadius = 120;
 const defaultColor = '#a3a3a3';
 const colorPalette = ['#A23DD4', '#4F52BE','#32A1B8'];
 const advanceDistance = 20;
 
-// --- Setup e Cleanup ---
 const totalArrows = computed(() => rows.value * cols.value);
 const arrowRefs = ref([]);
 const setArrowRef = (el) => { if (el) arrowRefs.value.push(el); };
@@ -44,30 +40,24 @@ onBeforeUpdate(() => {
   colorTimelines = [], arrowPositions = [], quickRotators = [], quickMoversX = [], quickMoversY = [];
 });
 
-// --- Inicialização ---
 onMounted(() => {
     const containerRect = gridContainer.value.getBoundingClientRect();
     arrowRefs.value.forEach((arrow, index) => {
-        // 1. Cache de Posição
         const rect = arrow.getBoundingClientRect();
         arrowPositions[index] = { x: (rect.left - containerRect.left) + rect.width / 2, y: (rect.top - containerRect.top) + rect.height / 2 };
 
-        // 2. Criação das Funções de Controle Exclusivo (quickTo)
         quickRotators[index] = gsap.quickTo(arrow, "rotation", { duration: 0.5, ease: 'power3.out' });
         quickMoversX[index] = gsap.quickTo(arrow, "x", { duration: 0.5, ease: 'power3.out' });
         quickMoversY[index] = gsap.quickTo(arrow, "y", { duration: 0.5, ease: 'power3.out' });
 
-        // 3. Criação das Timelines de Piscar Interativo (iniciam pausadas)
         const tl = gsap.timeline({ paused: true, repeat: -1, delay: gsap.utils.random(0,2), onRepeat: function() { this.invalidate(); } });
         const shortWait = () => gsap.utils.random(0.15, 0.4);
         tl.set(arrow, { fill: () => gsap.utils.random(colorPalette) }).to({}, { duration: shortWait() }).set(arrow, { fill: () => gsap.utils.random(colorPalette) }).to({}, { duration: shortWait() });
         colorTimelines[index] = tl;
     });
 
-    // 4. Definição do Estado Inicial Visual
     gsap.set(arrowRefs.value, { fill: defaultColor, rotation: 180, x: 0, y: 0 });
 
-    // 5. Criação e Início da Animação de Repouso
     idleAnimation = gsap.timeline({ repeat: -1 });
     const staggerConfig = { grid: "auto", from: "start", axis: "x", each: 0.06 };
     const sweepWidthTime = 0.2;
@@ -79,7 +69,6 @@ onMounted(() => {
     });
 });
 
-// --- Lógica de Interação Principal ---
 function updateArrows(event) {
     if (!gridContainer.value) return;
     lastMouseEvent = event;
@@ -121,20 +110,16 @@ function updateArrows(event) {
     });
 }
 
-// --- Manipuladores de Eventos ---
 
-// Transição para o modo INTERATIVO
 function handleMouseEnter() {
     if (idleAnimation) idleAnimation.pause();
     gsap.to(arrowRefs.value, { fill: defaultColor, duration: 0.3 });
 }
 
-// Transição para o modo REPOUSO
 function handleMouseLeave() {
     isMouseDown.value = false;
     colorTimelines.forEach(tl => tl.pause());
     
-    // Reset total usando os controladores EXCLUSIVOS de cada propriedade
     quickMoversX.forEach(q => q(0, 0.8, 'elastic.out(1, 0.5)'));
     quickMoversY.forEach(q => q(0, 0.8, 'elastic.out(1, 0.5)'));
     quickRotators.forEach(q => q(180, 0.7, 'elastic.out(1, 0.5)'));
@@ -142,7 +127,6 @@ function handleMouseLeave() {
     if (idleAnimation) idleAnimation.restart(true);
 }
 
-// Ações do modo INTERATIVO
 function handleMouseMove(event) { updateArrows(event); }
 
 function handleMouseDown(event) {

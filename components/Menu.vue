@@ -1,15 +1,15 @@
 <template>
-    <div ref="menuContainer" class="flex flex-col justify-center items-center h-full w-full">
+    <div ref="menuContainer" class="flex flex-col justify-center items-center h-full w-full bg-gradient-to-br from-pu via-bl to-cy">
         <div class="flex justify-end items-end px-5 py-3 text-end w-full">
-            <h1 @click="closeMenu" class="text-[5em] thunder text-end select-none cursor-pointer textMenu hover:text-danger">CLOSE</h1>
+            <h1 @click="closeMenu" class="text-[5em] thunder text-end text-b-light select-none cursor-pointer textMenu hover:text-danger">CLOSE</h1>
         </div>
-        <div class="flex flex-col text-start w-[70%] gap-3">
-            <h1 :ref="el => addMenuItemRef(el)" class="text-[6em] thunder leading-none w-max menuItem textMenu">SITES E APPS</h1>
-            <h1 :ref="el => addMenuItemRef(el)" class="text-[6em] thunder leading-none w-max menuItem textMenu">VÍDEOS</h1>
-            <h1 :ref="el => addMenuItemRef(el)" class="text-[6em] thunder leading-none w-max menuItem textMenu">ANIMAÇÕES</h1>
-            <h1 :ref="el => addMenuItemRef(el)" class="text-[6em] thunder leading-none w-max menuItem textMenu">LOGOS</h1>
-            <h1 :ref="el => addMenuItemRef(el)" class="text-[6em] thunder leading-none w-max menuItem textMenu">SOBRE MIM</h1>
-            <h1 :ref="el => addMenuItemRef(el)" class="text-[6em] thunder leading-none w-max menuItem textMenu">CONTATO</h1>
+        <div class="flex flex-col text-[8em] thunder text-b-light text-start w-[70%]">
+            <h1 :ref="el => addMenuItemRef(el)" class="leading-none w-max menuItem textMenu whitespace-nowrap">SITES E APPS</h1>
+            <h1 :ref="el => addMenuItemRef(el)" class="leading-none w-max menuItem textMenu whitespace-nowrap">VÍDEOS</h1>
+            <h1 :ref="el => addMenuItemRef(el)" class="leading-none w-max menuItem textMenu whitespace-nowrap">ANIMAÇÕES</h1>
+            <h1 :ref="el => addMenuItemRef(el)" class="leading-none w-max menuItem textMenu whitespace-nowrap">LOGOS</h1>
+            <h1 :ref="el => addMenuItemRef(el)" class="leading-none w-max menuItem textMenu whitespace-nowrap">SOBRE MIM</h1>
+            <h1 :ref="el => addMenuItemRef(el)" class="leading-none w-max menuItem textMenu whitespace-nowrap">CONTATO</h1>
         </div>
     </div>
 </template>

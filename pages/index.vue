@@ -1,38 +1,176 @@
 <template>
-<div class="bg-b-light text-b-dark min-h-screen">
+<div class="bg-b-light text-b-dark min-h-screen p-3">
     <Menu v-if="isMenuOpen" @close="isMenuOpen = false"/>
 
     <div v-if="!isMenuOpen">
-        <div class="flex justify-end items-end px-5 py-3 text-end">
+        <div v-if="complete" class="fixed z-50 right-3 top-3 px-5 py-3 text-end">
             <h1 @click="isMenuOpen = true" class="text-[5em] thunder text-end select-none cursor-pointer textMenu">MENU</h1>
         </div>
-        <div class="flex justify-center items-center ">
-        <!-- <div class="justify-center items-center border-2 border-black inline-block"> -->
-            <p id="title" ref="title" class="text-[10em] funnel font-black bg-gradient-to-r from-pu via-bl to-cy h-min bg-clip-text text-transparent select-none whitespace-nowrap top-1">LUIGI GIRARDI</p>
+
+        <div class="relative grid place-items-center overflow-hidden">
+            <div class="w-full col-start-1 row-start-1">
+                 <div class="flex flex-col justify-center items-center">
+                    <div class="text-start w-full">
+                        <h1 ref="luigiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap">LUIGI</h1>
+                    </div>
+                    <div class="text-end w-full">
+                        <h1 ref="girardiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap">GIRARDI</h1>
+                    </div>
+                </div>
+            </div>
         </div>
-        <ArrowGrid />
+        
+        <ArrowGrid class="mt-20"/>
     </div>
 </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { gsap } from 'gsap'
+import { ref, onMounted } from 'vue';
+import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
 
-const isMenuOpen = ref(false)
+gsap.registerPlugin(SplitText);
 
-const title = ref(null)
+const luigiRef = ref(null);
+const girardiRef = ref(null);
+const isMenuOpen = ref(false);
+const complete = ref(false);
 
-gsap.to(title.value, {
-  duration: 0.5,
-  opacity: 0,
-  ease: 'power2.inOut'
-})
+onMounted(() => {
+  if (luigiRef.value && girardiRef.value) {
+    const colorKeyframesL = ['#9ca3af', '#32A1B8', '#4F52BE', '#A23DD4'];
+    const colorKeyframesG = ['#9ca3af', '#A23DD4', '#4F52BE', '#32A1B8'];
+    const waveSequence = ['#A23DD4', '#4F52BE', '#32A1B8', '#4F52BE', '#A23DD4'];
 
+    const splitOptions = { type: 'chars', reduceWhiteSpace: false, charsClass: 'animated-text' };
+    const luigiSplit = new SplitText(luigiRef.value, splitOptions);
+    const girardiSplit = new SplitText(girardiRef.value, splitOptions);
+
+    const luigiChars = luigiSplit.chars;
+    const girardiChars = girardiSplit.chars;
+    const allChars = [...luigiChars, ...girardiChars];
+
+    gsap.set([luigiRef.value, girardiRef.value], { visibility: 'visible', color: 'transparent' });
+
+    const tl = gsap.timeline();
+
+    tl.from(luigiChars, {
+      duration: 1.8,
+      ease: 'power2.out',
+      x: '100vw',
+      opacity: 0,
+      stagger: { each: 0.08, from: 'start' }
+    }, 0);
+    tl.from(girardiChars, {
+      duration: 1.8,
+      ease: 'power2.out',
+      x: '-100vw',
+      opacity: 0,
+      stagger: { each: -0.08, from: 'start' }
+    }, 0);
+    tl.to(luigiChars, {
+      keyframes: { color: colorKeyframesL, ease: 'steps(3)' },
+      duration: 1.3,
+      stagger: { each: 0.08, from: 'start' }
+    }, 0.3);
+    tl.to(girardiChars, {
+      keyframes: { color: colorKeyframesG, ease: 'steps(3)' },
+      duration: 1.3,
+      stagger: { each: -0.08, from: 'start' }
+    }, 0.3);
+
+    tl.call(() => {
+      const colorInterpolator = gsap.utils.interpolate(waveSequence);
+      const baseProgress = allChars.map((_char, i) => (i / allChars.length) * 0.5);
+      const progress = { value: 0 };
+      const wrap = gsap.utils.wrap(0, 1);
+
+      gsap.to(allChars, {
+        duration: 1.0,
+        color: (i) => colorInterpolator(baseProgress[i]),
+        ease: 'power2.inOut',
+        stagger: { each: 0.02, from: 'start' },
+        onComplete: () => {
+          complete.value = true;
+          gsap.to(progress, {
+            value: 1,
+            duration: 4,
+            ease: 'none',
+            repeat: -1,
+            onUpdate: () => {
+              allChars.forEach((char, i) => {
+                const currentProgress = wrap(baseProgress[i] - progress.value);
+                gsap.set(char, { color: colorInterpolator(currentProgress) });
+              });
+            }
+          });
+          
+          gsap.set(allChars, { '--wght': 900 });
+          setupProximityAnimation();
+        }
+      });
+    });
+
+    const setupProximityAnimation = () => {
+      let charPositions = [];
+      let timeout;
+
+      const calculateCharPositions = () => {
+        charPositions = allChars.map(char => {
+          const rect = char.getBoundingClientRect();
+          return {
+            el: char,
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+          };
+        });
+      };
+      
+      calculateCharPositions();
+      
+      const maxDistance = 300;
+      const minWeight = 100;
+      const maxWeight = 900;
+
+      const mouseMoveHandler = (event) => {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        charPositions.forEach(pos => {
+          const distanceX = mouseX - pos.x;
+          const distanceY = mouseY - pos.y;
+          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+          
+          const newWeight = gsap.utils.mapRange(0, maxDistance, minWeight, maxWeight, distance);
+          const clampedWeight = gsap.utils.clamp(minWeight, maxWeight, newWeight);
+
+          gsap.to(pos.el, {
+            '--wght': clampedWeight,
+            duration: 0.4,
+            ease: 'power2.out'
+          });
+        });
+      };
+
+      const debouncedRecalculate = () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(calculateCharPositions, 100);
+      };
+
+      window.addEventListener('mousemove', mouseMoveHandler);
+      window.addEventListener('resize', debouncedRecalculate);
+    };
+  }
+});
 </script>
 
 <style>
-#title {
+h1 {
     line-height: 0.8;
+    text-shadow: none;
+}
+.animated-text {
+    font-variation-settings: 'wght' var(--wght);
 }
 </style>
