@@ -1,28 +1,16 @@
 <template>
-<div class="bg-b-light text-b-dark min-h-screen p-3">
-    <Menu v-if="isMenuOpen" @close="isMenuOpen = false"/>
-
-    <div v-if="!isMenuOpen">
-        <div v-if="complete" class="fixed z-50 right-3 top-3 px-5 py-3 text-end">
-            <h1 @click="isMenuOpen = true" class="text-[5em] thunder text-end select-none cursor-pointer textMenu">MENU</h1>
+    <div class="flex flex-col justify-center items-center">
+        <div class="text-start w-full">
+            <h1 ref="luigiRef"
+                class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">
+                LUIGI</h1>
         </div>
-
-        <div class="relative grid place-items-end overflow-hidden h-[90vh]">
-            <div class="w-full col-start-1 row-start-1">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="text-end w-full">
-                        <h1 ref="luigiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">LUIGI</h1>
-                    </div>
-                    <div class="text-start w-full">
-                        <h1 ref="girardiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">GIRARDI</h1>
-                    </div>
-                </div>
-            </div>
+        <div class="text-end w-full">
+            <h1 ref="girardiRef"
+                class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">
+                GIRARDI</h1>
         </div>
-        
-        <ArrowGrid class="mt-20"/>
     </div>
-</div>
 </template>
 
 <script setup>
@@ -34,7 +22,6 @@ gsap.registerPlugin(SplitText);
 
 const luigiRef = ref(null);
 const girardiRef = ref(null);
-const isMenuOpen = ref(false);
 const complete = ref(false);
 
 onMounted(() => {
@@ -60,14 +47,14 @@ onMounted(() => {
     tl.from(luigiChars, {
       duration: 1.8,
       ease: 'power2.out',
-      x: '-400vw',
-      stagger: { each: -0.08, from: 'start' }
+      x: '400vw',
+      stagger: { each: 0.08, from: 'start' }
     }, 0);
     tl.from(girardiChars, {
       duration: 1.8,
       ease: 'power2.out',
-      x: '400vw',
-      stagger: { each: 0.08, from: 'start' }
+      x: '-400vw',
+      stagger: { each: -0.08, from: 'start' }
     }, 0);
     tl.to(luigiChars, {
       keyframes: { color: colorKeyframesL, ease: 'steps(4)' },

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hover GSAP - Letras "saindo" da tela</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+  :root{
+    --font-size: 160px;
+  }
+
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    margin:0;
+    background:#000; 
+  }
+
+  .wrap{
+    perspective: 1400px; 
+    cursor: pointer;
+    user-select: none;
+    padding: 12px 20px;
+  }
+
+  .word{
+    display:inline-block;
+    font-weight:900;
+    font-size:var(--font-size);
+    color: #fff; 
+    font-family: "Impact", "Arial Black", sans-serif;
+    text-transform: uppercase;
+    white-space: nowrap;
+    -webkit-font-smoothing:antialiased;
+    transform-style: preserve-3d;
+  }
+
+  .char{
+    display:inline-block;
+    transform-origin: 50% 100%; 
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translate3d(0,0,0) rotateX(0deg) rotateZ(0deg) skewX(0deg) scale(1,1);
+    text-shadow: 0 6px 12px rgba(0,0,0,0.45);
+  }
+
+  @media (max-width:700px){ :root{ --font-size: 72px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="wrap">
+  <div class="word" id="word">TEXTO MUITO LONGO</div>
+</div>
+
+<script>
+  const CONFIG = {
+    SPREAD: 5, 
+    MAX_Z: 100,
+    MAX_Y: -10,
+    MAX_SCALE: 1.1,
+    MAX_ROT_X: 0,
+    MAX_ROT_Y: 30,
+    MAX_ROT_Z: 0,
+    MAX_SKEW: 0,
+    STAGGER: 0.03,
+    DURATION: 0.6,
+    EASE: "power4.out"
+  };
+
+  const wordEl = document.getElementById('word');
+
+  function splitToChars(el){
+    const text = el.textContent;
+    el.textContent = '';
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<text.length;i++){
+      const ch = text[i];
+      const s = document.createElement('span');
+      s.className = 'char';
+      s.textContent = (ch === ' ') ? '\u00A0' : ch;
+      frag.appendChild(s);
+    }
+    el.appendChild(frag);
+  }
+
+  splitToChars(wordEl);
+  const chars = Array.from(wordEl.querySelectorAll('.char'));
+
+  function calcTargets(){
+    const len = chars.length;
+    const center = (len - 1) / 2;
+    const targets = [];
+
+    for(let i=0;i<len;i++){
+      const offset = i - center;
+      const normalized = center === 0 ? 0 : offset / center;
+      const absN = Math.abs(normalized);
+
+      const archFactor = Math.pow(Math.max(0, 1 - absN), 0.5);
+
+      const y = -Math.round(CONFIG.MAX_Y * archFactor);
+
+      const z = Math.round(CONFIG.MAX_Z * archFactor);
+
+      const scale = 1 + archFactor * (CONFIG.MAX_SCALE - 1);
+      const scaleX = 1 + (scale - 1) * 0.48;
+      const scaleY = 1 + (scale - 1) * 1.8;
+
+      const rotX = -archFactor * CONFIG.MAX_ROT_X; 
+      const rotY = normalized * CONFIG.MAX_ROT_Y; 
+      const rotZ = normalized * CONFIG.MAX_ROT_Z;
+      const skew = normalized * CONFIG.MAX_SKEW * (0.9 - 0.5 * archFactor);
+
+      const x = normalized * 6;
+
+      targets.push({x, y, z, rotX, rotY, rotZ, skew, scaleX, scaleY});
+    }
+    return targets;
+  }
+
+  let targets = calcTargets();
+
+  function hoverIn(){
+    gsap.killTweensOf(chars);
+    gsap.to(chars, {
+      duration: CONFIG.DURATION,
+      x: i => targets[i].x * CONFIG.SPREAD,
+      y: i => targets[i].y,
+      z: i => targets[i].z,
+      rotateX: i => targets[i].rotX,
+      rotateY: i => targets[i].rotY,
+      rotateZ: i => targets[i].rotZ,
+      skewX: i => targets[i].skew,
+      scaleX: i => targets[i].scaleX,
+      scaleY: i => targets[i].scaleY,
+      transformPerspective: 1400,
+      transformOrigin: "50% 100%",
+      stagger: {
+        each: CONFIG.STAGGER,
+        from: "center"
+      },
+      ease: CONFIG.EASE,
+      overwrite: true
+    });
+  }
+
+  function hoverOut(){
+  gsap.killTweensOf(chars);
+  gsap.to(chars, {
+    duration: CONFIG.DURATION * 0.85,
+    x: 0, y: 0, z: 0,
+    rotateX: 0, rotateY: 0, rotateZ: 0, 
+    skewX: 0,
+    scaleX: 1, scaleY: 1,
+    transformPerspective: 1400,
+    transformOrigin: "50% 100%",
+    stagger: {
+      each: CONFIG.STAGGER * 0.9,
+      from: "center"
+    },
+    ease: "power2.inOut",
+    overwrite: true
+  });
+}
+
+  const wrap = document.getElementById('wrap');
+  wrap.addEventListener('mouseenter', hoverIn);
+  wrap.addEventListener('mouseleave', hoverOut);
+
+  
+  window.addEventListener('resize', () => { targets = calcTargets(); });
+
+  
+  wrap.addEventListener('mousedown', () => {
+    gsap.to(chars, { duration: 0.12, z: i => (targets[i].z || 0) + 40, stagger: 0.05, yoyo: false, ease: "power2.inOut" });
+  });
+</script>
+
+</body>
+</html>

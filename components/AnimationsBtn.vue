@@ -18,7 +18,6 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import gsap from 'gsap'
 
-// Texto padrão — pode passar via prop se preferir
 const text = ref('ANIMATIONS')
 
 const wrap = ref(null)
@@ -47,8 +46,6 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-const randomNumber = getRandomIntInclusive(CONFIG.MIN_RND, CONFIG.MAX_RND);
 
 function splitToChars(el) {
   const txt = el.textContent
@@ -192,12 +189,10 @@ function onMouseDown() {
 }
 
 onMounted(() => {
-  // monta spans
   splitToChars(wordEl.value)
   chars = Array.from(wordEl.value.querySelectorAll('.char'))
   targets = calcTargets()
 
-  // recalcula targets ao redimensionar / trocar texto
   window.addEventListener('resize', onResize)
 })
 
@@ -207,13 +202,10 @@ onBeforeUnmount(() => {
 })
 
 function onResize() {
-  // mantemos a lógica original: recalcula alvos
   targets = calcTargets()
 }
 
-// se quiser trocar o texto dinamicamente via prop, assinale watcher
 watch(text, () => {
-  // refaz spans e targets
   wordEl.value.textContent = text.value
   splitToChars(wordEl.value)
   chars = Array.from(wordEl.value.querySelectorAll('.char'))
@@ -222,7 +214,6 @@ watch(text, () => {
 </script>
 
 <style scoped>
-/* Font-size control via Tailwind is fine, mas mantemos a variável para parity */
 
 .word{
   text-transform: uppercase;

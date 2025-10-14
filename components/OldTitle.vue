@@ -9,12 +9,12 @@
 
         <div class="relative grid place-items-end overflow-hidden h-[90vh]">
             <div class="w-full col-start-1 row-start-1">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="text-end w-full">
-                        <h1 ref="luigiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">LUIGI</h1>
-                    </div>
+                 <div class="flex flex-col justify-center items-center">
                     <div class="text-start w-full">
-                        <h1 ref="girardiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">GIRARDI</h1>
+                        <h1 ref="luigiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap">LUIGI</h1>
+                    </div>
+                    <div class="text-end w-full">
+                        <h1 ref="girardiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap">GIRARDI</h1>
                     </div>
                 </div>
             </div>
@@ -60,14 +60,14 @@ onMounted(() => {
     tl.from(luigiChars, {
       duration: 1.8,
       ease: 'power2.out',
-      x: '-400vw',
-      stagger: { each: -0.08, from: 'start' }
+      x: '400vw',
+      stagger: { each: 0.08, from: 'start' }
     }, 0);
     tl.from(girardiChars, {
       duration: 1.8,
       ease: 'power2.out',
-      x: '400vw',
-      stagger: { each: 0.08, from: 'start' }
+      x: '-400vw',
+      stagger: { each: -0.08, from: 'start' }
     }, 0);
     tl.to(luigiChars, {
       keyframes: { color: colorKeyframesL, ease: 'steps(4)' },
@@ -87,24 +87,24 @@ onMounted(() => {
       const wrap = gsap.utils.wrap(0, 1);
 
       gsap.to(allChars, {
-        // duration: 1.0,
-        // color: (i) => colorInterpolator(baseProgress[i]),
-        // ease: 'power2.inOut',
-        // stagger: { each: 0.02, from: 'start' },
+        duration: 1.0,
+        color: (i) => colorInterpolator(baseProgress[i]),
+        ease: 'power2.inOut',
+        stagger: { each: 0.02, from: 'start' },
         onComplete: () => {
           complete.value = true;
-          // gsap.to(progress, {
-          //   value: 1,
-          //   duration: 4,
-          //   ease: 'none',
-          //   repeat: -1,
-          //   onUpdate: () => {
-          //     allChars.forEach((char, i) => {
-          //       const currentProgress = wrap(baseProgress[i] - progress.value);
-          //       gsap.set(char, { color: colorInterpolator(currentProgress) });
-          //     });
-          //   }
-          // });
+          gsap.to(progress, {
+            value: 1,
+            duration: 4,
+            ease: 'none',
+            repeat: -1,
+            onUpdate: () => {
+              allChars.forEach((char, i) => {
+                const currentProgress = wrap(baseProgress[i] - progress.value);
+                gsap.set(char, { color: colorInterpolator(currentProgress) });
+              });
+            }
+          });
           
           gsap.set(allChars, { '--wght': 900 });
           setupProximityAnimation();
