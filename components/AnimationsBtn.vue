@@ -1,15 +1,13 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center h-screen bg-bl p-6">
-    <div
-      ref="wrap"
-      class="wrap cursor-pointer select-none p-3"
-      @mouseenter="hoverIn"
-      @mouseleave="hoverOut"
-      @mousedown="onMouseDown"
-    >
-      <div ref="wordEl" class="word inline-block text-white tracking-normal uppercase select-none thunder text-[8rem] animated-text">
-        {{ text }}
-      </div>
+  <div
+    ref="wrap"
+    class="wrap cursor-pointer select-none p-3 w-min"
+    @mouseenter="hoverIn"
+    @mouseleave="hoverOut"
+    @mousedown="onMouseDown"
+  >
+    <div ref="wordEl" class="word inline-block tracking-normal uppercase select-none thunder text-[8rem] animated-text hover:tracking-[5px] hover:font-thin transition-all duration-[0.3s]">
+      {{ text }}
     </div>
   </div>
 </template>
@@ -120,9 +118,12 @@ function hoverIn() {
 
   tl.to(chars, {
     duration: 0.4, 
-    z: i => targets[i].z || 0,
-    y: i => targets[i].y || 4,
+    x: 0, 
+    y: -50,
+    z: 0,
+    rotateX: 0, rotateY: 0, rotateZ: 0,
     skewX: i => (targets[i].skew || 0) * 0,
+    scaleX: 1, scaleY: 1,
     ease: 'expo.in',
     stagger: {
       each: 0.06,   
@@ -130,16 +131,26 @@ function hoverIn() {
     }
   }, 0.9);
   tl.to(chars, {
-    duration: CONFIG.DURATION * 0.5,
-    x: 0, y: 0, z: 0,
-    rotateX: 0, rotateY: 0, rotateZ: 0,
-    skewX: 0,
-    scaleX: 1, scaleY: 1,
-    transformPerspective: 1400,
-    transformOrigin: '50% 100%',
-    stagger: { each: CONFIG.STAGGER * 0.9, from: 'center' },
-    ease: 'expo.inOut',
-  }, 2);
+    duration: 1,
+    y: 0,
+    ease: 'elastic.out',
+    stagger: {
+      each: 0.06,   
+      from: 'start' 
+    }
+  },1.3)
+  // tl.to(chars, {
+  //   duration: CONFIG.DURATION * 0.5,
+  //   x: 0, 
+  //   y: 0, z: 0,
+  //   rotateX: 0, rotateY: 0, rotateZ: 0,
+  //   skewX: 0,
+  //   scaleX: 1, scaleY: 1,
+  //   transformPerspective: 1400,
+  //   transformOrigin: '50% 100%',
+  //   stagger: { each: CONFIG.STAGGER * 0.9, from: 'center' },
+  //   ease: 'expo.inOut',
+  // }, 2);
 }
 
 function hoverOut() {
@@ -187,6 +198,8 @@ function onMouseDown() {
     }
   }, `<${timeOnTop}`); 
 }
+
+
 
 onMounted(() => {
   splitToChars(wordEl.value)

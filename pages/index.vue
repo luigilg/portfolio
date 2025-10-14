@@ -3,9 +3,7 @@
     <Menu v-if="isMenuOpen" @close="isMenuOpen = false"/>
 
     <div v-if="!isMenuOpen">
-        <div v-if="complete" class="fixed z-50 right-3 top-3 px-5 py-3 text-end">
-            <h1 @click="isMenuOpen = true" class="text-[5em] thunder text-end select-none cursor-pointer textMenu">MENU</h1>
-        </div>
+            <TopBar v-if="complete"/>
 
         <div class="relative grid place-items-end overflow-hidden h-[90vh]">
             <div class="w-full col-start-1 row-start-1">
