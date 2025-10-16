@@ -26,6 +26,16 @@
   src: url('../fonts/Urbanist.woff2') format('woff2');
   font-weight: 100 900;
 }
+@font-face {
+  font-family: 'Hikasami';
+  src: url('../fonts/Hikasami.woff2') format('woff2');
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'Gabarito';
+  src: url('../fonts/Gabarito.woff2') format('woff2');
+  font-weight: 100 900;
+}
 
 
 @tailwind base;
@@ -48,19 +58,21 @@
 .raleway{
     font-family: 'Raleway', sans-serif;
 }
-
 .thunder{
     font-family: 'Thunder';
 }
-
+.hikasami{
+  font-family: 'Hikasami';
+}
+.gabarito{
+  font-family: 'Gabarito';
+}
 .heming{
   font-family: 'Heming';
 }
-
 .urbanist{
   font-family: 'Urbanist';
 }
-
 .funnel{
   font-family: 'FunnelDisplay';
 }

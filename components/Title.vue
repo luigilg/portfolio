@@ -3,12 +3,12 @@
         <div class="text-start w-full">
             <h1 ref="luigiRef"
                 class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">
-                LUIGI</h1>
+                Luigi</h1>
         </div>
         <div class="text-end w-full">
             <h1 ref="girardiRef"
                 class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[25px]">
-                GIRARDI</h1>
+                Girardi</h1>
         </div>
     </div>
 </template>
