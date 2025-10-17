@@ -7,6 +7,7 @@ export default {
         'pu': '#A23DD4',
         'bl': '#4F52BE',
         'cy': '#32A1B8',
+        'gr': '#AAAAAA',
         'b': {
           light: '#E4E1D5',
           dark: '#282E32',

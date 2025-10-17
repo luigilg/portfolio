@@ -9,16 +9,17 @@
             <div class="w-full col-start-1 row-start-1">
                 <div class="flex flex-col justify-center items-center gap-10">
                     <div class="text-start w-full">
-                        <h1 ref="luigiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">Luigi</h1>
+                        <h1 ref="luigiRef" class="invisible text-[18em] gabarito font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">LUIGI</h1>
                     </div>
                     <div class="text-start w-full">
-                        <h1 ref="girardiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">Girardi</h1>
+                        <h1 ref="girardiRef" class="invisible text-[18em] gabarito font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">GIRARDI</h1>
                     </div>
                 </div>
             </div>
         </div>
         <SnappyText />
-        <ArrowGrid class="mt-20"/>
+        <WhatIDo />
+        <!-- <ArrowGrid class="mt-20"/> -->
     </div>
 </div>
 </template>

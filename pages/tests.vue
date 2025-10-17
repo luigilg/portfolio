@@ -5,8 +5,9 @@
             :tamanho="scale"
         />
     </div>
-    <AnimationsBtn  class="text-pu" /> -->
-    <SnappyText />
+    <AnimationsBtn  class="text-pu" /> 
+    <SnappyText />-->
+    <WhatIDo />
 </template>
 
 <script setup>
