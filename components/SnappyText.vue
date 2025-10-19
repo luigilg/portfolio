@@ -2,7 +2,7 @@
     <div class="w-full flex flex-col items-center justify-center h-max">
         <div class="h-[350px]"></div>
         <div id="cont"
-            class="flex flex-col w-max justify-center items-center hikasami font-extrabold text-[6rem] leading-none text-b-dark ">
+            class="flex flex-col w-max justify-center items-center hikasami font-bold text-[6rem] leading-none text-b-dark ">
             <div id="icons" class="flex items-center justify-center w-full gap-3 absolute top-[37.5%]">
                 <div class="globe">
                     <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,16 +40,16 @@
                 </div>
             </div>
             <div class="flex mb-6">
-                <h1 class="text-nowrap txt t1a">Eu crio</h1> <h1 class="ml-[125px] txt t1b">experiências digitais</h1>
+                <h1 class="text-nowrap txt t1a">Eu crio</h1> <h1 class="text-nowrap ml-[125px] txt t1b">experiências digitais</h1>
             </div>
             <div class="flex mb-6">
-                <h1 class="text-nowrap txt t2a">excepcionais,  com </h1><h1 class="ml-[145px] txt text-nowrap t2b opacity-0"> foco em</h1>
+                <h1 class="text-nowrap txt t2a">excepcionais,  com </h1><h1 class="text-nowrap ml-[145px] txt t2b opacity-0"> foco em</h1>
             </div>
             <div class="flex mb-6">
-                <h1 class="text-nowrap txt t3a">entregar muita </h1><h1 class="ml-[120px] txt t3b">qualidade</h1>
+                <h1 class="text-nowrap txt t3a">entregar muita </h1><h1 class="text-nowrap ml-[120px] txt t3b">qualidade</h1>
             </div>
             <div class="flex">
-                <h1 class="text-nowrap txt t4a">e causar </h1><h1 class="ml-[120px] txt t4b">impacto.</h1>
+                <h1 class="text-nowrap txt t4a">e causar </h1><h1 class="text-nowrap ml-[120px] txt t4b">impacto.</h1>
             </div>
         </div>
         <div class="h-[3500px]"></div>

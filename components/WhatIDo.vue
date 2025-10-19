@@ -1,23 +1,36 @@
 <template>
-    <div class="h-screen w-full flex justify-center items-center  relative">
+    <div class="h-screen w-full flex justify-center items-center relative">
         <div class="flex flex-col w-full justify-center items-center thunder font-light text-[9rem] 
-                    select-none text-gr hover:font-light transition-[font-weight] z-10"
+                    select-none text-gr hover:font-light transition-[font-weight] z-10 mt-20"
             @mouseenter="onListEnter"
             @mouseleave="onListLeave">
             <div v-for="(item, key) in items" :key="key" 
-                class="w-full flex justify-center cursor-pointer relative hover:font-bold 
+                class="w-full flex justify-center cursor-pointer relative hover:font-bold
                 hover:tracking-[0px] transition-[font-weight,letter-spacing] duration-200 ease-out
                 active:tracking-[0px] active:font-thin"
                 @mouseenter="onItemEnter(key)">
                 <p :class="key" class="wid-txt leading-none">{{ item.desc }}</p>
-                <div :class="key + '-imgs image-group z-20'">
-                    <img
-                        v-for="(img, i) in items[key].imgs"
-                        :key="img + i"
-                        :src="img"
-                        class="preview-img"
-                        :class="key+'-img-'+i"
-                    >
+                <div :class="key + '-imgs image-group z-20 opacity-0'">
+                    <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
+                        <video
+                            v-if="media.type === 'video'"
+                            :src="media.src"
+                            class="preview-img"
+                            :class="key+'-img-'+i"
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                            preload="metadata"
+                        ></video>
+                        <img
+                            v-else
+                            :src="media.src"
+                            class="preview-img"
+                            :class="key+'-img-'+i"
+                            alt=""
+                        >
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,25 +48,44 @@ export default {
             lastHoveredIndex: null,
             currentColor: -1,
             items: {
+                // CORREÇÃO #1: A estrutura de dados foi restaurada
                 anim: {
                     desc: 'ANIMAÇÕES',
-                    imgs: ["/_nuxt/assets/images/Gasto-logo.png", "/_nuxt/assets/images/Bantads-logo.png", "/_nuxt/assets/images/Nutriplan-logo.png"]
+                    imgs: [
+                        { src: "/_nuxt/assets/images/ProCubo-3.mp4", type: 'video' },
+                        { src: "/_nuxt/assets/images/Minidrinks.mp4", type: 'video' },
+                        { src: "/_nuxt/assets/images/Baya-jornada.mp4", type: 'video' }
+                    ]
                 },
                 syst: {
                     desc: 'SITES E APPS',
-                    imgs: ["/_nuxt/assets/images/Gasto-logo.png", "/_nuxt/assets/images/Bantads-logo.png", "/_nuxt/assets/images/Nutriplan-logo.png"]
+                    imgs: [
+                        { src: "/_nuxt/assets/images/Gasto-logo.png", type: 'image' },
+                        { src: "/_nuxt/assets/images/Bantads-logo.png", type: 'image' },
+                        { src: "/_nuxt/assets/images/Nutriplan-logo.png", type: 'image' }
+                    ]
                 },
                 vids: {
                     desc: 'VÍDEOS',
-                    imgs: ["/_nuxt/assets/images/Gasto-logo.png", "/_nuxt/assets/images/Bantads-logo.png", "/_nuxt/assets/images/Nutriplan-logo.png"]
+                    imgs: [
+                        { src: "/_nuxt/assets/images/ProCubo-3.mp4", type: 'video' }, 
+                        { src: "/_nuxt/assets/images/Minidrinks.mp4", type: 'video' },
+                        { src: "/_nuxt/assets/images/Baya-jornada.mp4", type: 'video' }
+                    ]
                 },
                 desn: {
                     desc: 'DESIGN',
-                    imgs: ["/_nuxt/assets/images/Gasto-logo.png", "/_nuxt/assets/images/Bantads-logo.png", "/_nuxt/assets/images/Nutriplan-logo.png"]
+                    imgs: [
+                        { src: "/_nuxt/assets/images/Gasto-logo.png", type: 'image' },
+                        { src: "/_nuxt/assets/images/Bantads-logo.png", type: 'image' },
+                        { src: "/_nuxt/assets/images/Nutriplan-logo.png", type: 'image' }
+                    ]
                 },
                 musc: {
-                    desc: 'MÚSICA',
-                    imgs: ["/_nuxt/assets/images/Bantads-logo.png"]
+                    desc: 'MÚSICA',    
+                    imgs: [
+                        { src: "/_nuxt/assets/images/Bantads-logo.png", type: 'image' }
+                    ]
                 },
             }
         };
@@ -132,8 +164,8 @@ export default {
             const randomRotation3 = (Math.random() - 0.5) * 20;
 
             gsap.set(groupSelector, { opacity: 1 });
-            gsap.to(textSelector, { color: color, duration: 0.4, ease: 'fast', overwrite: true });
-            gsap.to(groupSelector, { scale: 1, duration: 1, ease: 'elastic.out(1, 0.8)', overwrite: true });
+            gsap.to(textSelector, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
+            gsap.to(groupSelector, { scale: 1, duration: 1, ease: 'elastic.out(1.25, 0.8)', overwrite: true });
 
             gsap.fromTo(`.${key}-img-0`, 
                 { x: 0, y: (initialYOffset-200), scale: 0.6, rotation: 0,  }, 
@@ -155,7 +187,7 @@ export default {
             const finalTextColor = isFinalLeave ? '' : '#aaa';
             const exitYOffset = 100 * -yDirection;
 
-            gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true });
+            gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
             gsap.to(groupSelector, { scale: 1, duration: 0.4, ease: 'fast', overwrite: true });
             gsap.to(groupSelector, { opacity: 0, duration: 0 });
             gsap.to(allImgsSelector, { y: exitYOffset, rotation: 0, duration: 0.4, ease: 'fast', overwrite: true });

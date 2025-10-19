@@ -5,21 +5,21 @@
     <div v-if="!isMenuOpen">
             <TopBar v-if="complete"/>
 
-        <div class="relative grid place-items-end overflow-hidden h-[90vh]">
+        <div class="relative grid place-items-end h-[90vh]">
             <div class="w-full col-start-1 row-start-1">
                 <div class="flex flex-col justify-center items-center gap-10">
                     <div class="text-start w-full">
-                        <h1 ref="luigiRef" class="invisible text-[18em] gabarito font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">LUIGI</h1>
+                        <h1 ref="luigiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">LUIGI</h1>
                     </div>
-                    <div class="text-start w-full">
-                        <h1 ref="girardiRef" class="invisible text-[18em] gabarito font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">GIRARDI</h1>
+                    <div class="text-end w-full">
+                        <h1 ref="girardiRef" class="invisible text-[18em] funnel font-black text-gray-400 select-none whitespace-nowrap -tracking-[15px]">GIRARDI</h1>
                     </div>
                 </div>
             </div>
         </div>
         <SnappyText />
         <WhatIDo />
-        <!-- <ArrowGrid class="mt-20"/> -->
+        <ArrowGrid class="mt-20"/>
     </div>
 </div>
 </template>
@@ -66,7 +66,7 @@ onMounted(() => {
       duration: 1.8,
       ease: 'power4.out',
       x: '400vw',
-      stagger: { each: 0.08, from: 'start' }
+      stagger: { each: -0.08, from: 'end' }
     }, 0.3);
     tl.to(luigiChars, {
       keyframes: { color: colorKeyframesL, ease: 'steps(4)' },
@@ -76,7 +76,7 @@ onMounted(() => {
     tl.to(girardiChars, {
       keyframes: { color: colorKeyframesG, ease: 'steps(4)' },
       duration: 1.3,
-      stagger: { each: -0.08, from: 'start' }
+      stagger: { each: 0.08, from: 'end' }
     }, 0.8);
 
     tl.call(() => {
