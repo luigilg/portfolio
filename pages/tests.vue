@@ -1,12 +1,13 @@
 <template>
-    <div class="flex w-[1000px] h-[500px] justify-center items-center" >
+    <OldTitle />
+    <!-- <div class="flex w-[1000px] h-[500px] justify-center items-center" >
         <LogoAnim 
             class="transition-transform duration-[1s] ease-out" 
             :tamanho="scale"
         />
     </div>
     <AnimationsBtn  class="text-pu" /> 
-    <SnappyText />
+    <SnappyText /> -->
     <!-- <WhatIDo /> -->
 </template>
 

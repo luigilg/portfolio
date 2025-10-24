@@ -19,8 +19,6 @@
                 </div>
             </div>
         </div>
-        
-        <ArrowGrid class="mt-20"/>
     </div>
 </div>
 </template>

@@ -15,7 +15,7 @@
                         <video
                             v-if="media.type === 'video'"
                             :src="media.src"
-                            class="preview-img"
+                            class="preview-vid"
                             :class="key+'-img-'+i"
                             autoplay
                             loop
@@ -84,7 +84,7 @@ export default {
                 musc: {
                     desc: 'MÚSICA',    
                     imgs: [
-                        { src: "/_nuxt/assets/images/Bantads-logo.png", type: 'image' }
+                        { src: "/_nuxt/assets/images/SoundCloud-Logo.png", type: 'image' }
                     ]
                 },
             }
@@ -216,6 +216,17 @@ export default {
     box-shadow: 0 30px 60px 3px rgb(0 0 0 / 0.1), 0 10px 20px rgb(0 0 0 / 0.15);
     object-fit: cover;
     top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+.preview-vid {
+    position: absolute;
+    max-height: 150px;
+    width: 250px;
+    border-radius: 0.75rem;
+    box-shadow: 0 30px 60px 3px rgb(0 0 0 / 0.1), 0 10px 20px rgb(0 0 0 / 0.15);
+    object-fit: cover;
+    top: 38%;
     left: 50%;
     transform: translate(-50%, -50%); 
 }
