@@ -52,46 +52,31 @@
                 <h1 class="text-nowrap txt t4a">e causar </h1><h1 class="text-nowrap ml-[120px] txt t4b">impacto.</h1>
             </div>
         </div>
-        <div class="h-[2000px]"></div>
+        <div class="h-[2500px]"></div>
     </div>
 </template>
 
 <script>
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { CustomEase } from 'gsap/CustomEase';
-
 
 export default {
     mounted() {
         gsap.registerPlugin(
             ScrollTrigger,
-            // ScrollSmoother,
             CustomEase
         );
-        // CustomEase.create("fast", "M0,0 C0.039,0.356 0.05,0.675 0.228,0.837 0.406,1 0.489,1 1,1 ");
         CustomEase.create("fast", "M0,0 C0.126,0.382 0.32,0.925 0.634,0.971 0.788,0.993 0.731,0.984 1,1 ");
-
-        // let smoother = ScrollSmoother.create({
-        //     wrapper: ".wrapper",
-        //     content: ".content",
-        //     smooth: 0.5,
-        //     ease: "fast"
-        // });
+        CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
 
         gsap.set(['.t1b', '.t1a', '.t2a', '.t2b', '.t3a', '.t3b', '.t4a', '.t4b'], { opacity: 0 });
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '#cont',
-                start: 'center center',
-                end: '+=1200',
-                scrub: true,
-                pin: true,
-            }
-        });
+        // --- 1. Crie a timeline SEM o ScrollTrigger ---
+        const tl = gsap.timeline();
 
+        // --- 2. Adicione todas as suas animações ---
+        // (Exatamente como você tinha antes)
         tl
             .to('.globe', {
                 y: -145,
@@ -115,77 +100,108 @@ export default {
             }, "<")
             .to('.globe', {
                 x: -161,
-                duration: 0.3,
-                ease: "power1.out",
-            },'>-0.3')
+                duration: 0.4,
+                ease: "scroll",
+            }, '>-0.4')
             .addLabel("icons", "<")
             .to('.eye', {
                 x: 295,
-                duration: 0.3,
-                ease: "power1.out",
-            },'<0.1')
+                duration: 0.4,
+                ease: "scroll",
+            }, '<0.1')
             .to('.star', {
                 x: 32,
-                duration: 0.3,
-                ease: "power1.out",
-            },'<0.1')
+                duration: 0.4,
+                ease: "scroll",
+            }, '<0.1')
             .to('.arrows', {
                 x: -175,
-                duration: 0.3,
-                ease: "power1.out",
-            },'<0.1')
-            .set('.t1a', { opacity: 1 },"icons+=0.05")
-            .set('.t1b', { opacity: 1 },"icons+=0.15")
-            .set('.t2b', { opacity: 1 },'icons+=0.1')
-            .set('.t2a', { opacity: 1 },'icons+=0.2')
-            .set('.t3b', { opacity: 1 },'icons+=0.25')
-            .set('.t3a', { opacity: 1 },'icons+=0.35')
-            .set('.t4a', { opacity: 1 },'icons+=0.30')
-            .set('.t4b', { opacity: 1 },'icons+=0.40')
+                duration: 0.4,
+                ease: "scroll",
+            }, '<0.1')
+            .set('.t1a', { opacity: 1 }, "icons+=0.05")
+            .set('.t1b', { opacity: 1 }, "icons+=0.15")
+            .set('.t2b', { opacity: 1 }, 'icons+=0.1')
+            .set('.t2a', { opacity: 1 }, 'icons+=0.2')
+            .set('.t3b', { opacity: 1 }, 'icons+=0.25')
+            .set('.t3a', { opacity: 1 }, 'icons+=0.35')
+            .set('.t4a', { opacity: 1 }, 'icons+=0.30')
+            .set('.t4b', { opacity: 1 }, 'icons+=0.40')
             .from('.t1a', {
                 x: 60,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, 'icons+=0.05')
             .from('.t2b', {
                 x: -150,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, '<0.05')
             .from('.t1b', {
                 x: 60,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, '<0.05')
             .from('.t2a', {
                 x: -150,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, '<0.05')
             .from('.t3b', {
                 x: -30,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, '<0.05')
             .from('.t4a', {
                 x: 60,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, '<0.05')
             .from('.t3a', {
                 x: -30,
-                duration: 0.3,
-                ease: "fast",
+                duration: 0.5,
+                ease: "scroll",
             }, '<0.05')
             .from('.t4b', {
                 x: 60,
-                duration: 0.3,
-                ease: "fast",
-            }, '<0.04')
+                duration: 0.5,
+                ease: "scroll",
+            }, '<0.04');
+
+        // --- 3. Calcule o "padding" ---
+
+        // A duração em segundos de todas as animações acima
+        const animDuration = tl.duration();
+
+        // A distância de rolagem que você quer para a animação
+        const animScroll = 1350;
+
+        // A distância de rolagem EXTRA que você quer manter o pin
+        // (Baseado no seu <div class="h-[2000px]">)
+        const extraPinScroll = 1000;
+
+        // A distância TOTAL de rolagem para o pin
+        const totalPinScroll = animScroll + extraPinScroll;
+
+        // Calcule a "duração de preenchimento" proporcional
+        const padDuration = (animDuration / animScroll) * extraPinScroll;
+
+        // --- 4. Adicione o padding (uma animação vazia) ---
+        tl.to({}, { duration: padDuration });
+
+        // --- 5. Crie o ScrollTrigger separado ---
+        ScrollTrigger.create({
+            trigger: '#cont',
+            start: 'center center',
+            // Use o valor TOTAL do pin
+            end: `+=${totalPinScroll}`,
+            scrub: true,
+            pin: true,
+            // Vincule sua timeline preenchida
+            animation: tl, 
+        });
     }
-
 }
-
 </script>
 
 <style></style>
