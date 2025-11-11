@@ -116,7 +116,7 @@ onMounted(() => {
     smoother = ScrollSmoother.create({
       wrapper: mainWrapper.value,   
       content: mainContent.value, 
-      smooth: 0.7,
+      smooth: 0.5,
       ease: "scroll",
       onUpdate: updateCharPositions
     });

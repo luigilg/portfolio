@@ -72,11 +72,8 @@ export default {
 
         gsap.set(['.t1b', '.t1a', '.t2a', '.t2b', '.t3a', '.t3b', '.t4a', '.t4b'], { opacity: 0 });
 
-        // --- 1. Crie a timeline SEM o ScrollTrigger ---
         const tl = gsap.timeline();
 
-        // --- 2. Adicione todas as suas animações ---
-        // (Exatamente como você tinha antes)
         tl
             .to('.globe', {
                 y: -145,
@@ -101,23 +98,24 @@ export default {
             .to('.globe', {
                 x: -161,
                 duration: 0.4,
-                ease: "scroll",
+                ease: "power1.inOut",
             }, '>-0.4')
-            .addLabel("icons", "<")
+            // .addLabel("icons", "<")
             .to('.eye', {
                 x: 295,
                 duration: 0.4,
-                ease: "scroll",
+                ease: "power1.inOut",
             }, '<0.1')
+            .addLabel("icons", "<")
             .to('.star', {
                 x: 32,
                 duration: 0.4,
-                ease: "scroll",
+                ease: "power1.inOut",
             }, '<0.1')
             .to('.arrows', {
                 x: -175,
                 duration: 0.4,
-                ease: "scroll",
+                ease: "power1.inOut",
             }, '<0.1')
             .set('.t1a', { opacity: 1 }, "icons+=0.05")
             .set('.t1b', { opacity: 1 }, "icons+=0.15")
@@ -168,36 +166,24 @@ export default {
                 ease: "scroll",
             }, '<0.04');
 
-        // --- 3. Calcule o "padding" ---
-
-        // A duração em segundos de todas as animações acima
         const animDuration = tl.duration();
 
-        // A distância de rolagem que você quer para a animação
         const animScroll = 1350;
 
-        // A distância de rolagem EXTRA que você quer manter o pin
-        // (Baseado no seu <div class="h-[2000px]">)
         const extraPinScroll = 1000;
 
-        // A distância TOTAL de rolagem para o pin
         const totalPinScroll = animScroll + extraPinScroll;
 
-        // Calcule a "duração de preenchimento" proporcional
         const padDuration = (animDuration / animScroll) * extraPinScroll;
 
-        // --- 4. Adicione o padding (uma animação vazia) ---
         tl.to({}, { duration: padDuration });
 
-        // --- 5. Crie o ScrollTrigger separado ---
         ScrollTrigger.create({
             trigger: '#cont',
             start: 'center center',
-            // Use o valor TOTAL do pin
             end: `+=${totalPinScroll}`,
             scrub: true,
             pin: true,
-            // Vincule sua timeline preenchida
             animation: tl, 
         });
     }
