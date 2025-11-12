@@ -16,7 +16,7 @@
 
           <path ref="pathG" transform="translate(78,52)"
             d="M69.5 134C69.5 134 137 133.635 153 133.635C169 133.635 182 135 182 157C182 179 165 227 109 227C67.5 227 40 191.5 40 154.5V109.5C41 92.6669 51 59.4999 79 47C113.681 31.5175 153 43.0001 174.5 76.0002"
-            fill="none" stroke="white" stroke-width="80"  stroke-milterlimit="round" />
+            fill="none" stroke="white" stroke-width="80" stroke-miterlimit="round" />
         </mask>
       </defs>
     </svg>

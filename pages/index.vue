@@ -1,50 +1,44 @@
 <template>
-<div id="smooth-wrapper" ref="mainWrapper">
-<div id="smooth-content" class="bg-b-light text-b-dark min-h-screen p-3" ref="mainContent">
-    <Menu v-if="isMenuOpen" @close="isMenuOpen = false"/>
-
-    <div v-if="!isMenuOpen">
-        <TopBar v-if="complete"/>
-
-        <div class="relative grid place-items-end h-[95vh] overflow-hidden">
-            <div class="w-full col-start-1 row-start-1">
-                <div class="flex flex-col justify-center items-center gap-10">
-                    <div class="text-start flex flex-row items-end gap-12 w-full">
-                        <h1 ref="luigiRef" class="invisible text-[20rem] gabarito font-black text-b-dark select-none whitespace-nowrap -tracking-[12px]">LUIGI</h1>
-                        <p ref="creativeRef" class="hikasami font-bold text-[5rem] leading-none mb-2 text-b-dark overflow-hidden invisible">creative</p>
-                    </div>
-                    <div class="w-full h-[50px] gradbar rounded-xl"></div>
-                    <div class="text-end w-full flex flex-row justify-end items-start gap-12">
-                        <p ref="devRef" class="hikasami font-bold text-[5rem] leading-none text-b-dark overflow-hidden invisible pb-2">developer</p>
-                        <h1 ref="girardiRef" class="invisible text-[20rem] gabarito font-black text-b-dark select-none whitespace-nowrap -tracking-[12px]">GIRARDI</h1>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <div class="relative grid place-items-end h-[95vh] overflow-hidden">
+      <div class="w-full col-start-1 row-start-1">
+        <div class="flex flex-col justify-center items-center gap-10">
+          <div class="text-start flex flex-row items-end gap-12 w-full">
+            <h1 ref="luigiRef" class="invisible text-[20rem] gabarito font-black text-b-dark select-none whitespace-nowrap -tracking-[12px]">LUIGI</h1>
+            <!-- <AlternatingText :texts="['creative', 'professional','innovative', 'passionate']" position="start" :start="startAltText" from="bottom"  /> -->
+            <AlternatingText :texts="['creative']" position="start" :start="startAltText" from="bottom"  />
+          </div>
+          <div class="w-full h-[50px] gradbar rounded-xl"></div>
+          <div class="text-end w-full flex flex-row justify-end items-start gap-12">
+            <AlternatingText :texts="['developer', 'designer', 'composer', 'animator', 'artist']" position="end" from="top" :start="startAltText" />
+            <h1 ref="girardiRef" class="invisible text-[20rem] gabarito font-black text-b-dark select-none whitespace-nowrap -tracking-[12px]">GIRARDI</h1>
+          </div>
         </div>
-        <SnappyText />
-        <WhatIDo />
+      </div>
     </div>
-</div>
-</div>
+    <div ref="snappyTextContainer" class="invisible">
+      <SnappyText />
+    </div>
+    <WhatIDo /> 
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { CustomEase } from 'gsap/CustomEase';
 
-gsap.registerPlugin(SplitText, ScrollSmoother, CustomEase);
+gsap.registerPlugin(SplitText, CustomEase);
 
-const mainWrapper = ref(null);
-const mainContent = ref(null);
 const luigiRef = ref(null);
 const girardiRef = ref(null);
 const creativeRef = ref(null);
 const devRef = ref(null);
 const isMenuOpen = ref(false);
+const snappyTextContainer = ref(null);
 const complete = ref(false);
+const startAltText = ref(false);
 
 const creativeDevAnim = () => {
   if (!creativeRef.value || !devRef.value) return;
@@ -75,8 +69,7 @@ const creativeDevAnim = () => {
 onMounted(() => {
   let allChars = [];
   let charPositions = [];
-  let smoother = null;
-  const waveSequence = ['#A23DD4', '#A23DD4', '#4F52BE', '#32A1B8', '#4F52BE', '#A23DD4', '#A23DD4'];
+  const waveSequence = ['#A23DD4', '#A23DD4', '#4F52BE', '#32A1B8', '#32A1B8', '#4F52BE', '#A23DD4'];
   const colorInterpolator = gsap.utils.interpolate(waveSequence);
   
   const mousePos = { x: 0, y: 0 };
@@ -84,7 +77,13 @@ onMounted(() => {
 
   const saveOriginalCharData = () => {
     if (!allChars.length) return;
+
+    gsap.set(allChars, { fontVariationSettings: "'wght' 900", textAlign: 'center' });
+
     charPositions = allChars.map(char => {
+      const width = char.getBoundingClientRect().width;
+      gsap.set(char, { width: width });
+
       const rect = char.getBoundingClientRect();
       return {
         el: char,
@@ -93,6 +92,8 @@ onMounted(() => {
         originalColor: '#282e32'
       };
     });
+
+    gsap.set(allChars, { clearProps: "fontVariationSettings", '--wght': 900 });
   };
 
   const updateCharPositions = () => {
@@ -112,18 +113,11 @@ onMounted(() => {
   if (process.client) {
     CustomEase.create("fast", "M0,0 C0.126,0.382 0.32,0.925 0.634,0.971 0.788,0.993 0.731,0.984 1,1 ");
     CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
-
-    smoother = ScrollSmoother.create({
-      wrapper: mainWrapper.value,   
-      content: mainContent.value, 
-      smooth: 0.5,
-      ease: "scroll",
-      onUpdate: updateCharPositions
-    });
     
     window.addEventListener('mousemove', e => {
       mousePos.x = e.clientX;
       mousePos.y = e.clientY;
+      updateCharPositions();
     });
     window.addEventListener('resize', debouncedRecalculate);
   }
@@ -166,14 +160,16 @@ onMounted(() => {
       duration: 1.3,
       stagger: { each: 0.05, from: 'end' }
     }, 0.4);
-
+    tl.call(creativeDevAnim, [], 1.5);
+    tl.call(() => {
+      startAltText.value = true;
+    }, [], 1.6);
+    
     tl.call(() => {
       complete.value = true;
-      gsap.set(allChars, { '--wght': 900 });
       
       saveOriginalCharData();
       setupProximityAnimation();
-      creativeDevAnim();
     });
 
     const setupProximityAnimation = () => {
@@ -197,7 +193,7 @@ onMounted(() => {
           gsap.to(pos.el, {
             '--wght': clampedWeight,
             duration: 0.4,
-            ease: 'power2.out',
+            ease: 'power1.out',
             overwrite: 'auto'
           });
 
@@ -226,6 +222,21 @@ onMounted(() => {
       
       gsap.ticker.add(proximityLoop);
     };
+
+    if (snappyTextContainer.value) {
+      gsap.from(snappyTextContainer.value, {
+        scrollTrigger: {
+          trigger: snappyTextContainer.value,
+          start: "top 85%",
+        },
+        opacity: 0,
+        duration: 1,
+        ease: 'expo.out',
+        onStart: () => {
+          gsap.set(snappyTextContainer.value, { visibility: 'visible' });
+        }
+      });
+    }
   }
 });
 </script>

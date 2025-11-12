@@ -4,35 +4,38 @@
                     select-none text-gr hover:font-light transition-[font-weight] z-10 mt-20"
             @mouseenter="onListEnter"
             @mouseleave="onListLeave">
-            <div v-for="(item, key) in items" :key="key" 
+            <div v-for="(item, key) in items" 
+                :key="key" 
                 class="w-full flex justify-center cursor-pointer relative hover:font-black
                 -tracking-[10px] transition-[font-weight, letter-spacing] duration-200 ease-out z-0 hover:z-10
                 active:font-[100] active:scale-90"
                 @click="navigate(item.route)"
                 @mouseenter="onItemEnter(key)">
                 <p :class="key" class="wid-txt leading-none">{{ item.desc }}</p>
-                <div :class="key + '-imgs image-group z-20 opacity-0'">
-                    <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
-                        <video
-                            v-if="media.type === 'video'"
-                            :src="media.src"
-                            class="preview-vid"
-                            :class="key+'-img-'+i"
-                            autoplay
-                            loop
-                            muted
-                            playsinline
-                            preload="metadata"
-                        ></video>
-                        <img
-                            v-else
-                            :src="media.src"
-                            class="preview-img"
-                            :class="key+'-img-'+i"
-                            alt=""
-                        >
+                <ClientOnly>
+                    <div v-if="item.imgs != null" :class="key + '-imgs image-group z-20 opacity-0'">
+                        <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
+                            <video
+                                v-if="media.type === 'video'"
+                                :src="media.src"
+                                class="preview-vid"
+                                :class="key+'-img-'+i"
+                                autoplay
+                                loop
+                                muted
+                                playsinline
+                                preload="metadata"
+                            ></video>
+                            <img
+                                v-else
+                                :src="media.src"
+                                class="preview-img"
+                                :class="key+'-img-'+i"
+                                alt=""
+                            >
+                        </div>
                     </div>
-                </div>
+                </ClientOnly>
             </div>
         </div>
     </div>
@@ -149,6 +152,12 @@ const onListLeave = () => {
 };
 
 const animateIn = (key, color, yDirection) => {
+    // Se não houver imagens, apenas anima o texto e sai da função
+    if (!items[key].imgs) {
+        gsap.to(`.${key}`, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
+        return;
+    }
+
     const textSelector = `.${key}`;
     const groupSelector = `.${key}-imgs`;
     
@@ -188,6 +197,13 @@ const animateOut = (key, isFinalLeave = false, yDirection) => {
     const groupSelector = `.${key}-imgs`;
     const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
     const finalTextColor = isFinalLeave ? '' : '#aaa';
+
+    // Se não houver imagens, apenas anima o texto e sai da função
+    if (!items[key].imgs) {
+        gsap.to(`.${key}`, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
+        return;
+    }
+
     const exitYOffset = 100 * -yDirection;
 
     gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });

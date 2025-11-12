@@ -8,6 +8,7 @@ export default {
         'bl': '#4F52BE',
         'cy': '#32A1B8',
         'gr': '#AAAAAA',
+        'gr-md': '#868791',
         'b': {
           light: '#E4E1D5',
           dark: '#282E32',

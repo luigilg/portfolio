@@ -77,100 +77,100 @@ export default {
         tl
             .to('.globe', {
                 y: -145,
-                ease: "fast",
+                ease: "power2.out",
                 duration: 0.7,
             }, "<")
             .to('.eye', {
                 y: -45,
-                ease: "fast",
+                ease: "power2.out",
                 duration: 0.7,
             }, "<")
             .to('.star', {
                 y: 55,
-                ease: "fast",
+                ease: "power2.out",
                 duration: 0.7,
             }, "<")
             .to('.arrows', {
                 y: 155,
-                ease: "fast",
+                ease: "power2.out",
                 duration: 0.7,
             }, "<")
             .to('.globe', {
                 x: -161,
-                duration: 0.4,
-                ease: "power1.inOut",
+                duration: 0.5,
+                ease: "power1.out",
             }, '>-0.4')
             // .addLabel("icons", "<")
             .to('.eye', {
                 x: 295,
-                duration: 0.4,
-                ease: "power1.inOut",
-            }, '<0.1')
+                duration: 0.5,
+                ease: "power1.out",
+            }, '<0.08')
             .addLabel("icons", "<")
             .to('.star', {
                 x: 32,
-                duration: 0.4,
-                ease: "power1.inOut",
-            }, '<0.1')
+                duration: 0.5,
+                ease: "power1.out",
+            }, '<0.08')
             .to('.arrows', {
                 x: -175,
-                duration: 0.4,
-                ease: "power1.inOut",
-            }, '<0.1')
-            .set('.t1a', { opacity: 1 }, "icons+=0.05")
-            .set('.t1b', { opacity: 1 }, "icons+=0.15")
-            .set('.t2b', { opacity: 1 }, 'icons+=0.1')
-            .set('.t2a', { opacity: 1 }, 'icons+=0.2')
-            .set('.t3b', { opacity: 1 }, 'icons+=0.25')
-            .set('.t3a', { opacity: 1 }, 'icons+=0.35')
-            .set('.t4a', { opacity: 1 }, 'icons+=0.30')
-            .set('.t4b', { opacity: 1 }, 'icons+=0.40')
+                duration: 0.5,
+                ease: "power1.out",
+            }, '<0.08')
             .from('.t1a', {
                 x: 60,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, 'icons+=0.05')
+            .set('.t1a', { opacity: 1 }, "<")
             .from('.t2b', {
                 x: -150,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, '<0.05')
+            .set('.t2b', { opacity: 1 }, "<")
             .from('.t1b', {
                 x: 60,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, '<0.05')
+            .set('.t1b', { opacity: 1 }, "<")
             .from('.t2a', {
                 x: -150,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, '<0.05')
+            .set('.t2a', { opacity: 1 }, "<")
             .from('.t3b', {
-                x: -30,
+                x: -50,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, '<0.05')
+            .set('.t3b', { opacity: 1 }, "<")
             .from('.t4a', {
                 x: 60,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, '<0.05')
+            .set('.t4a', { opacity: 1 }, "<")
             .from('.t3a', {
-                x: -30,
+                x: -50,
                 duration: 0.5,
-                ease: "scroll",
+                ease: "power1.out",
             }, '<0.05')
+            .set('.t3a', { opacity: 1 }, "<")
             .from('.t4b', {
                 x: 60,
                 duration: 0.5,
-                ease: "scroll",
-            }, '<0.04');
+                ease: "power1.out",
+            }, '<0.03')
+            .set('.t4b', { opacity: 1 }, "<");
 
         const animDuration = tl.duration();
 
         const animScroll = 1350;
 
-        const extraPinScroll = 1000;
+        const extraPinScroll = 700;
 
         const totalPinScroll = animScroll + extraPinScroll;
 

@@ -1,14 +1,18 @@
 <template>
-    <OldTitle />
+    <!-- <OldTitle /> -->
     <!-- <div class="flex w-[1000px] h-[500px] justify-center items-center" >
         <LogoAnim 
-            class="transition-transform duration-[1s] ease-out" 
-            :tamanho="scale"
+        class="transition-transform duration-[1s] ease-out" 
+        :tamanho="scale"
         />
     </div>
     <AnimationsBtn  class="text-pu" /> 
     <SnappyText /> -->
     <!-- <WhatIDo /> -->
+    <!-- <div class="flex items-center justify-center"> -->
+        
+    <!-- </div> -->
+    <PageTitleTest />
 </template>
 
 <script setup>
