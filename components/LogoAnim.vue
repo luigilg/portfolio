@@ -57,13 +57,13 @@ onMounted(() => {
     .to(pathL.value, {
       drawSVG: "100%",
       ease: 'power1.in',
-      duration: 0.4
+      duration: 0.3
     })
     .to(pathG.value, {
       drawSVG: "100%",
       ease: 'power4.out',
-      duration: 1.3
-    }, '<0.4');
+      duration: 1.1
+    }, '<0.3');
   gsap.set([pathL.value, pathG.value], { drawSVG: "0%" });
 });
 

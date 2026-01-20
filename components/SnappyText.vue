@@ -2,17 +2,17 @@
     <div class="w-full flex flex-col items-center justify-center h-max">
         <div class="h-[350px]"></div>
         <div id="cont"
-            class="flex flex-col w-max justify-center items-center hikasami font-bold text-[6rem] leading-none text-b-dark ">
+            class="flex flex-col w-max justify-center items-center hikasami font-bold text-[6rem] leading-none text-b-dark scale-[80%]">
             <div id="icons" class="flex items-center justify-center w-full gap-3 absolute top-[37.5%]">
-                <div class="globe">
-                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="globe flex items-center justify-center">
+                    <svg class="svgIcon" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M50 0.5C77.3381 0.5 99.5 22.6619 99.5 50C99.5 77.3381 77.3381 99.5 50 99.5C22.6619 99.5 0.5 77.3381 0.5 50C0.5 22.6619 22.6619 0.5 50 0.5ZM11.8926 55.5C13.9581 69.9391 24.0332 81.7927 37.4746 86.415C31.7833 77.0494 28.2594 66.4834 27.2139 55.5H11.8926ZM72.7861 55.5C71.7406 66.4836 68.2158 77.0493 62.5244 86.415C75.9662 81.7929 86.0419 69.9395 88.1074 55.5H72.7861ZM38.2725 55.5C39.4871 66.3131 43.5354 76.6129 50 85.3545C56.4645 76.6129 60.5129 66.3131 61.7275 55.5H38.2725ZM62.5244 13.584C68.2161 22.9499 71.7406 33.5162 72.7861 44.5H88.1074C86.0419 30.0604 75.9664 18.2061 62.5244 13.584ZM50 14.6445C43.5351 23.3863 39.4872 33.6867 38.2725 44.5H61.7275C60.5129 33.6866 56.4648 23.3863 50 14.6445ZM37.4746 13.584C24.0331 18.2063 13.9581 30.0608 11.8926 44.5H27.2139C28.2594 33.5163 31.783 22.9498 37.4746 13.584Z"
                             fill="#A23DD4" />
                     </svg>
                 </div>
-                <div class="eye">
-                    <svg width="116" height="87" viewBox="0 0 116 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="eye flex items-center justify-center">
+                    <svg class="svgIcon" width="116" height="87" viewBox="0 0 116 87" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M58.0469 23.2031C69.0492 23.2033 77.9688 32.1226 77.9688 43.125C77.9686 54.1273 69.0492 63.0467 58.0469 63.0469C47.0444 63.0469 38.1251 54.1274 38.125 43.125C38.125 32.1225 47.0444 23.2031 58.0469 23.2031ZM58.0469 35.2031C53.6718 35.2031 50.125 38.7499 50.125 43.125C50.1251 47.5 53.6718 51.0469 58.0469 51.0469C62.4218 51.0467 65.9686 47.4999 65.9688 43.125C65.9688 38.75 62.4218 35.2033 58.0469 35.2031Z"
                             fill="#32A1B8" />
@@ -24,15 +24,15 @@
                             fill="#32A1B8" />
                     </svg>
                 </div>
-                <div class="star">
-                    <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="star flex items-center justify-center">
+                    <svg class="svgIcon" width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M50.5 28.3066L70.9688 7.83789L80.1611 17.0312L59.6924 37.5H88V50.5H59.6924L79.7041 70.5117L70.5117 79.7041L50.5 59.6924V88H37.5V59.6924L17.4883 79.7041L8.29492 70.5117L28.3066 50.5H0V37.5H28.3076L7.83789 17.0312L17.0312 7.83789L37.5 28.3066V0H50.5V28.3066Z"
                             fill="#4F52BE" />
                     </svg>
                 </div>
-                <div class="arrows">
-                    <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="arrows flex items-center justify-center">
+                    <svg class="svgIcon" width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M32.23 13.2686H21.4263L40.4565 32.2979L40.4995 32.2559L43.6499 35.4062L48.0923 30.9648L48.1343 31.0068L65.8745 13.2686H55.0708L55.0718 0.761719H87.2241V32.9141L74.7173 32.915V22.1113L52.5366 44.292L74.7173 66.4727V55.6689L87.2241 55.6699V87.8223H55.0718L55.0708 75.3164H65.8745L43.6499 53.0918L21.4263 75.3164H32.23V87.8223H0.0766602V55.6699L12.5835 55.6689V66.4727L34.7642 44.292L12.5835 22.1113V32.915L0.0766602 32.9141V0.761719H32.23V13.2686Z"
                             fill="#A23DD4" />
@@ -52,7 +52,7 @@
                 <h1 class="text-nowrap txt t4a">e causar </h1><h1 class="text-nowrap ml-[120px] txt t4b">impacto.</h1>
             </div>
         </div>
-        <div class="h-[2500px]"></div>
+        <div class="h-[3000px]"></div>
     </div>
 </template>
 
@@ -71,6 +71,21 @@ export default {
         CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
 
         gsap.set(['.t1b', '.t1a', '.t2a', '.t2b', '.t3a', '.t3b', '.t4a', '.t4b'], { opacity: 0 });
+        gsap.set('.ball', { opacity: 0 });
+
+        const entryTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '#cont',
+                start: 'top 102%', 
+                end: 'bottom 20%',
+                toggleActions: 'play none none none', 
+                scrub: true,
+            }
+        });
+        entryTl.from('#icons', { scale: 5, gap: '0px', duration: 1, ease: "power1.out" }, "<");
+
+        // entryTl.from('.svgIcon', { scale: 4.5, duration: 0.8, ease: "power2.out" });
+        // entryTl.from('#icons', { gap: '500px', duration: 0.8, ease: "power2.out" }, "<");
 
         const tl = gsap.timeline();
 
@@ -79,7 +94,7 @@ export default {
                 y: -145,
                 ease: "power2.out",
                 duration: 0.7,
-            }, "<")
+            }, ">-0.3")
             .to('.eye', {
                 y: -45,
                 ease: "power2.out",
@@ -96,87 +111,140 @@ export default {
                 duration: 0.7,
             }, "<")
             .to('.globe', {
-                x: -161,
+                x: '-=161',
                 duration: 0.5,
                 ease: "power1.out",
             }, '>-0.4')
-            // .addLabel("icons", "<")
             .to('.eye', {
-                x: 295,
-                duration: 0.5,
+                x: '+=295',
+                duration: 0.7,
                 ease: "power1.out",
             }, '<0.08')
             .addLabel("icons", "<")
             .to('.star', {
-                x: 32,
-                duration: 0.5,
+                x: '+=32',
+                duration: 0.3,
                 ease: "power1.out",
             }, '<0.08')
             .to('.arrows', {
-                x: -175,
+                x: '-=175',
                 duration: 0.5,
                 ease: "power1.out",
             }, '<0.08')
             .from('.t1a', {
-                x: 60,
+                x: -60,
                 duration: 0.5,
                 ease: "power1.out",
             }, 'icons+=0.05')
             .set('.t1a', { opacity: 1 }, "<")
             .from('.t2b', {
-                x: -150,
+                x: -65,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.05')
+            }, '<0.06')
             .set('.t2b', { opacity: 1 }, "<")
             .from('.t1b', {
                 x: 60,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.05')
+            }, '<0.06')
             .set('.t1b', { opacity: 1 }, "<")
             .from('.t2a', {
-                x: -150,
+                x: -140,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.05')
+            }, '<0.09')
             .set('.t2a', { opacity: 1 }, "<")
             .from('.t3b', {
+                x: 50,
+                duration: 0.5,
+                ease: "power1.out",
+            }, '<0.07')
+            .set('.t3b', { opacity: 1 }, "<")
+            .from('.t4a', {
                 x: -50,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.05')
-            .set('.t3b', { opacity: 1 }, "<")
-            .from('.t4a', {
-                x: 60,
-                duration: 0.5,
-                ease: "power1.out",
-            }, '<0.05')
+            }, '<0.07')
             .set('.t4a', { opacity: 1 }, "<")
             .from('.t3a', {
                 x: -50,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.05')
+            }, '<0.07')
             .set('.t3a', { opacity: 1 }, "<")
             .from('.t4b', {
                 x: 60,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.03')
+            }, '<0.05')
             .set('.t4b', { opacity: 1 }, "<");
 
-        const animDuration = tl.duration();
+        tl.addLabel("endEntry");
 
-        const animScroll = 1350;
+        const pauseDuration = 1;
+        tl.to({}, { duration: pauseDuration });
 
-        const extraPinScroll = 700;
+        const animScroll = 2200;
 
-        const totalPinScroll = animScroll + extraPinScroll;
+        const outPropsA = {
+            // x: -100,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power1.out",
+        }
+        const outPropsB = {
+            // x: -100,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power1.out",
+        }
+        const outPropsIcon = {
+            // x: "-=100",
+            opacity: 0,
+            duration: 0.3,
+            ease: "power1.out",
+        }
 
-        const padDuration = (animDuration / animScroll) * extraPinScroll;
+        tl.to('.t1a', {
+            ...outPropsA, x: '-=100'
+        }, 'endEntry+=1.1')
+        .to('.globe', {
+            ...outPropsIcon, x: '-=100'
+        },'<0.1')
+        .to('.t1b', {
+            ...outPropsB, x: '-=100'
+        },'<0.1')
+        .to('.t2b', {
+            ...outPropsB, x: '+=100'
+        },'<')
+        .to('.eye', {
+            ...outPropsIcon, x: '+=100'
+        },'<0.1')
+        .to('.t2a', {
+            ...outPropsA, x: '+=100'
+        },'<0.1')
+        .to('.t3a', {
+            ...outPropsA, x: '-=100'
+        },'<')
+        .to('.star', {
+            ...outPropsIcon, x: '-=100'
+        },'<0.1')
+        .to('.t3b', {
+            ...outPropsB, x: '-=100'
+        },'<0.1')
+        .to('.t4b', {
+            ...outPropsB, x: '+=100'
+        },'<')
+        .to('.arrows', {
+            ...outPropsIcon, x: '+=100'
+        },'<0.1')
+        .to('.t4a', {
+            ...outPropsA, x: '+=100'
+        },'<0.05')
 
-        tl.to({}, { duration: padDuration });
+        const readingScroll = 1000;
+        const totalPinScroll = animScroll + readingScroll;
 
         ScrollTrigger.create({
             trigger: '#cont',

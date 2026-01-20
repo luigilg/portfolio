@@ -1,11 +1,15 @@
 <template>
     <div class="h-screen w-full flex justify-center items-center relative">
-        <div class="flex flex-col w-full justify-center items-center gabarito font-light text-[9rem] 
+        <div class="flex flex-col w-fit justify-center items-center gabarito font-light text-[9rem] 
                     select-none text-gr hover:font-light transition-[font-weight] z-10 mt-20"
             @mouseenter="onListEnter"
             @mouseleave="onListLeave">
+            <div class="outlined-text funnel font-black text-[64rem] z-[-2] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                :style="{ '--stroke-color': currentStrokeColor }">
+                {{ quantity }}
+            </div>
             <div v-for="(item, key) in items" 
-                :key="key" 
+                :key="key"
                 class="w-full flex justify-center cursor-pointer relative hover:font-black
                 -tracking-[10px] transition-[font-weight, letter-spacing] duration-200 ease-out z-0 hover:z-10
                 active:font-[100] active:scale-90"
@@ -52,17 +56,23 @@ const activeItemKey = ref(null);
 const lastHoveredIndex = ref(null);
 const currentColor = ref(-1);
 
+const quantity = ref(0);
+const tweenQuantity = { value: 0 };
+const currentStrokeColor = ref('rgb(165, 9, 255)');
+
 const items = {
     anim: {
+        count: 24,
         desc: 'ANIMAÇÕES',
         imgs: [
             { src: "/projects/ProCubo/S1.mp4", type: 'video' },
             { src: "/projects/MiniDrinks/LogoAnim.mp4", type: 'video' },
-            { src: "/projects/ANIMAÇÕES/TrilhasDoSaber.mp4", type: 'video' }
+            { src: "/projects/ElasticTypo/1.mp4", type: 'video' }
         ],
         route: '/animations'
     },
     syst: {
+        count: 7,
         desc: 'SITES E APPS',
         imgs: [
             { src: "/projects/Bantads/logo.png", type: 'image' },
@@ -71,6 +81,7 @@ const items = {
         ]
     },
     vids: {
+        count: 17,
         desc: 'VÍDEOS',
         imgs: [
             { src: "/projects/Conversu/logo.png", type: 'image' },
@@ -79,6 +90,7 @@ const items = {
         ]
     },
     desn: {
+        count: 21,
         desc: 'DESIGN',
         imgs: [
             { src: "/projects/Abelino/Logo.jpg", type: 'image' },
@@ -87,6 +99,7 @@ const items = {
         ]
     },
     musc: {
+        count: 44,
         desc: 'MÚSICA',
         route: '/music',
     },
@@ -126,7 +139,27 @@ const onItemEnter = (key) => {
         animateOut(activeItemKey.value, false, exitDirection);
     }
     
-    animateIn(key, colorSequence(), yDirection);
+    
+    const nextColor = colorSequence();
+    currentStrokeColor.value = nextColor;
+
+    animateIn(key, nextColor, yDirection);
+    
+    const targetQty = items[key].count !== undefined ? items[key].count : 0;
+    
+    gsap.to(tweenQuantity, {
+        value: targetQty,
+        duration: 0.6,
+        ease: 'power2.out',
+        onUpdate: () => quantity.value = Math.round(tweenQuantity.value),
+        overwrite: true
+    });
+
+    gsap.to('.outlined-text', {
+        opacity: 0.35,
+        duration: 0.3,
+        overwrite: true
+    });
     
     activeItemKey.value = key;
     lastHoveredIndex.value = newIndex;
@@ -149,10 +182,23 @@ const onListLeave = () => {
         activeItemKey.value = null;
         lastHoveredIndex.value = null;
     }
+
+    gsap.to('.outlined-text', {
+        opacity: 0,
+        duration: 0.3,
+        overwrite: true
+    });
+
+    gsap.to(tweenQuantity, {
+        value: 0, 
+        duration: 0.6,
+        ease: 'power2.out',
+        onUpdate: () => quantity.value = Math.round(tweenQuantity.value),
+        overwrite: true
+    });
 };
 
 const animateIn = (key, color, yDirection) => {
-    // Se não houver imagens, apenas anima o texto e sai da função
     if (!items[key].imgs) {
         gsap.to(`.${key}`, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
         return;
@@ -198,7 +244,6 @@ const animateOut = (key, isFinalLeave = false, yDirection) => {
     const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
     const finalTextColor = isFinalLeave ? '' : '#aaa';
 
-    // Se não houver imagens, apenas anima o texto e sai da função
     if (!items[key].imgs) {
         gsap.to(`.${key}`, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
         return;
@@ -253,5 +298,16 @@ const navigate = async (route) => {
     top: 38%;
     left: 50%;
     transform: translate(-50%, -50%); 
+}
+
+.outlined-text {
+  -webkit-text-fill-color: transparent;
+
+  -webkit-text-stroke-width: 2px; 
+  -webkit-text-stroke-color: var(--stroke-color); 
+
+  opacity: 0;
+
+  color: transparent; 
 }
 </style>
