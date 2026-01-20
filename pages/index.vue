@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative grid place-items-end h-[95vh] overflow-hidden">
+    <div class="relative grid place-items-end h-[95vh]">
       <div class="w-full col-start-1 row-start-1">
         <div class="flex flex-col justify-center items-center gap-10">
           <div class="text-start flex flex-row items-end gap-12 w-full">
@@ -19,11 +19,16 @@
     <div ref="snappyTextContainer" class="invisible">
       <SnappyText />
     </div>
-    <WhatIDo /> 
+      <WhatIDo /> 
+
   </div>
 </template>
 
 <script setup>
+definePageMeta({
+  pageTransition: true,
+});
+
 import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
@@ -243,6 +248,7 @@ onMounted(() => {
 
 <style>
 .gradbar {
+    position: relative;
     --d:120vw;
     color: transparent;
     background-image: repeating-linear-gradient(
@@ -255,6 +261,22 @@ onMounted(() => {
         var(--d));
     background-size: calc(var(--d)/sin(90deg)) 100%;
     animation: sweep-right 5s linear infinite reverse;
+}
+
+.gradbar::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit;
+    background-size: inherit;
+    animation: inherit;
+    filter: blur(25px);
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0.6;
 }
 
 @keyframes sweep-right {

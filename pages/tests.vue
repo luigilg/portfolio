@@ -12,7 +12,12 @@
     <!-- <div class="flex items-center justify-center"> -->
         
     <!-- </div> -->
-    <PageTitleTest />
+    <div class="h-screen">
+        <!-- <ArrowGrid /> -->
+         <LogoAnim />
+    </div>
+    
+    <!-- <PageTitleTest /> -->
 </template>
 
 <script setup>
