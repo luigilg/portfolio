@@ -24,7 +24,7 @@
       MAS O QUE EU SOU?
     </div>
     <StripesWAI  class="-mt-[100px] relative z-20"/>
-    <div class="relative mx-10 -mt-[700px] px-[10rem] z-30">
+    <div class="relative mx-10 -mt-[700px] px-[10rem] z-30 bg-transparent">
       <p ref="introText" class="funnel font-normal text-[2.2rem]">
       Sou um <span class="font-extrabold">generalista criativo</span> com formação em Análise e Desenvolvimento de Sistemas pela UFPR. 
       Trabalho com animação e edição de vídeo, design, composição musical e mais recentemente, desenvolvimento de sites e apps. 
@@ -33,7 +33,7 @@
       Sou autodidata, tenho grande facilidade de aprendizado e adaptação, 
       e sou constantemente motivado a encontrar soluções eficientes e práticas para qualquer situação.</p>
     </div>
-    <GradientStrokeAnim data-speed="clamp(0.5)"/>
+    <GradientStrokeAnim class="-mt-[700px] z-40" data-speed="clamp(0.5)" start="90% 80%"/>
     <WhatIDo  class="scale-[75%]"/> 
   </div>
 </template>
