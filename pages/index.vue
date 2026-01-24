@@ -19,8 +19,22 @@
     <div ref="snappyTextContainer" class="invisible">
       <SnappyText />
     </div>
-      <WhatIDo /> 
-
+    <div class="text-center text-[10rem] gabarito font-extrabold whoAmI relative z-0">
+      <!-- QUEM SOU EU? -->
+      MAS O QUE EU SOU?
+    </div>
+    <StripesWAI  class="-mt-[100px] relative z-20"/>
+    <div class="relative mx-10 -mt-[700px] px-[10rem] z-30">
+      <p ref="introText" class="funnel font-normal text-[2.2rem]">
+      Sou um <span class="font-extrabold">generalista criativo</span> com formação em Análise e Desenvolvimento de Sistemas pela UFPR. 
+      Trabalho com animação e edição de vídeo, design, composição musical e mais recentemente, desenvolvimento de sites e apps. 
+      Tenho experiência prática como Full-Stack, porém prefiro o front-end. 
+      Atuo há uma década fazendo trabalhos freelance e pessoais, de forma profissional. 
+      Sou autodidata, tenho grande facilidade de aprendizado e adaptação, 
+      e sou constantemente motivado a encontrar soluções eficientes e práticas para qualquer situação.</p>
+    </div>
+    <GradientStrokeAnim data-speed="clamp(0.5)"/>
+    <WhatIDo  class="scale-[75%]"/> 
   </div>
 </template>
 
@@ -33,8 +47,9 @@ import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { CustomEase } from 'gsap/CustomEase';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(SplitText, CustomEase);
+gsap.registerPlugin(SplitText, CustomEase, ScrollTrigger);
 
 const luigiRef = ref(null);
 const girardiRef = ref(null);
@@ -42,6 +57,7 @@ const creativeRef = ref(null);
 const devRef = ref(null);
 const isMenuOpen = ref(false);
 const snappyTextContainer = ref(null);
+const introText = ref(null);
 const complete = ref(false);
 const startAltText = ref(false);
 
@@ -242,6 +258,85 @@ onMounted(() => {
         }
       });
     }
+  }
+  const whoAmISplit = new SplitText('.whoAmI', { type: 'chars' }); 
+
+  const tlWhoAmI = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.whoAmI',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  ScrollTrigger.create({
+    trigger: '.whoAmI',
+    start: 'center center',
+    end: '+=2200',
+    pin: true,
+    pinSpacing: false, 
+  });
+
+
+  tlWhoAmI.from(whoAmISplit.chars, {
+    opacity: 0,
+    x: 200,
+    duration: 0.7,
+    ease: 'elastic.out(1.10,0.8)',
+    stagger: {
+      from: 'start',
+      each: 0.05
+    },
+    onStart: () => {
+      gsap.set('.whoAmI', { visibility: 'visible' });
+    }
+  })
+
+  if (introText.value) {
+      const splitIntro = new SplitText(introText.value, { type: 'words' });
+      
+      gsap.set(splitIntro.words, { autoAlpha: 0, color: '#32A1B8' });
+
+      const tlIntro = gsap.timeline({
+          scrollTrigger: {
+              trigger: introText.value,
+              start: 'center center', 
+              end: '+=2300', 
+              scrub: true, 
+              pin: true,
+          }
+      });
+      
+      splitIntro.words.forEach((word, i) => {
+          
+          tlIntro.to(word, {
+              autoAlpha: 1,
+              duration: 0.01, 
+              ease: 'none',
+              onStart: () => {
+                  // gsap.set(word, { filter: 'blur(4px)' });
+
+                  gsap.to(word, {
+                      keyframes: [
+                          // { filter: 'blur(0px)', duration: 0.2 }, 
+                          { color: '#4F52BE', duration: 0.4 },
+                          { color: '#A23DD4', duration: 0.2 },
+                          { color: '#282E32', duration: 0.2 }
+                      ],
+                      duration: 0.45,   
+                      ease: 'none',
+                      overwrite: 'auto'
+                  });
+              },
+              onReverseComplete: () => {
+                  gsap.set(word, { color: '#32A1B8', filter: 'blur(0px)', overwrite: 'auto' });
+              }
+          }, i * 0.2); 
+      });
+
+      const animDuration = tlIntro.duration();
+      const pauseDuration = animDuration * (1000 / 1300);
+      tlIntro.to({}, { duration: pauseDuration });
   }
 });
 </script>

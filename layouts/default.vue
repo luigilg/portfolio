@@ -11,11 +11,13 @@ import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import { CustomEase } from 'gsap/CustomEase';
 
 const mainWrapper = ref(null);
 const mainContent = ref(null);
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, CustomEase);
+
 
 const pageTransition = {
   name: 'page',
@@ -46,7 +48,8 @@ onMounted(() => {
     ScrollSmoother.create({
       wrapper: mainWrapper.value,
       content: mainContent.value,
-      smooth: 0.7,
+      smooth: 1,
+      ease: CustomEase.create("expow", "M0,0 C0.038,0.569 0.053,0.748 0.169,0.857 0.283,0.964 0.366,1 1,1 "),
       effects: true,
       normalizeScroll: true,
     });
