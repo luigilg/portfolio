@@ -4,10 +4,10 @@
                     select-none text-gr hover:font-light transition-[font-weight] z-10 mt-20"
             @mouseenter="onListEnter"
             @mouseleave="onListLeave">
-            <div class="outlined-text funnel font-black text-[64rem] z-[-2] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            <!-- <div class="outlined-text funnel font-black text-[64rem] z-[-2] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                 :style="{ '--stroke-color': currentStrokeColor }">
                 {{ quantity }}
-            </div>
+            </div> -->
             <div v-for="(item, key) in items" 
                 :key="key"
                 class="w-full flex justify-center cursor-pointer relative hover:font-black
@@ -65,9 +65,12 @@ const items = {
         count: 24,
         desc: 'ANIMAÇÕES',
         imgs: [
-            { src: "/projects/ProCubo/S1.mp4", type: 'video' },
-            { src: "/projects/MiniDrinks/LogoAnim.mp4", type: 'video' },
-            { src: "/projects/ElasticTypo/1.mp4", type: 'video' }
+            // { src: "/projects/ProCubo/S1.mp4", type: 'video' },
+            // { src: "/projects/MiniDrinks/LogoAnim.mp4", type: 'video' },
+            // { src: "/projects/ElasticTypo/1.mp4", type: 'video' }
+            { src: "/projects/Conversu/logo.png", type: 'image' },
+            { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
+            { src: "/projects/Engepro/logo.jpg", type: 'image' }
         ],
         route: '/animations'
     },
