@@ -41,16 +41,16 @@
                 </div>
             </div>
             <div class="flex mb-6">
-                <h1 class="text-nowrap txt t1a">Eu crio</h1> <h1 class="text-nowrap ml-[125px] txt t1b">experiências digitais</h1>
+                <h1 class="text-nowrap font-black txt t1a">Eu crio</h1> <h1 class="text-nowrap font-black ml-[125px] txt t1b">experiências digitais</h1>
             </div>
             <div class="flex mb-6">
-                <h1 class="text-nowrap txt t2a">excepcionais,  com </h1><h1 class="text-nowrap ml-[145px] txt t2b opacity-0"> foco em</h1>
+                <h1 class="text-nowrap font-black txt t2a">excepcionais,  com </h1><h1 class="text-nowrap font-black ml-[145px] txt t2b opacity-0"> foco em</h1>
             </div>
             <div class="flex mb-6">
-                <h1 class="text-nowrap txt t3a">entregar muita </h1><h1 class="text-nowrap ml-[120px] txt t3b">qualidade</h1>
+                <h1 class="text-nowrap font-black txt t3a">entregar muita </h1><h1 class="text-nowrap font-black ml-[120px] txt t3b">qualidade</h1>
             </div>
             <div class="flex">
-                <h1 class="text-nowrap txt t4a">e causar </h1><h1 class="text-nowrap ml-[120px] txt t4b">impacto.</h1>
+                <h1 class="text-nowrap font-black txt t4a">e causar </h1><h1 class="text-nowrap font-black ml-[120px] txt t4b">impacto.</h1>
             </div>
         </div>
         <div class="h-[3000px]"></div>
@@ -94,14 +94,14 @@ export default {
             .to('.globe', {
                 y: -145,
                 ease: "sine.out",
-                duration: 0.2,
+                duration: 0.3,
             }, ">")
             .addLabel("globeY", ">")
             .to('.eye', {
                 y: -45,
                 ease: "sine.out",
                 duration: 0.3,
-            }, ">")
+            }, ">-0.2")
             .addLabel("eyeY", ">")
             .to('.star, .arrows', {
                 y: 55,
@@ -117,9 +117,9 @@ export default {
             .addLabel("arrowsY", ">")
             .to('.globe', {
                 x: '-=487',
-                duration: 0.3,
+                duration: 0.62,
                 ease: "power1.out",
-            }, 'globeY')
+            }, 'globeY-=0.04')
             .to('.eye', {
                 x: '+=306',
                 duration: 0.5,
@@ -137,22 +137,22 @@ export default {
                 ease: "power1.out",
             }, '<0.2')
             .from('.t1a', {
-                x: -60,
+                x: -70,
                 duration: 0.5,
                 ease: "power1.out",
             }, 'icons+=0.05')
             .set('.t1a', { opacity: 1 }, "<")
             .from('.t2b', {
-                x: -65,
+                x: 70,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.06')
+            }, '<0.1')
             .set('.t2b', { opacity: 1 }, "<")
             .from('.t1b', {
-                x: 60,
+                x: 120,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.06')
+            }, '<0.03')
             .set('.t1b', { opacity: 1 }, "<")
             .from('.t2a', {
                 x: -140,
@@ -167,10 +167,10 @@ export default {
             }, '<0.07')
             .set('.t3b', { opacity: 1 }, "<")
             .from('.t4a', {
-                x: -50,
-                duration: 0.5,
+                x: -150,
+                duration: 0.4,
                 ease: "power1.out",
-            }, '<0.07')
+            }, '<0.02')
             .set('.t4a', { opacity: 1 }, "<")
             .from('.t3a', {
                 x: -50,
@@ -182,7 +182,7 @@ export default {
                 x: 60,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.05')
+            }, '<0.1')
             .set('.t4b', { opacity: 1 }, "<");
 
         tl.addLabel("endEntry");
@@ -213,7 +213,7 @@ export default {
 
         tl.to('.t1a', {
             ...outPropsA, x: '-=100'
-        }, 'endEntry+=1.1')
+        }, 'endEntry+=0.3')
         .to('.globe', {
             ...outPropsIcon, x: '-=100'
         },'<0.1')
@@ -247,6 +247,7 @@ export default {
         .to('.t4a', {
             ...outPropsA, x: '+=100'
         },'<0.05')
+        .to({}, { duration: 0.8 });
 
         const readingScroll = 1000;
         const totalPinScroll = animScroll + readingScroll;

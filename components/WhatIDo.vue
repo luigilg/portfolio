@@ -16,7 +16,7 @@
                 @click="navigate(item.route)"
                 @mouseenter="onItemEnter(key)">
                 <p :class="key" class="wid-txt leading-none">{{ item.desc }}</p>
-                <ClientOnly>
+                <!-- <ClientOnly>
                     <div v-if="item.imgs != null" :class="key + '-imgs image-group z-20 opacity-0'">
                         <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
                             <video
@@ -39,7 +39,7 @@
                             >
                         </div>
                     </div>
-                </ClientOnly>
+                </ClientOnly> -->
             </div>
         </div>
     </div>

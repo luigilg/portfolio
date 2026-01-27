@@ -1,6 +1,6 @@
 <template>
   <div class="bg-b-light" id="smooth-wrapper" ref="mainWrapper">
-    <div id="smooth-content" class="bg-b-light text-b-dark min-h-screen p-3" ref="mainContent">
+    <div id="smooth-content" class="bg-b-light text-b-dark min-h-screen py-3 px-0" ref="mainContent">
       <NuxtPage :transition="pageTransition" />
     </div>
   </div>
