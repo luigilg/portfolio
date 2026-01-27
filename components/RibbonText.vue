@@ -9,7 +9,7 @@
             <textPath 
               ref="textPathRef" 
               href="#curve" 
-              class="text-[8rem] font-bold uppercase fill-b-light gabarito"
+              class="text-[8rem] font-black uppercase fill-b-light gabarito"
               startOffset="-50%"
             >
              {{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}{{ dot }}{{ text }}

@@ -34,12 +34,13 @@
       e sou constantemente motivado a encontrar soluções eficientes e práticas para qualquer situação.</p>
     </div>
     <!-- <GradientStrokeAnimS ref="gradientStrokeRef" class="-mt-[20px] z-10 -mb-[510px]" :class="{ 'invisible': !showStroke }" data-speed="clamp(0.5)" start="20% 85%" end="100% 90%"/> -->
-    <GradientStrokeAnim ref="gradientStrokeRef" data-lag="0.5" class="-mt-[20px] z-10 -mb-[510px]" :class="{ 'invisible': !showStroke }" start="20% 95%" end="100% 95%"/>
-    <div class="text-center mt-[550px] -mb-[200px] text-[10rem] gabarito font-extrabold worksIdid relative z-0">
+    <GradientStrokeAnim ref="gradientStrokeRef" data-lag="0.4" class="-mt-[20px] z-10 -mb-[510px]" :class="{ 'invisible': !showStroke }" start="20% 95%" end="100% 95%"/>
+    <div data-lag="0.4" class="text-center mt-[550px] -mb-[200px] text-[10rem] gabarito font-extrabold worksIdid relative z-0">
       TRABALHOS QUE JÁ FIZ
     </div>
-    <WhatIDo ref="whatIDoRef" class="scale-[75%] z-[2]"/> 
-    <RibbonText text=" <TECH STACK/> "  class="-mt-[500px]" />
+    <WhatIDo data-lag="0.4" ref="whatIDoRef" class="scale-[75%] z-[2]"/> 
+    <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" />
+    <div class="h-screen"></div>
   </div>
 </template>
 
@@ -395,7 +396,7 @@ onMounted(() => {
     ScrollTrigger.create({
       trigger: whatIDoRef.value.$el,
       start: "center center",
-      end: "+=500",
+      end: "+=700",
       pin: true,
       pinSpacing: true,
     });

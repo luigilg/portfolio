@@ -10,13 +10,13 @@
             </div> -->
             <div v-for="(item, key) in items" 
                 :key="key"
-                class="w-full flex justify-center cursor-pointer relative hover:font-black
+                class="w-full flex py-2 justify-center cursor-pointer relative hover:font-black
                 -tracking-[10px] transition-[font-weight, letter-spacing] duration-200 ease-out z-0 hover:z-10
                 active:font-[100] active:scale-90"
                 @click="navigate(item.route)"
                 @mouseenter="onItemEnter(key)">
                 <p :class="key" class="wid-txt leading-none">{{ item.desc }}</p>
-                <!-- <ClientOnly>
+                <ClientOnly>
                     <div v-if="item.imgs != null" :class="key + '-imgs image-group z-20 opacity-0'">
                         <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
                             <video
@@ -39,7 +39,7 @@
                             >
                         </div>
                     </div>
-                </ClientOnly> -->
+                </ClientOnly>
             </div>
         </div>
     </div>
