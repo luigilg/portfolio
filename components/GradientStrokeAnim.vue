@@ -1,11 +1,14 @@
 <template class="bg-transparent">
-    <div ref="wrapperRef" class="w-screen relative left-1/2 -translate-x-1/2 bg-transparent invisible">
-        <svg ref="svgRef" width="100%" height="auto" viewBox="0 0 1920 1531" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path ref="pathRef" d="M-87 4.46436C-69.8333 87.2977 30.4 276.064 294 368.464C623.5 483.964 995.5 500.964 1094 287.464C1192.5 73.9644 837.492 14.1617 814 221.464C788 450.9 1100.65 716.166 1501.5 856.464C1931.5 1006.96 2078 1263.13 2105 1527.96" stroke="transparent" stroke-width="44" stroke-linecap="round" stroke-dasharray="10000" stroke-dashoffset="10000"/>
+    <div ref="wrapperRef" class="w-screen relative left-1/2 -translate-x-1/2 bg-transparent">
+        <svg ref="svgRef" width="100%" height="auto" viewBox="0 0 2165 739" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path ref="pathRef" d="M0.78833 284.821C174.955 293.987 678.688 262.128 824.288 149.328C1006.29 8.32834 858.288 -23.6717 762.788 62.8283C667.288 149.328 713.288 441.328 585.788 532.328C458.288 623.328 401.788 486.829 553.788 441.328C720.288 391.488 999.788 426.328 1206.29 362.828C1412.79 299.328 1496.79 224.828 1496.79 124.328C1496.79 44.3451 1396.79 40.8281 1306.29 73.3281C1215.79 105.828 1101.29 206.828 1143.79 291.828C1186.29 376.828 1368.64 327.328 1454.08 233.328C1377.79 307.328 1351.29 615.328 1167.29 703.828C983.288 792.328 1050.79 562.829 1206.29 462.828C1361.79 362.828 1816.79 257.821 2164.29 248.821" 
+                stroke="transparent" stroke-width="30" stroke-linecap="round" stroke-dasharray="10000" stroke-dashoffset="10000"/>
             <defs>
-                <linearGradient id="paint0_linear_173_3" x1="1975" y1="1428.46" x2="-86.9999" y2="24.9643" gradientUnits="userSpaceOnUse">
+                <linearGradient id="paint0_linear_211_2" x1="2128.8" y1="1179.42" x2="223.585" y2="-360.437" gradientUnits="userSpaceOnUse">
                     <stop stop-color="#21A9C5"/>
-                    <stop offset="0.437847" stop-color="#4F52BE"/>
+                    <stop offset="0.2" stop-color="#21A9C5"/>
+                    <stop offset="0.543269" stop-color="#4F52BE"/>
+                    <stop offset="0.8" stop-color="#A23DD4"/>
                     <stop offset="1" stop-color="#A23DD4"/>
                 </linearGradient>
             </defs>
@@ -39,17 +42,12 @@ onMounted(() => {
     if (pathRef.value && svgRef.value && wrapperRef.value) {
         const length = pathRef.value.getTotalLength();
 
-        // 1. Set dashes to hide the line geometry.
-        // 2. CRITICAL: Switch stroke from 'transparent' (HTML) to Gradient (JS) 
-        //    ONLY AFTER geometry is hidden.
         gsap.set(pathRef.value, {
             strokeDasharray: length,
             strokeDashoffset: length,
-            stroke: 'url(#paint0_linear_173_3)'
+            stroke: 'url(#paint0_linear_211_2)'
         });
         
-        gsap.to(wrapperRef.value, { autoAlpha: 1, duration: 0.5 });
-
         gsap.fromTo(pathRef.value, 
             { strokeDashoffset: length },
             {

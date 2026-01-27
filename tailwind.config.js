@@ -12,6 +12,7 @@ export default {
         'b': {
           light: '#E4E1D5',
           dark: '#282E32',
+          dark2: '#44494c',
         },
         'danger': '#EA3939',
         'danger-light': '#FF5858',
