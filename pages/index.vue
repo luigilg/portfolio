@@ -19,13 +19,10 @@
     <div ref="snappyTextContainer" class="invisible">
       <SnappyTextBKP />
     </div>
-    <div class="text-center text-[10rem] gabarito font-extrabold whoAmI relative z-0">
-      <!-- QUEM SOU EU? -->
-      MAS O QUE EU SOU?
-    </div>
-    <StripesWAI  class="-mt-[100px] relative z-20"/>
-    <div class="relative mx-10 -mt-[800px] px-[10rem] z-30 bg-transparent">
-      <p ref="introText" class="funnel font-normal text-[2.2rem] text-b-dark2">
+    <Title1 class="whoAmI relative z-0 -mt-[400px]" text="MAS O QUE EU SOU?"/>
+    <StripesWAI  class="-mt-[100px] relative z-[1]"/>
+    <div class="relative mx-10 -mt-[1600px] px-[10rem] z-[2] bg-transparent">
+      <p ref="introText" data-lag="0.4" class="funnel font-normal text-[2.2rem] text-b-dark">
       Sou um <span class="font-extrabold text-pu">generalista criativo</span> com formação em Análise e Desenvolvimento de Sistemas pela UFPR. 
       Trabalho com animação e edição de vídeo, design, composição musical e mais recentemente, desenvolvimento de sites e apps. 
       Tenho experiência prática como Full-Stack, porém prefiro o front-end. 
@@ -34,12 +31,22 @@
       e sou constantemente motivado a encontrar soluções eficientes e práticas para qualquer situação.</p>
     </div>
     <!-- <GradientStrokeAnimS ref="gradientStrokeRef" class="-mt-[20px] z-10 -mb-[510px]" :class="{ 'invisible': !showStroke }" data-speed="clamp(0.5)" start="20% 85%" end="100% 90%"/> -->
-    <GradientStrokeAnim ref="gradientStrokeRef" data-lag="0.4" class="-mt-[20px] z-10 -mb-[510px]" :class="{ 'invisible': !showStroke }" start="20% 95%" end="100% 95%"/>
-    <div data-lag="0.4" class="text-center mt-[550px] -mb-[200px] text-[10rem] gabarito font-extrabold worksIdid relative z-0">
-      TRABALHOS QUE JÁ FIZ
-    </div>
-    <WhatIDo data-lag="0.4" ref="whatIDoRef" class="scale-[75%] z-[2]"/> 
-    <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" />
+    <GradientStrokeAnim ref="gradientStrokeRef" data-lag="0.4" data-speed="clamp(0.7)" class="mt-[20px] z-[3] -mb-[450px]" :class="{ 'invisible': !showStroke }" start="20% 95%" end="100% 95%"/>
+    <Title1 
+        data-lag="0.4" 
+        class="mt-[650px] -mb-[50px] worksIdid relative z-[4]"
+        text="TRABALHOS QUE JÁ FIZ"
+    />
+    <WhatIDo data-lag="0.4" ref="whatIDoRef" class="scale-[75%] z-[5]"/> 
+    <Title1 
+        data-lag="0.4" 
+        class=""
+        text="TECH STACK"
+    />
+     <!-- <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" /> -->
+     <div ref="techStackRef" data-lag="0.4" class="w-full flex justify-center items-center mt-5">
+       <TechStack/>
+      </div>
     <div class="h-screen"></div>
   </div>
 </template>
@@ -69,6 +76,7 @@ const startAltText = ref(false);
 const gradientStrokeRef = ref(null);
 const showStroke = ref(false);
 const whatIDoRef = ref(null);
+const techStackRef = ref(null);
 
 const creativeDevAnim = () => {
   if (!creativeRef.value || !devRef.value) return;
@@ -269,14 +277,7 @@ onMounted(() => {
     }
   }
 
-  const whoAmISplit = new SplitText('.whoAmI', { type: 'chars' }); 
-  const tlWhoAmI = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.whoAmI',
-      start: 'top 80%',
-      toggleActions: 'play none none reverse'
-    }
-  });
+
   ScrollTrigger.create({
     trigger: '.whoAmI',
     start: 'center center',
@@ -284,41 +285,7 @@ onMounted(() => {
     pin: true,
     pinSpacing: false, 
   });
-  tlWhoAmI.from(whoAmISplit.chars, {
-    opacity: 0,
-    x: 200,
-    duration: 0.7,
-    ease: 'elastic.out(1.10,0.8)',
-    stagger: {
-      from: 'start',
-      each: 0.05
-    },
-    onStart: () => {
-      gsap.set('.whoAmI', { visibility: 'visible' });
-    }
-  })
-  
-  const worksIdidSplit = new SplitText('.worksIdid', { type: 'chars' }); 
-  const tlworksIdid = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.worksIdid',
-      start: 'top 80%',
-      toggleActions: 'play none none reverse'
-    }
-  });
-  tlworksIdid.from(worksIdidSplit.chars, {
-    opacity: 0,
-    x: 200,
-    duration: 0.7,
-    ease: 'elastic.out(1.10,0.8)',
-    stagger: {
-      from: 'start',
-      each: 0.05
-    },
-    onStart: () => {
-      gsap.set('.worksIdid', { visibility: 'visible' });
-    }
-  })
+
 
   if (introText.value) {
       const splitIntro = new SplitText(introText.value, { type: 'words' });
@@ -329,7 +296,7 @@ onMounted(() => {
           scrollTrigger: {
               trigger: introText.value,
               start: 'center center', 
-              end: '+=2000', 
+              end: '+=2500', 
               scrub: true, 
               pin: true,
           }
@@ -342,14 +309,11 @@ onMounted(() => {
               duration: 0.01, 
               ease: 'none',
               onStart: () => {
-                  // gsap.set(word, { filter: 'blur(4px)' });
-
                   gsap.to(word, {
                       keyframes: [
-                          // { filter: 'blur(0px)', duration: 0.2 }, 
                           { color: '#4F52BE', duration: 0.4 },
                           { color: '#A23DD4', duration: 0.2 },
-                          { color: '#44494c', duration: 0.2 }
+                          { color: '#282E32', duration: 0.2 }
                       ],
                       duration: 0.45,   
                       ease: 'none',
@@ -359,7 +323,7 @@ onMounted(() => {
               onReverseComplete: () => {
                   gsap.set(word, { color: '#32A1B8', filter: 'blur(0px)', overwrite: 'auto' });
               }
-          }, i * 0.2); 
+          }, 8 + i * 0.2); 
       });
 
       const animDuration = tlIntro.duration();
@@ -392,6 +356,8 @@ onMounted(() => {
     });
   }
 
+
+
   if (whatIDoRef.value) {
     ScrollTrigger.create({
       trigger: whatIDoRef.value.$el,
@@ -400,6 +366,17 @@ onMounted(() => {
       pin: true,
       pinSpacing: true,
     });
+  }
+
+  if (techStackRef.value) {
+      ScrollTrigger.create({
+        trigger: techStackRef.value,
+        start: "center center",
+        end: "+=600",
+        pin: true,
+        pinSpacing: true,
+        pinReparent: true
+      });
   }
 });
 </script>
@@ -449,5 +426,9 @@ h1 {
 }
 .animated-text {
     font-variation-settings: 'wght' var(--wght);
+}
+
+.logo-white{
+  filter: brightness(0) invert(1);
 }
 </style>
