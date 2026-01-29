@@ -81,7 +81,8 @@ const items = {
             { src: "/projects/Bantads/logo.png", type: 'image' },
             { src: "/projects/Gasto/logo.png", type: 'image' },
             { src: "/projects/Nutriplan/logo.png", type: 'image' }
-        ]
+        ],
+        route: '/dev'
     },
     vids: {
         count: 17,
@@ -90,7 +91,8 @@ const items = {
             { src: "/projects/Conversu/logo.png", type: 'image' },
             { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
             { src: "/projects/Engepro/logo.jpg", type: 'image' }
-        ]
+        ],
+        route: '/videos'
     },
     desn: {
         count: 21,
@@ -99,7 +101,8 @@ const items = {
             { src: "/projects/Abelino/Logo.jpg", type: 'image' },
             { src: "/projects/Squirrel/horizontal1.jpg", type: 'image' },
             { src: "/projects/Nutriplan/logo.png", type: 'image' }
-        ]
+        ],
+        route: '/designs'
     },
     musc: {
         count: 44,

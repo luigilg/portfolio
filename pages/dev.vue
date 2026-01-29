@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <Title1 text="ANIMAÇÕES" :delay="0.3" class="relative z-20 leading-none" />
+        <Title1 text="DEV" :delay="0.3" class="relative z-20 leading-none" />
 
         
         <div ref="scrollContainer" class="flex w-full max-w-[90%] mt-10 relative justify-between">
@@ -129,9 +129,9 @@ watch(activeItemIndex, () => {
 
 
 const items = projects
-    .filter(p => p.categories.includes('animation'))
+    .filter(p => p.categories.includes('dev'))
     .map(p => {
-        const preview = p.previews?.animation || p.preview;
+        const preview = p.previews?.dev || p.preview;
         return {
             id: p.id,
             name: p.title,

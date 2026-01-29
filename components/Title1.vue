@@ -14,7 +14,8 @@ const props = defineProps({
     text: {
         type: String,
         required: true
-    }
+    },
+    delay: Number,
 });
 
 const titleRef = ref(null);
@@ -40,6 +41,7 @@ onMounted(() => {
 
         tl.from(chars, {
             opacity: 0,
+            delay: props.delay ? props.delay : 0,
             x: 200,
             duration: 0.7,
             ease: 'elastic.out(1.10,0.8)',

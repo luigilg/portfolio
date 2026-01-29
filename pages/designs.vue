@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <Title1 text="ANIMAÇÕES" :delay="0.3" class="relative z-20 leading-none" />
+        <Title1 text="DESIGNS" :delay="0.3" class="relative z-20 leading-none" />
 
         
         <div ref="scrollContainer" class="flex w-full max-w-[90%] mt-10 relative justify-between">
@@ -57,8 +57,11 @@
                     class="w-full h-[600px] flex items-center justify-center pointer-events-none"
                 >
                     <div 
-                        class="preview-content max-w-full rounded-xl transition-opacity duration-300 overflow-hidden relative shadow-2xl"
-                        :class="(activeItemIndex !== null && contentReady) ? 'opacity-100' : 'opacity-0'"
+                        class="preview-content max-w-full transition-opacity duration-300 relative"
+                        :class="[
+                            (activeItemIndex !== null && contentReady) ? 'opacity-100' : 'opacity-0',
+                            (activeItemIndex !== null && items[activeItemIndex].transparent) ? '' : 'shadow-2xl rounded-xl overflow-hidden'
+                        ]"
                         :style="{ backgroundColor: 'transparent' }"
                     >
                         <template v-if="activeItemIndex !== null && items[activeItemIndex].src">
@@ -74,7 +77,7 @@
                                 v-else 
                                 :src="resolvePath(items[activeItemIndex].src)" 
                                 :key="`img-${activeItemIndex}`"
-                                class="w-full h-auto block"
+                                class="w-full h-auto block max-h-[600px]"
                                 @load="onMediaLoaded"
                              />
                         </template>
@@ -129,16 +132,17 @@ watch(activeItemIndex, () => {
 
 
 const items = projects
-    .filter(p => p.categories.includes('animation'))
+    .filter(p => p.categories.includes('design'))
     .map(p => {
-        const preview = p.previews?.animation || p.preview;
+        const preview = p.previews?.design || p.preview;
         return {
             id: p.id,
             name: p.title,
             src: `../public${preview.src}`, 
             link: p.hasPage,
             speed: preview.speed,
-            start: preview.start
+            start: preview.start,
+            transparent: preview.transparent
         };
     });
 

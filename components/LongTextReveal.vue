@@ -1,13 +1,13 @@
 <template>
     <div class="reveal-container w-full">
-        <p ref="textElement" class="invisible hikasami font-semibold text-2xl" :class="'text-' + position">
+        <p ref="textElement" class="invisible funnel font-normal text-2xl" :class="'text-' + position">
             {{ texto }}
         </p>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,21 +21,28 @@ const props = defineProps({
 });
 
 const textElement = ref(null);
+let ctx;
 
 onMounted(() => {
     if (process.client) {
         gsap.registerPlugin(SplitText, ScrollTrigger);
 
-        gsap.to(textElement.value, {
-            autoAlpha: 1, duration: 0, onComplete: () => {
-                const split = new SplitText(textElement.value, {
+        // Small delay to ensure layout is settled before splitting
+        setTimeout(() => {
+             ctx = gsap.context(() => {
+                gsap.set(textElement.value, { autoAlpha: 1 });
+
+                const splitChild = new SplitText(textElement.value, {
                     type: 'lines',
                     linesClass: 'line-child' 
                 });
 
-                new SplitText(textElement.value, { type: 'lines', linesClass: 'line-parent' });
+                const splitParent = new SplitText(textElement.value, { 
+                    type: 'lines', 
+                    linesClass: 'line-parent' 
+                });
 
-                gsap.from(split.lines, {
+                gsap.from(splitChild.lines, {
                     yPercent: 100,
                     ease: 'expo.out',
                     stagger: 0.1,
@@ -45,9 +52,13 @@ onMounted(() => {
                         start: 'top 85%', 
                     }
                 });
-            }
-        });
+            }, textElement.value);
+        }, 200);
     }
+});
+
+onUnmounted(() => {
+    if (ctx) ctx.revert();
 });
 </script>
 

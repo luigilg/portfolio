@@ -41,7 +41,7 @@
     <Title1 
         data-lag="0.4" 
         class=""
-        text="TECH STACK"
+        text="LUIGI'S TECH STACK"
     />
      <!-- <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" /> -->
      <div ref="techStackRef" data-lag="0.4" class="w-full flex justify-center items-center mt-5">

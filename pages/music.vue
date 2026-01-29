@@ -32,7 +32,7 @@
                  <div class="w-[1px] bg-b-dark/10 mx-4"></div>
                  <div class="flex flex-col items-center">
                     <span class="text-5xl gabarito font-bold text-cy">9</span>
-                    <span class="text-sm font-medium uppercase tracking-widest opacity-60">Publicadas</span>
+                    <span class="text-sm font-medium uppercase tracking-widest opacity-60">Publicações</span>
                  </div>
             </div>
         </div>
@@ -62,5 +62,5 @@ definePageMeta({
 
 const iframeSrc = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1090480555&color=%23A23DD4&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
 
-const texto1 = 'Comecei a compor músicas aos 14 anos de idade. Hoje, com 24 anos, tenho dezenas de composições prontas, e mais de 150 rascunhos de músicas. Dentre os estilos musicais que mais produzi, estão o orquestral, o eletrônico e o híbrido entre ambos, mas também já compus músicas em estilo voz e violão. Comecei com as eletrônicas e desenvolvi uma paixão imensa por trilhas sonoras cinematográficas. Todas as músicas que decidi publicar estão disponíveis no SoundCloud.'
+const texto1 = 'Comecei a compor músicas aos 14 anos de idade. Hoje, com 24 anos, tenho dezenas de composições prontas, e mais de 150 rascunhos de músicas. Dentre os estilos musicais que mais produzi, estão o orquestral, o eletrônico e o híbrido entre ambos, mas também já compus músicas em estilo voz e violão. Comecei com as eletrônicas e desenvolvi uma paixão imensa por trilhas sonoras cinematográficas. Em 2017 participei do IV Concurso Nacional de Composição Música Hoje, para composições orquestrais, e apesar da minha composição não ter sido uma das premiadas, fiquei muito contente com o desafio de criar uma composição mais longa. Todas as músicas que decidi publicar estão disponíveis no SoundCloud.'
 </script>
