@@ -46,8 +46,10 @@
      <!-- <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" /> -->
      <div ref="techStackRef" data-lag="0.4" class="w-full flex justify-center items-center mt-5">
        <TechStack/>
-      </div>
-    <div class="h-screen"></div>
+      </div> 
+      <!-- <RibbonText data-lag="0.4" text="OI" ball class="-mt-[300px]" /> -->
+      <Footer1 class="mt-20" data-lag="0.4"/>
+    <!-- <div class="h-screen"></div> -->
   </div>
 </template>
 
@@ -116,11 +118,11 @@ onMounted(() => {
   const saveOriginalCharData = () => {
     if (!allChars.length) return;
 
-    gsap.set(allChars, { fontVariationSettings: "'wght' 900", textAlign: 'center' });
+    // gsap.set(allChars, { fontVariationSettings: "'wght' 900", textAlign: 'center' });
 
     charPositions = allChars.map(char => {
-      const width = char.getBoundingClientRect().width;
-      gsap.set(char, { width: width });
+      // const width = char.getBoundingClientRect().width;
+      // gsap.set(char, { width: width });
 
       const rect = char.getBoundingClientRect();
       return {
@@ -131,7 +133,7 @@ onMounted(() => {
       };
     });
 
-    gsap.set(allChars, { clearProps: "fontVariationSettings", '--wght': 900 });
+    // gsap.set(allChars, { clearProps: "fontVariationSettings", '--wght': 900 });
   };
 
   const updateCharPositions = () => {
@@ -213,8 +215,8 @@ onMounted(() => {
     const setupProximityAnimation = () => {
       const maxDistance = 300;
       const proximityColorEffectRadius = 270;
-      const minWeight = 100;
-      const maxWeight = 900;
+      // const minWeight = 100;
+      // const maxWeight = 900;
       
       const proximityLoop = () => {
         const mouseX = mousePos.x;
@@ -226,10 +228,10 @@ onMounted(() => {
           const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
           
           const newWeight = gsap.utils.mapRange(0, maxDistance, minWeight, maxWeight, distance);
-          const clampedWeight = gsap.utils.clamp(minWeight, maxWeight, newWeight);
+          // const clampedWeight = gsap.utils.clamp(minWeight, maxWeight, newWeight);
 
           gsap.to(pos.el, {
-            '--wght': clampedWeight,
+            // '--wght': clampedWeight,
             duration: 0.4,
             ease: 'power1.out',
             overwrite: 'auto'

@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <Title1 text="DEV" :delay="0.3" class="relative z-20 leading-none" />
+        <Title1 text="SITES E APPS" :delay="0.3" class="relative z-20 leading-none" />
 
         
         <div ref="scrollContainer" class="flex w-full max-w-[90%] mt-10 relative justify-between">
@@ -34,7 +34,7 @@
                         :fill="activeColor"/>
                     </svg> -->
                     <div 
-                        :class="[`item-text-${index}`, activeItemIndex === index ? 'font-black' : 'font-bold'], [item.link ? 'group-active:font-[100]' : '']"
+                        :class="[`item-text-${index}`, visualActiveIndex === index ? 'font-black' : 'font-bold'], [item.link ? 'group-active:font-[100]' : '']"
                         class="text-[2.6em] select-none text-nowrap leading-none flex items-center w-fit relative uppercase gabarito text-[#B0B0B0] origin-left transition-[font-weight] duration-200 ease-out "
                     >
                         {{ item.name }}
@@ -191,14 +191,16 @@ const colorSequence = () => {
     return colors[currentColorIndex.value];
 };
 
+let hoverTimeout = null;
+const visualActiveIndex = ref(null);
+
 const onItemEnter = (index) => {
-    if (activeItemIndex.value === index) return;
-
-    if (activeItemIndex.value !== null) {
-        animateOut(activeItemIndex.value);
+    if (visualActiveIndex.value === index) return;
+    
+    if (visualActiveIndex.value !== null) {
+        animateOut(visualActiveIndex.value);
     }
-
-    activeItemIndex.value = index;
+    visualActiveIndex.value = index;
     const nextColor = colorSequence();
     activeColor.value = nextColor;
 
@@ -225,6 +227,12 @@ const onItemEnter = (index) => {
         ease: 'fast', 
         overwrite: true 
     });
+
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    
+    hoverTimeout = setTimeout(() => {
+        activeItemIndex.value = index;
+    }, 20); 
 };
 
 const onItemDown = (index) => {
@@ -253,10 +261,13 @@ const onItemUp = (index) => {
 };
 
 const onListLeave = () => {
-    if (activeItemIndex.value !== null) {
-        animateOut(activeItemIndex.value);
-        activeItemIndex.value = null;
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    
+    if (visualActiveIndex.value !== null) {
+        animateOut(visualActiveIndex.value);
+        visualActiveIndex.value = null;
     }
+    activeItemIndex.value = null;
 };
 
 const animateOut = (index) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-b-light" id="smooth-wrapper" ref="mainWrapper">
-    <div id="smooth-content" class="bg-b-light text-b-dark min-h-screen py-3 px-0" ref="mainContent">
+    <div id="smooth-content" class="bg-b-light text-b-dark min-h-screen pt-3 px-0" ref="mainContent">
       <NuxtPage :transition="pageTransition" />
     </div>
   </div>
@@ -15,6 +15,7 @@ import { CustomEase } from 'gsap/CustomEase';
 
 const mainWrapper = ref(null);
 const mainContent = ref(null);
+let smoother;
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, CustomEase);
 
@@ -24,6 +25,12 @@ const pageTransition = {
   mode: 'out-in',
   css: false, 
   onEnter(el, done) {
+    if (smoother) {
+        // Retrieve saved scroll position from history state (handled by Vue Router)
+        const savedPos = window.history.state?.scroll?.top || 0;
+        // Force instant scroll jump (false = no smooth)
+        smoother.scrollTo(savedPos, false);
+    }
     gsap.from(el, {
       opacity: 0,
       xPercent: 50,
@@ -45,7 +52,7 @@ const pageTransition = {
 
 onMounted(() => {
   if (process.client) {
-    ScrollSmoother.create({
+    smoother = ScrollSmoother.create({
       wrapper: mainWrapper.value,
       content: mainContent.value,
       smooth: 1,

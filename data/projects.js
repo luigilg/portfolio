@@ -415,5 +415,25 @@ export const projects = [
         hasPage: false,
         preview: { src: '/projects/DESIGNS/SP.jpg', type: 'image', speed: 1, start: 0 },
     },
+    {
+        id: 'mmtads',
+        title: 'MM TADS',
+        categories: ['dev'],
+        hasPage: true,
+        preview: { src: '/projects/MMTADS/logo.png', type: 'image', speed: 1, start: 0 },
+        media: [
+            { type: 'image', src: '/projects/MMTADS/logo.png', cols: 2 },
+            { type: 'image', src: '/projects/MMTADS/1.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/2.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/3.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/4.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/5.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/6.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/7.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/8.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/9.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/10.png', cols: 1 },
+        ]
+    },
     
 ];

@@ -4,7 +4,7 @@
     
     <div class="flex w-[1000px] h-[500px] justify-center items-center" >
         <!-- <TechCard logo="html" color="fe4d13"/> -->
-        <TechStack/>
+        <!-- <TechStack/> -->
         <!-- <LogoAnim class="transition-transform duration-[1s] ease-out" :tamanho="scale"/> -->
     </div>
 
@@ -18,9 +18,11 @@
     
     <!-- <div class="flex items-center justify-center"> -->
         <!-- </div> -->
-        
-    <div class="h-screen w-full">
+        <div class=" w-full h-screen">
+            </div>
+    <div class=" w-full">
         <!-- <ArrowGrid /> -->
+         <Footer1 class="z-[2]"/>
     </div>
     
     <!-- <PageTitleTest /> -->
