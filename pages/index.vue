@@ -213,7 +213,7 @@ onMounted(() => {
     });
 
     const setupProximityAnimation = () => {
-      const maxDistance = 300;
+      // const maxDistance = 300;
       const proximityColorEffectRadius = 270;
       // const minWeight = 100;
       // const maxWeight = 900;
@@ -227,8 +227,7 @@ onMounted(() => {
           const distanceY = mouseY - pos.y;
           const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
           
-          const newWeight = gsap.utils.mapRange(0, maxDistance, minWeight, maxWeight, distance);
-          // const clampedWeight = gsap.utils.clamp(minWeight, maxWeight, newWeight);
+          // const newWeight = gsap.utils.mapRange(0, maxDistance, minWeight, maxWeight, distance);
 
           gsap.to(pos.el, {
             // '--wght': clampedWeight,

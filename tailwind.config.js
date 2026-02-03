@@ -4,6 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
+        // 'pu2': '#bb32ff',
+        // 'bl2': '#4d53ff',
+        // 'cy2': '#06c6ec',
+        'cy2': ' #72cee0 ',
         'pu': '#A23DD4',
         'bl': '#4F52BE',
         'cy': '#32A1B8',

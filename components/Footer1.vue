@@ -25,7 +25,7 @@
                  </div>
                  
                  <div class="footer-email-wrapper">
-                    <a href="mailto:luigilgirardi@gmail.com" class="funnel font-normal text-3xl hover:font-thin transition-all text-[#E4E1D5] no-underline block">luigilgirardi@gmail.com</a>
+                    <a href="mailto:luigilgirardi@gmail.com" class="funnel font-normal text-xl hover:font-thin transition-all text-[#E4E1D5] no-underline block">luigilgirardi@gmail.com</a>
                  </div>
              </div>
         </div>
@@ -49,7 +49,7 @@ const containerRef = ref(null);
 let allChars = [];
 let charPositions = [];
 
-const waveSequence = ['#32A1B8', '#32A1B8', '#4F52BE', '#A23DD4', '#A23DD4', '#4F52BE', '#32A1B8', '#32A1B8'];
+const waveSequence = ['#72cee0', '#06c6ec', '#4d53ff', '#bb32ff', '#bb32ff', '#4d53ff', '#06c6ec', '#72cee0'];
 const colorInterpolator = gsap.utils.interpolate(waveSequence);
 
 const mousePos = { x: 0, y: 0 };
@@ -82,9 +82,11 @@ onMounted(() => {
                     trigger: containerRef.value, 
                     start: "top 90%",
                     end: "bottom 95%",
-                    scrub: 1,
+                    scrub: 1.4,
                 },
-                yPercent: 100, 
+                yPercent: 200, 
+                x: 100,
+                rotate: 10,
                 autoAlpha: 0,
                 stagger: 0.05,
                 ease: "power2.out",

@@ -74,7 +74,7 @@
                                 v-else 
                                 :src="resolvePath(items[activeItemIndex].src)" 
                                 :key="`img-${activeItemIndex}`"
-                                class="w-full h-auto block"
+                                class="w-full h-auto block max-h-[600px]"
                                 @load="onMediaLoaded"
                              />
                         </template>
@@ -129,7 +129,7 @@ watch(activeItemIndex, () => {
 
 
 const items = projects
-    .filter(p => p.categories.includes('dev'))
+    .filter(p => p.categories && p.categories.includes('dev'))
     .map(p => {
         const preview = p.previews?.dev || p.preview;
         return {

@@ -31,7 +31,7 @@
                  </div>
                  <div class="w-[1px] bg-b-dark/10 mx-4"></div>
                  <div class="flex flex-col items-center">
-                    <span class="text-5xl gabarito font-bold text-cy">9</span>
+                    <span class="text-5xl gabarito font-bold text-cy">10</span>
                     <span class="text-sm font-medium uppercase tracking-widest opacity-60">Publicações</span>
                  </div>
             </div>

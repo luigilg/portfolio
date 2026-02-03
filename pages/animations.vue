@@ -129,7 +129,7 @@ watch(activeItemIndex, () => {
 
 
 const items = projects
-    .filter(p => p.categories.includes('animation'))
+    .filter(p => p.categories && p.categories.includes('animation'))
     .map(p => {
         const preview = p.previews?.animation || p.preview;
         return {

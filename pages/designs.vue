@@ -132,7 +132,7 @@ watch(activeItemIndex, () => {
 
 
 const items = projects
-    .filter(p => p.categories.includes('design'))
+    .filter(p => p.categories && p.categories.includes('design'))
     .map(p => {
         const preview = p.previews?.design || p.preview;
         return {

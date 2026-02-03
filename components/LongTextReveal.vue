@@ -27,7 +27,6 @@ onMounted(() => {
     if (process.client) {
         gsap.registerPlugin(SplitText, ScrollTrigger);
 
-        // Small delay to ensure layout is settled before splitting
         setTimeout(() => {
              ctx = gsap.context(() => {
                 gsap.set(textElement.value, { autoAlpha: 1 });
@@ -68,6 +67,6 @@ onUnmounted(() => {
 }
 
 .line-child {
-    transform: translate(0, 0); /* Garante que a animação GSAP funcione corretamente */
+    transform: translate(0, 0); 
 }
 </style>
