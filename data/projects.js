@@ -1,3 +1,5 @@
+import bantadsDesc from './descriptions/bantads.md?raw';
+
 export const projects = [
     { 
         id: 'minidrinks', 
@@ -43,7 +45,7 @@ export const projects = [
             { type: 'video', src: '/projects/Conversu/AiChat.mp4', cols: 1, caption: 'Chat de IA - usado no site da Conversu', controls: true, autoplay: true, muted: true },
             { type: 'video', src: '/projects/Conversu/app.mp4', cols: 1, caption: 'Promo App - Reels', controls: true, autoplay: true, muted: true },
             { type: 'video', src: '/projects/Conversu/ReelsPromo.mp4', cols: 1, caption: 'Promocional - Reels', controls: true, autoplay: true, muted: true },
-            { type: 'video', src: '/projects/Conversu/ReelsAtendimento.mp4', cols: 1, caption: 'Atendimento - Reels', controls: true, autoplay: true, muted: true },
+            { type: 'video', src: '/projects/Conversu/ReelsAtendimento.mp4', cols: 2, caption: 'Atendimento - Reels', controls: true, autoplay: true, muted: true },
         ]
     },
     { 
@@ -102,6 +104,7 @@ export const projects = [
     { 
         id: 'kinetic-typography', 
         title: 'KINETIC TYPOGRAPHY', 
+        link: {url: 'https://www.behance.net/gallery/115180035/Kinetic-Typography-RGB', label: 'BEHANCE'},
         categories: ['animation'], 
         hasPage: true, 
         preview: { src: '/projects/KineticTypo/OpenYourEyes.mp4', type: 'video', speed: 1, start: 0 },
@@ -212,10 +215,19 @@ export const projects = [
         ]
     },
     { 
+        id: 'portfolio', 
+        title: 'LUIGI GIRARDI' ,
+        hasPage: false, 
+        preview: { src: '/projects/DESIGNS/portfolio.png', type: 'image', speed: 1, start: 0 },
+        categories: ['design', 'dev'],
+    },
+    { 
         id: 'nutriplan', 
         title: 'NUTRIPLAN', 
         color: '#8a5acd',
+        description: 'O Nutriplan é um sistema de planejamento alimentar, criado para dois tipos de usuários: usuários padrão e profissionais da nutrição. O sistema consiste em ',
         categories: ['design', 'dev'], 
+        link: {url: 'https://github.com/tcc-nutricao/nutriplan', label: 'GITHUB'},
         hasPage: true, 
         preview: { src: '/projects/Nutriplan/logo.png', type: 'video', speed: 1, start: 0 },
         media: [
@@ -224,21 +236,40 @@ export const projects = [
             { type: 'image', src: '/projects/Nutriplan/2.png', cols: 1, caption: 'Página de Cadastro' },
             { type: 'image', src: '/projects/Nutriplan/3.png', cols: 1, caption: 'Página de cadastro de dados pessoais' },
             { type: 'image', src: '/projects/Nutriplan/4.png', cols: 1, caption: 'Página de cadastro de dados pessoais' },
-            { type: 'image', src: '/projects/Nutriplan/5.png', cols: 1, caption: 'Página de Diário Alimentar' },
-            { type: 'image', src: '/projects/Nutriplan/6.png', cols: 1, caption: 'Página de progresso pessoal' },
-            { type: 'image', src: '/projects/Nutriplan/7.png', cols: 1, caption: 'Página de receitas' },
-            { type: 'image', src: '/projects/Nutriplan/8.png', cols: 1, caption: 'Página de grupos' },
-            { type: 'image', src: '/projects/Nutriplan/9.png', cols: 1, caption: 'Página de pacientes' },
-            { type: 'image', src: '/projects/Nutriplan/10.png', cols: 1, caption: 'Menu colapsado' },
+            { type: 'image', src: '/projects/Nutriplan/5.png', cols: 2, caption: 'Página de Diário Alimentar' },
+            { type: 'image', src: '/projects/Nutriplan/6.png', cols: 2, caption: 'Página de progresso pessoal' },
+            { type: 'image', src: '/projects/Nutriplan/7.png', cols: 2, caption: 'Página de receitas' },
+            { type: 'image', src: '/projects/Nutriplan/8.png', cols: 2, caption: 'Página de grupos' },
+            { type: 'image', src: '/projects/Nutriplan/9.png', cols: 2, caption: 'Página de pacientes' },
+            { type: 'image', src: '/projects/Nutriplan/10.png', cols: 2, caption: 'Menu colapsado' },
+        ]
+    },
+    { 
+        id: 'gasto', 
+        title: 'GAS.TO', 
+        color: '#ebaf16',
+        description: 'Gas.to é um aplicativo desenvolvido em React Native usando Expo para auxiliar no controle de consumo de combustível do seu carro, tanto na cidade quanto na estrada. Com ele, você pode calcular os gastos de uma viagem, dividir as despesas com outras pessoas e monitorar a eficiência do seu veículo. Fiz esse app pensando no uso para pessoas com carros que não fazem o cálculo de gasto de combustível automaticamente no painel do veículo.',
+        categories: ['design', 'dev'], 
+        link: {url: 'https://github.com/luigilg/Gas.to', label: 'GITHUB'},
+        hasPage: true, 
+        preview: { src: '/projects/Gasto/logo.png', type: 'image', speed: 1, start: 0 },
+        media: [
+            { type: 'image', src: '/projects/Gasto/logo.png', cols: 1, caption: 'Logo' },
+            { type: 'image', src: '/projects/Gasto/1.png', cols: 1, caption: 'Página inicial. Nela são mostrados os consumos, urbano e de estrada. É possível visualizar o valor do litro e dia do registro.' },
+            { type: 'image', src: '/projects/Gasto/2.png', cols: 1, caption: 'Página de nova medição. Caso não tenha o consumo já medido, para realizar uma medição ideal, deve-se primordialmente encher o tanque do carro e anotar a quilometragem nesse ponto. Então, depois de andar com o carro, deve-se encher o tanque novamente, anotando a quilometragem e quantos litros foram abastecidos. Também deve ser anotado o valor do litro abastecido.' },
+            { type: 'image', src: '/projects/Gasto/3.png', cols: 1, caption: 'Página de cálculo de gasto de combustível para viagem. É possível incluir ida e volta ao cálculo, e também é possível dividir o valor da viagem equivalentemente entre até 5 pessoas. Informa-se a quantidade de pessoas a dividir o valor de consumo (podendo ser x pessoas na ida e y pessoas na volta). Depois é informada a distância da viagem, do ponto de saída e de destino. Pode-se usar o valor do litro que já foi salvo em uma medição antiga, ou informar um valor de litro diferente. O consumo já vem diretamente da última medição feita para o consumo de combustível na estrada. Por fim, é informado o valor total de gasto e o valor por pessoa (mostrando ida e volta caso tenha).' },
         ]
     },
     { 
         id: 'bantads', 
         title: 'BANTADS', 
         color: '#f98316',
+        description: bantadsDesc,
+        link: {url: 'https://github.com/duddanelly/trabalho-DAC', label: 'GITHUB'},
+        isMarkdown: true,
         categories: ['design', 'dev'], 
         hasPage: true, 
-        preview: { src: '/projects/Bantads/logo.png', type: 'video', speed: 1, start: 0 },
+        preview: { src: '/projects/Bantads/logo.png', type: 'image', speed: 1, start: 0 },
         media: [
             { type: 'image', src: '/projects/Bantads/logo.png', cols: 2, caption: 'Logo' },
             { type: 'image', src: '/projects/Bantads/3.png', cols: 2, caption: 'Página de Cadastro' },
@@ -320,7 +351,7 @@ export const projects = [
         id: 'dehall', 
         title: 'DEHALL', 
         categories: ['animation'], 
-        hasPage: true, 
+        hasPage: false, 
         preview: { src: '/projects/ANIMAÇÕES/DeHall.mp4', type: 'video', speed: 1, start: 0 } 
     },
     { 
@@ -416,23 +447,64 @@ export const projects = [
         preview: { src: '/projects/DESIGNS/SP.jpg', type: 'image', speed: 1, start: 0 },
     },
     {
+        id: 'rotina',
+        title: 'ROTINA',
+        description: 'Rotina é um web app de organização de rotina diária, que divide os dias da semana em blocos de 10 minutos, podendo atribuir atividades customizadas em cada bloco. Desenvolvi com HTML, CSS e JavaScript puros, usei um arquivo em nuvem para guardar rotinas e publiquei usando Netlify. Criei esse app para praticar e aprender mais sobre desenvolvimento web, mas principalmente por necessidade de um sistema para organizar cada momento da minha rotina. Esse web app está disponível para uso, basta acessar o link no topo direito da página!',
+        color: '#000000',
+        link: {url: 'https://rotina10.netlify.app/', label: 'ACESSE!'},
+        categories: ['dev'],
+        hasPage: true,
+        preview: { src: '/projects/Rotina/1.png', type: 'image', speed: 1, start: 0 },
+        media: [
+            { type: 'image', src: '/projects/Rotina/1.png', cols: 1, caption: 'Visão padrão do site. Na visão aparecem os blocos de 10 minutos do dia, indo das 05:00 até 23:50. Podem ser selecionados e customizados os dias da semana de segunda a sábado.' },
+            { type: 'image', src: '/projects/Rotina/5.png', cols: 1, caption: 'Aqui é possível ver a visualização de blocos durante o dia, mostrando um círculo de fundo cheio nos blocos de horários que já passaram, apenas o contorno do círculo nos blocos que ainda acontecerão, e o bloco atual destacado com um brilho.' },
+            { type: 'image', src: '/projects/Rotina/2.png', cols: 1, caption: 'Essa é a barra do topo, que mostra o nome do app e o nome do usuário carregado. À direita, é mostrada a atividade do bloco de horário atual da rotina.' },
+            { type: 'image', src: '/projects/Rotina/3.png', cols: 1, caption: "Essa é a barra de input do nome de 'usuário' ou rotina, para salvar ou carregar os dados da rotina na nuvem, mas de forma simples e aberta, sem nenhuma autenticação. É informado apenas o nome da rotina (ou 'usuário') a ser carregada e, caso exista rotina com o texto informado, ela é carregada." },
+            { type: 'image', src: '/projects/Rotina/4.png', cols: 1, caption: 'Nessa tela é possível ver que os blocos das 20h estão selecionados (contém um contorno branco com brilho). É possível selecionar vários blocos e, para facilitar a seleção múltipla, pode-se clicar no horário à esquerda, que todos os 6 blocos dessa hora são selecionados.' },
+            { type: 'image', src: '/projects/Rotina/6.png', cols: 1, caption: "Após selecionar blocos e clicar em 'Atribuir', abre-se um modal para escolher a atividade (dentre as atividades criadas pelo usuário) para os blocos selecionados. É possível clicar em 'Nova Atividade' para abrir o modal de gerenciamento de atividades." },
+            { type: 'image', src: '/projects/Rotina/7.png', cols: 1, caption: "Esse é o modal de gerenciamento de atividades, que permite criar, editar, excluir e reposicionar atividades. É possível atribuir um nome, uma cor e um emoji para uma atividade." },
+            { type: 'image', src: '/projects/Rotina/8.png', cols: 1, caption: 'Aqui é mostrado o modal de cópia de blocos de um dia, para o dia atual. Pode-se selecionar qualquer dia da semana para copiar e substituir todos os blocos de atividade.' },
+        ]
+    },
+    {
         id: 'mmtads',
         title: 'MM TADS',
+        description: 'Sistema de gerenciamento de manutenções de equipamentos, que foi criado para uma matéria da faculdade. Nesse sistema é possível, como cliente, criar uma conta para solicitar manutenções de equipamentos diversos, aprovar ou rejeitar orçamentos de conserto, acompanhar o status e confirmar pagamento de manutenções. Já como funcionário, é possível visualizar as solicitações de manutenções; criar orçamentos de conserto; aprovar ou rejeitar manutenções; redirecionar manutenções para outro funcionário; acompanhar o status; gerenciar categorias de equipamentos; gerenciar funcionários; emitir relatórios de manutenções por data ou por categoria. Fui responsável por toda a parte de design do sistema, e atuei em grande parte desenvolvimento do front-end e back-end.',
+        color: '#2b83c9',
+        link: {url: 'https://github.com/PAFONTINHAS/Trabalho-Pratico-WEB-II', label: 'GITHUB'},
         categories: ['dev'],
         hasPage: true,
         preview: { src: '/projects/MMTADS/logo.png', type: 'image', speed: 1, start: 0 },
         media: [
-            { type: 'image', src: '/projects/MMTADS/logo.png', cols: 2 },
-            { type: 'image', src: '/projects/MMTADS/1.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/2.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/3.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/4.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/5.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/6.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/7.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/8.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/9.png', cols: 1 },
-            { type: 'image', src: '/projects/MMTADS/10.png', cols: 1 },
+            { type: 'image', src: '/projects/MMTADS/logo.png', cols: 2, caption: 'Logo do sistema' },
+            { type: 'image', src: '/projects/MMTADS/1.png', cols: 2, caption: 'Página de Login' },
+            { type: 'image', src: '/projects/MMTADS/2.png', cols: 2, caption: 'Página de Autocadastro' },
+            { type: 'image', src: '/projects/MMTADS/3.png', cols: 2, caption: '(CLIENTE) Página Inicial' },
+            { type: 'image', src: '/projects/MMTADS/4.png', cols: 2, caption: '(CLIENTE) Detalhes de uma solicitação' },
+            { type: 'image', src: '/projects/MMTADS/5.png', cols: 2, caption: '(CLIENTE) Página de solicitação de manutenções' },
+            { type: 'image', src: '/projects/MMTADS/6.png', cols: 2, caption: '(FUNCIONÁRIO) Página Inicial: mostra apenas as solicitações em aberto' },
+            { type: 'image', src: '/projects/MMTADS/7.png', cols: 2, caption: '(FUNCIONÁRIO) Página de Solicitações: mostra todas as solicitações' },
+            { type: 'image', src: '/projects/MMTADS/8.png', cols: 2, caption: '(FUNCIONÁRIO) Detalhes de uma solicitação. Nesse caso, um valor de orçamento é informado.' },
+            { type: 'image', src: '/projects/MMTADS/9.png', cols: 2, caption: '(FUNCIONÁRIO) Página de Administração' },
+            { type: 'image', src: '/projects/MMTADS/10.png', cols: 2, caption: '(FUNCIONÁRIO) Página de Gerenciamento de Funcionários' },
+            { type: 'image', src: '/projects/MMTADS/11.png', cols: 2, caption: '(FUNCIONÁRIO) Página de Relatórios' },
+        ]
+    },
+    {
+        id: 'mercado',
+        title: 'SUPERMERCADO',
+        description: 'Esse é um sistema web extremamente simples de gerenciamento de funcionários e departamentos de um mercado, que foi criado para uma matéria da faculdade. Nesse sistema é possível gerenciar (CRUD: criar, listar, editar e apagar) departamentos e funcionários de um mercado. Foi feito com com HTML, CSS e JavaScript puro, com o uso do nodemon para facilitar a atualização da página e o uso de um banco de dados local com MySQL.',
+        color: '#945b9a',
+        categories: ['dev'],
+        hasPage: true,
+        preview: { src: '/projects/Supermercado/logo.png', type: 'image', transparent: true },
+        media: [
+            { type: 'image', src: '/projects/Supermercado/1.png', cols: 2, caption: 'Página de Funcionários' },
+            { type: 'image', src: '/projects/Supermercado/2.png', cols: 2, caption: 'Página de Departamentos' },
+            { type: 'image', src: '/projects/Supermercado/3.png', cols: 2, caption: 'Página de Cadastro de Funcionário' },
+            { type: 'image', src: '/projects/Supermercado/4.png', cols: 2, caption: 'Página de Edição de Funcionário' },
+            { type: 'image', src: '/projects/Supermercado/5.png', cols: 2, caption: 'Página de Detalhes do Funcionário' },
+            { type: 'image', src: '/projects/Supermercado/6.png', cols: 2, caption: 'Modal padrão de confirmação de remoção' },
         ]
     },
     
