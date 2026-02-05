@@ -68,9 +68,6 @@ gsap.registerPlugin(SplitText, CustomEase, ScrollTrigger);
 
 const luigiRef = ref(null);
 const girardiRef = ref(null);
-const creativeRef = ref(null);
-const devRef = ref(null);
-const isMenuOpen = ref(false);
 const introText = ref(null);
 const snappyTextContainer = ref(null);
 const complete = ref(false);
@@ -79,32 +76,6 @@ const gradientStrokeRef = ref(null);
 const showStroke = ref(false);
 const whatIDoRef = ref(null);
 const techStackRef = ref(null);
-
-const creativeDevAnim = () => {
-  if (!creativeRef.value || !devRef.value) return;
-  
-  gsap.set([creativeRef.value, devRef.value], { visibility: 'visible' });
-  
-  const splitOptions = { type: 'chars', reduceWhiteSpace: false };
-  const creSplit = new SplitText(creativeRef.value, splitOptions);
-  const devSplit = new SplitText(devRef.value, splitOptions);
-
-  const creChs = creSplit.chars;
-  const devChs = devSplit.chars;
-
-  gsap.from(creChs, {
-    yPercent: 150,
-    duration: 0.7,
-    ease: 'expo.out',
-    stagger: { each: 0.05, from: 'start' }
-  });
-  gsap.from(devChs, {
-    yPercent: -150,
-    duration: 0.7,
-    ease: 'expo.out',
-    stagger: { each: 0.05, from: 'end' }
-  });
-};
 
 onMounted(() => {
   let allChars = [];
@@ -200,7 +171,6 @@ onMounted(() => {
       duration: 1.3,
       stagger: { each: 0.05, from: 'end' }
     }, 0.4);
-    tl.call(creativeDevAnim, [], 1.5);
     tl.call(() => {
       startAltText.value = true;
     }, [], 1.6);

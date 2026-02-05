@@ -1,4 +1,5 @@
 import bantadsDesc from './descriptions/bantads.md?raw';
+import nutriplanDesc from './descriptions/nutriplan.md?raw';
 
 export const projects = [
     { 
@@ -225,7 +226,8 @@ export const projects = [
         id: 'nutriplan', 
         title: 'NUTRIPLAN', 
         color: '#8a5acd',
-        description: 'O Nutriplan é um sistema de planejamento alimentar, criado para dois tipos de usuários: usuários padrão e profissionais da nutrição. O sistema consiste em ',
+        description: nutriplanDesc,
+        isMarkdown: true,
         categories: ['design', 'dev'], 
         link: {url: 'https://github.com/tcc-nutricao/nutriplan', label: 'GITHUB'},
         hasPage: true, 
@@ -265,8 +267,8 @@ export const projects = [
         title: 'BANTADS', 
         color: '#f98316',
         description: bantadsDesc,
-        link: {url: 'https://github.com/duddanelly/trabalho-DAC', label: 'GITHUB'},
         isMarkdown: true,
+        link: {url: 'https://github.com/duddanelly/trabalho-DAC', label: 'GITHUB'},
         categories: ['design', 'dev'], 
         hasPage: true, 
         preview: { src: '/projects/Bantads/logo.png', type: 'image', speed: 1, start: 0 },

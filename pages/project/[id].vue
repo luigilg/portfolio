@@ -10,7 +10,7 @@
             <span class="gabarito font-bold text-2xl text-b-dark2 group-hover:text-b-dark group-hover:scale-[120%] group-hover:font-black transition-font-weight group-active:font-thin">VOLTAR</span>
         </div>
         <div v-if="project.link" class=" flex items-center group gap-1 cursor-pointer">
-            <a :href="project.link.url" target="_blank" class="funnel font-normal text-2xl text-b-dark2 group-hover:text-b-dark group-hover:scale-[120%] group-hover:font-black transition-all underline group-active:font-thin">{{ project.link.label }}</a>
+            <a :href="project.link.url" target="_blank" class="funnel font-normal text-2xl text-b-dark2 group-hover:text-b-dark group-hover:scale-[120%] group-hover:font-black underline group-active:font-thin">{{ project.link.label }}</a>
             <svg class="w-3 h-3 -translate-y-[2px] -rotate-[0deg] transition-transform group-hover:translate-x-4 group-hover:-translate-y-2 group-hover:scale-[130%]" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M43.7883 -5.44358e-06V37.6507L29.2602 37.4456V24.7605L10.0267 43.9939L0.000196677 33.9674L19.4394 14.5281L6.34344 14.5288L6.13835 0.00068509L43.7883 -5.44358e-06Z" 
                 :fill="project.color ? project.color : '#44494c'"/>
