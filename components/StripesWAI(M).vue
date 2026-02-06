@@ -68,8 +68,8 @@ onMounted(() => {
     
     // Animate along Y axis instead of X
     // Odd stripes from bottom (100%), Even stripes from top (-100%)
-    gsap.set('.stripe-1, .stripe-3, .stripe-5', { yPercent: 100 });
-    gsap.set('.stripe-2, .stripe-4', { yPercent: -100 });
+    gsap.set('.stripe-1, .stripe-3, .stripe-5', { yPercent: 100.2 });
+    gsap.set('.stripe-2, .stripe-4', { yPercent: -100.2 });
 
     // Masks follow stripes logic
     gsap.set('.mask-1, .mask-3, .mask-5', { yPercent: -100 });
@@ -79,7 +79,7 @@ onMounted(() => {
         scrollTrigger: {
             trigger: container.value,
             start: "top top", 
-            end: "+=3000", 
+            end: "+=1200vh", 
             pin: true,
             scrub: true, 
             anticipatePin: 1
@@ -101,7 +101,7 @@ onMounted(() => {
         scrollTrigger: {
             trigger: container.value,
             start: "top top", 
-            end: () => "+=" + (3000 + window.innerHeight), 
+            end: "+=1200vh", 
             scrub: true 
         }
     });

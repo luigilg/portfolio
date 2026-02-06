@@ -57,7 +57,7 @@
                 <h1 class="text-nowrap font-black txt t6a mr-[16vw]">causar impacto.</h1>
             </div>
         </div>
-        <div class="h-[3000px]"></div>
+        <div class="h-[1800px]"></div>
     </div>
 </template>
 
@@ -142,23 +142,23 @@ export default {
             }, '<0.2')
 
             .from('.t1a', {
-                x: -70,
+                x: -50,
                 duration: 0.5,
                 ease: "power1.out",
-            }, 'icons-=0.05')
+            }, 'icons+=0.1')
             .set('.t1a', { opacity: 1 }, "<")
             .from('.t2b', {
-                x: 100,
-                duration: 0.5,
-                ease: "power1.out",
-            }, '<0.1')
-            .set('.t2b', { opacity: 1 }, "<")
-
-            .from('.t1b', {
-                x: 120,
+                x: 50,
                 duration: 0.5,
                 ease: "power1.out",
             }, '<0.07')
+            .set('.t2b', { opacity: 1 }, "<")
+
+            .from('.t1b', {
+                x: 50,
+                duration: 0.5,
+                ease: "power1.out",
+            }, '<0.06')
             .set('.t1b', { opacity: 1 }, "<")
             .from('.t2a', {
                 x: -30,
@@ -171,20 +171,20 @@ export default {
                 x: 50,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.07')
+            }, '<0.05')
             .set('.t3b', { opacity: 1 }, "<")
             .from('.t4a', {
                 x: -50,
                 duration: 0.4,
                 ease: "power1.out",
-            }, '<0.02')
+            }, '<0.05')
             .set('.t4a', { opacity: 1 }, "<")
 
             .from('.t3a', {
                 x: -50,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.07')
+            }, '<0.05')
             .set('.t3a', { opacity: 1 }, "<")
             .from('.t4b', {
                 x: 50,
@@ -197,19 +197,19 @@ export default {
                 x: 60,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.03')
+            }, '<0.04')
             .set('.t5b', { opacity: 1 }, "<")
             .from('.t5a', {
                 x: -60,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.03')
+            }, '<0.04')
             .set('.t5a', { opacity: 1 }, "<")
             .from('.t6a', {
                 x: -60,
                 duration: 0.5,
                 ease: "power1.out",
-            }, '<0.03')
+            }, '<0.04')
             .set('.t6a', { opacity: 1 }, "<");
 
         tl.addLabel("endEntry");
@@ -217,7 +217,7 @@ export default {
         const pauseDuration = 1;
         tl.to({}, { duration: pauseDuration });
 
-        const animScroll = 2200;
+        const animScroll = 100;
 
         const outPropsA = {
             // x: -100,
@@ -240,7 +240,7 @@ export default {
 
         tl.to('.t1a', {
             ...outPropsA, x: '-=100'
-        }, 'endEntry+=0.3')
+        }, 'endEntry+=1.2')
         .to('.t1b', {
             ...outPropsB, x: '-=100'
         },'<0.05')
@@ -288,7 +288,7 @@ export default {
         },'<0.05')
         .to({}, { duration: 0.8 });
 
-        const readingScroll = 1000;
+        const readingScroll = 1700;
         const totalPinScroll = animScroll + readingScroll;
 
         ScrollTrigger.create({

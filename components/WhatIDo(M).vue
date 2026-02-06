@@ -1,0 +1,382 @@
+<template>
+    <div class="h-screen w-full flex justify-center items-center relative">
+        <div class="flex flex-col w-fit justify-center items-center gabarito font-light text-[15vw] 
+                    select-none text-gr hover:font-light transition-[font-weight] z-10 mt-20"
+            @mouseenter="onListEnter"
+            @mouseleave="onListLeave">
+            <!-- <div class="outlined-text funnel font-black text-[9.5vw] z-[-2] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                :style="{ '--stroke-color': currentStrokeColor }">
+                {{ quantity }}
+            </div> -->
+            <div v-for="(item, key) in items" 
+                :key="key"
+                class="w-full flex py-2 justify-center cursor-pointer relative group
+                -tracking-[1vw] transition-[font-weight, letter-spacing] duration-200 ease-out z-0
+                active:font-[100] active:scale-90 active:font-black active-item item-container"
+                :style="{ '--active-color': nextColor }"
+                @click="navigate(item.route)"
+                @touchstart.passive="onItemTouchStart(key)"
+                @touchend.passive="onItemTouchEnd(key)"
+                @touchcancel.passive="onItemTouchEnd(key)"
+            >
+                <p :class="key" class="wid-txt leading-none relative flex items-center">
+                    {{ item.desc }}
+                    <svg 
+                        :class="`arrow-right-${key}`" 
+                        class="absolute left-full ml-2 opacity-0 rotate-45 scale-50"
+                        width="2.5vh" height="2.5vh" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M43.7883 -5.44358e-06V37.6507L29.2602 37.4456V24.7605L10.0267 43.9939L0.000196677 33.9674L19.4394 14.5281L6.34344 14.5288L6.13835 0.00068509L43.7883 -5.44358e-06Z" 
+                        fill="#282E32"/>
+                    </svg>
+                </p>
+                
+                <!-- <ClientOnly>
+                    <div v-if="item.imgs != null" :class="key + '-imgs image-group z-20 opacity-0'">
+                        <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
+                            <video
+                                v-if="media.type === 'video'"
+                                :src="media.src"
+                                class="preview-vid"
+                                :class="key+'-img-'+i"
+                                autoplay
+                                loop
+                                muted
+                                playsinline
+                                preload="metadata"
+                            ></video>
+                            <img
+                                v-else
+                                :src="media.src"
+                                class="preview-img"
+                                :class="key+'-img-'+i"
+                                alt=""
+                            >
+                        </div>
+                    </div>
+                </ClientOnly> -->
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import gsap from 'gsap';
+import { CustomEase } from 'gsap/CustomEase';
+
+const router = useRouter();
+
+const activeItemKey = ref(null);
+const lastHoveredIndex = ref(null);
+const currentColor = ref(-1);
+
+const quantity = ref(0);
+const tweenQuantity = { value: 0 };
+const currentStrokeColor = ref('rgb(165, 9, 255)');
+
+const items = {
+    anim: {
+        count: 26,
+        desc: 'ANIMAÇÕES',
+        // imgs: [
+        //     // { src: "/projects/ProCubo/S1.mp4", type: 'video' },
+        //     // { src: "/projects/MiniDrinks/LogoAnim.mp4", type: 'video' },
+        //     // { src: "/projects/ElasticTypo/1.mp4", type: 'video' }
+        //     { src: "/projects/Conversu/logo.png", type: 'image' },
+        //     { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
+        //     { src: "/projects/Engepro/logo.jpg", type: 'image' }
+        // ],
+        route: '/mobile/animations'
+    },
+    syst: {
+        count: 7,
+        desc: 'SITES E APPS',
+        // imgs: [
+        //     { src: "/projects/Bantads/logo.png", type: 'image' },
+        //     { src: "/projects/Gasto/logo.png", type: 'image' },
+        //     { src: "/projects/Nutriplan/logo.png", type: 'image' }
+        // ],
+        route: '/dev'
+    },
+    vids: {
+        count: 11,
+        desc: 'VÍDEOS',
+        // imgs: [
+        //     { src: "/projects/Conversu/logo.png", type: 'image' },
+        //     { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
+        //     { src: "/projects/Engepro/logo.jpg", type: 'image' }
+        // ],
+        route: '/videos'
+    },
+    desn: {
+        count: 13,
+        desc: 'DESIGN',
+        // imgs: [
+        //     { src: "/projects/Abelino/Logo.jpg", type: 'image' },
+        //     { src: "/projects/Squirrel/horizontal1.jpg", type: 'image' },
+        //     { src: "/projects/Nutriplan/logo.png", type: 'image' }
+        // ],
+        route: '/designs'
+    },
+    musc: {
+        count: 44,
+        desc: 'MÚSICA',
+        route: '/music',
+    },
+};
+
+onMounted(() => {
+    gsap.registerPlugin(CustomEase);
+    CustomEase.create("fast", "M0,0 C0.039,0.356 0.05,0.675 0.228,0.837 0.406,1 0.489,1 1,1 ");
+
+    // gsap.set(".image-group", {
+    //     opacity: 0,
+    //     scale: 1,
+    // });
+});
+
+const nextColor = ref('#A23DD4');
+
+const colorSequence = () => {
+    const colors = ["#A23DD4", "#4F52BE", "#32A1B8"];
+    currentColor.value = (currentColor.value + 1) % colors.length;
+    return colors[currentColor.value];
+};
+
+const onItemTouchStart = (key) => {
+    const color = colorSequence();
+    nextColor.value = color;
+
+    gsap.to(`.arrow-right-${key}`, { 
+        y: '-1.2vh',
+        rotate: 0,
+        opacity: 1,
+        scale: 1.2, 
+        duration: 0.4, 
+        ease: 'fast',
+        overwrite: true
+    });
+};
+
+const onItemTouchEnd = (key) => {
+    gsap.to(`.arrow-right-${key}`, {
+        opacity: 0,
+        rotate: 45,
+        scale: 0.5,
+        x: 0,
+        y: 0,
+        duration: 0.25,
+        ease: 'fast',
+        overwrite: true
+    });
+};
+
+// const onItemEnter = (key) => {
+//     if (window.matchMedia('(hover: none)').matches) return;
+
+//     if (activeItemKey.value === key) return;
+
+//     const itemKeys = Object.keys(items);
+//     const newIndex = itemKeys.indexOf(key);
+//     let yDirection = 1;
+
+//     if (lastHoveredIndex.value !== null) {
+//         if (newIndex < lastHoveredIndex.value) yDirection = -1;
+//     } else {
+//         yDirection = newIndex < itemKeys.length / 2 ? 1 : -1;
+//     }
+    
+//     if (activeItemKey.value) {
+//         const exitDirection = yDirection * -1;
+//         animateOut(activeItemKey.value, false, exitDirection);
+//     }
+    
+    
+//     const color = colorSequence();
+//     nextColor.value = color;
+//     currentStrokeColor.value = color;
+
+//     animateIn(key, color, yDirection);
+    
+//     const targetQty = items[key].count !== undefined ? items[key].count : 0;
+    
+//     gsap.to(tweenQuantity, {
+//         value: targetQty,
+//         duration: 0.6,
+//         ease: 'power2.out',
+//         onUpdate: () => quantity.value = Math.round(tweenQuantity.value),
+//         overwrite: true
+//     });
+
+//     gsap.to('.outlined-text', {
+//         opacity: 0.35,
+//         duration: 0.3,
+//         overwrite: true
+//     });
+    
+//     activeItemKey.value = key;
+//     lastHoveredIndex.value = newIndex;
+// };
+
+const onListEnter = () => {
+    if (window.matchMedia('(hover: none)').matches) return;
+    
+    gsap.to(".wid-txt", {
+        color: "#aaa",
+        overwrite: true
+    });
+};
+
+const onListLeave = () => {
+    if (activeItemKey.value) {
+        const itemKeys = Object.keys(items);
+        const lastIndex = itemKeys.indexOf(activeItemKey.value);
+        const exitDirection = lastIndex < itemKeys.length / 2 ? 1 : -1;
+
+        animateOut(activeItemKey.value, true, exitDirection);
+        activeItemKey.value = null;
+        lastHoveredIndex.value = null;
+    }
+
+    gsap.to('.outlined-text', {
+        opacity: 0,
+        duration: 0.3,
+        overwrite: true
+    });
+
+    gsap.to(tweenQuantity, {
+        value: 0, 
+        duration: 0.6,
+        ease: 'power2.out',
+        onUpdate: () => quantity.value = Math.round(tweenQuantity.value),
+        overwrite: true
+    });
+};
+
+// const animateIn = (key, color, yDirection) => {
+//     if (!items[key].imgs) {
+//         gsap.to(`.${key}`, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
+//         return;
+//     }
+
+//     const textSelector = `.${key}`;
+//     const groupSelector = `.${key}-imgs`;
+    
+//     const textLength = items[key].desc.length;
+//     const textCharWidth = 60;
+//     const textOffset = (textLength * textCharWidth) / 2;
+
+//     const initialYOffset = 100 * yDirection * -1;
+    
+//     const finalX_img1 = -textOffset - 270;
+//     const finalX_img2 = textOffset + 270;
+
+//     const randomRotation1 = (Math.random() - 0.5) * 20;
+//     const randomRotation2 = (Math.random() - 0.5) * 20;
+//     const randomRotation3 = (Math.random() - 0.5) * 20;
+
+//     gsap.set(groupSelector, { opacity: 1 });
+//     gsap.to(textSelector, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
+//     gsap.to(groupSelector, { scale: 1, duration: 1, ease: 'elastic.out(1.25, 0.8)', overwrite: true });
+
+//     gsap.fromTo(`.${key}-img-0`,
+//         { x: 0, y: (initialYOffset - 200), scale: 0.6, rotation: 0, },
+//         { x: 0, y: -200, scale: 1, rotation: randomRotation1, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
+//     );
+//     gsap.fromTo(`.${key}-img-1`,
+//         { x: finalX_img1, y: initialYOffset, scale: 0.6, rotation: 0, },
+//         { x: finalX_img1, y: 0, scale: 1, rotation: randomRotation2, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
+//     );
+//     gsap.fromTo(`.${key}-img-2`,
+//         { x: finalX_img2, y: initialYOffset, scale: 0.6, rotation: 0, },
+//         { x: finalX_img2, y: 0, scale: 1, rotation: randomRotation3, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
+//     );
+// };
+
+// const animateOut = (key, isFinalLeave = false, yDirection) => {
+//     const textSelector = `.${key}`;
+//     const groupSelector = `.${key}-imgs`;
+//     const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
+//     const finalTextColor = isFinalLeave ? '' : '#aaa';
+
+//     if (!items[key].imgs) {
+//         gsap.to(`.${key}`, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
+//         return;
+//     }
+
+//     const exitYOffset = 100 * -yDirection;
+
+//     gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
+//     gsap.to(groupSelector, { scale: 1, duration: 0.4, ease: 'fast', overwrite: true });
+//     gsap.to(groupSelector, { opacity: 0, duration: 0 });
+//     gsap.to(allImgsSelector, { y: exitYOffset, rotation: 0, duration: 0.4, ease: 'fast', overwrite: true });
+// };
+
+const navigate = async (route) => {
+    if (route) {
+        await router.push({ path: route });
+    }
+};
+
+</script>
+
+<style scoped>
+.image-group {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    will-change: transform, opacity;
+    width: 1200px; 
+    height: 600px;
+}
+
+.preview-img {
+    position: absolute;
+    max-height: 150px;
+    width: 250px;
+    border-radius: 0.75rem;
+    box-shadow: 0 30px 60px 3px rgb(0 0 0 / 0.1), 0 10px 20px rgb(0 0 0 / 0.15);
+    object-fit: cover;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+.preview-vid {
+    position: absolute;
+    max-height: 150px;
+    width: 250px;
+    border-radius: 0.75rem;
+    box-shadow: 0 30px 60px 3px rgb(0 0 0 / 0.1), 0 10px 20px rgb(0 0 0 / 0.15);
+    object-fit: cover;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+
+.outlined-text {
+  -webkit-text-fill-color: transparent;
+
+  -webkit-text-stroke-width: 2px; 
+  -webkit-text-stroke-color: var(--stroke-color); 
+
+  opacity: 0;
+
+  color: transparent; 
+}
+
+.active-item:active,
+.active-item:active .wid-txt {
+    color: var(--active-color) !important;
+}
+
+@media (hover: hover) {
+    .item-container:hover {
+        font-weight: 900;
+        z-index: 10;
+    }
+}
+
+</style>

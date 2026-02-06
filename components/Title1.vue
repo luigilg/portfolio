@@ -35,7 +35,8 @@ onMounted(() => {
             scrollTrigger: {
                 trigger: titleRef.value,
                 start: 'top 80%',
-                toggleActions: 'play none none reverse'
+                toggleActions: 'play none none reverse',
+                refreshPriority: -1
             }
         });
 
@@ -43,11 +44,12 @@ onMounted(() => {
             opacity: 0,
             delay: props.delay ? props.delay : 0,
             x: 200,
-            duration: 0.7,
-            ease: 'elastic.out(1.10,0.8)',
+            duration: 0.6,
+            ease: 'elastic.out(1.1,1)',
+            // ease: 'expo.out',
             stagger: {
                 from: 'start',
-                each: 0.05
+                each: 0.03
             }
         });
     }

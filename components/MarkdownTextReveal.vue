@@ -1,5 +1,5 @@
 <template>
-    <div ref="container" class="markdown-reveal w-full" :class="'text-' + position">
+    <div ref="container" class="markdown-reveal w-max" :class="'text-' + position">
         <div v-html="renderedContent" class="markdown-content funnel font-normal text-lg"></div>
     </div>
 </template>
