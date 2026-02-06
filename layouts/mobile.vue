@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-layout bg-white text-b-dark min-h-screen pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+  <div class="mobile-layout bg-white text-b-dark min-h-screen">
     <div class="mobile-content relative overflow-hidden">
       <!-- Different wrapper structure for mobile, likely simpler without ScrollSmoother initially -->
       <slot />

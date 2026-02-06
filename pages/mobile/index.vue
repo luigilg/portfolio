@@ -18,9 +18,9 @@
       <SnappyText(M) />
     </div>
     <Title1 class="whoAmI relative z-[2] text-[18vw] -mt-[60vh]" text="MAS O QUE EU SOU?"/>
-    <StripesWAI(M)  class="-mt-[100px] mb-[210vh] relative z-[3]"/>
-    <div class="relative px-[10vw] z-[4] bg-transparent">
-      <p ref="introText" class="funnel font-normal text-[4vw] text-b-dark text-justify">
+    <StripesWAI(M) class="-mt-[10vh] -mb-[25vh] relative z-[3]"/>
+    <div class="relative px-[10vw] -mb-[21vh] z-[4] bg-transparent">
+      <p ref="introText" class="funnel font-normal text-[2vh] text-b-dark text-justify">
       Sou um <span class="font-extrabold text-pu">generalista criativo</span> com formação em Análise e Desenvolvimento de Sistemas pela UFPR. 
       Trabalho com animação e edição de vídeo, design, composição musical e mais recentemente, desenvolvimento de sites e apps. 
       Tenho experiência prática como Full-Stack, porém prefiro o front-end. 
@@ -28,6 +28,12 @@
       Sou autodidata, tenho grande facilidade de aprendizado e adaptação, 
       e sou constantemente motivado a encontrar soluções eficientes e práticas para qualquer situação.</p>
     </div>
+    <GradientStrokeAnimS ref="gradientStrokeRef" class="z-[5]" start="20% 80%" end="20% 35%"/>
+    <Title1 
+        class="text-[16vw] worksIdid relative z-[6] -mt-[10vh] -mb-[15vh]"
+        text="TRABALHOS QUE JÁ FIZ"
+    />
+    <WhatIDo(M) ref="whatIDoRef"/> 
     <div class="mt-10">
       <p class="text-sm text-center funnel text-gray-500 mb-10">Versão mobile ainda em desenvolvimento... Acesse pelo computador!</p>
     </div> 
@@ -39,6 +45,15 @@
 definePageMeta({
   layout: 'mobile',
   pageTransition: true,
+});
+
+useHead({
+  bodyAttrs: {
+    class: 'bg-white'
+  },
+  meta: [
+    { name: 'theme-color', content: '#ffffff' }
+  ]
 });
 
 import { ref, onMounted } from 'vue';
@@ -107,25 +122,25 @@ onMounted(() => {
     const tl = gsap.timeline();
 
     tl.from(luigiChars, {
-      duration: 1.8,
+      duration: 1.3,
       ease: 'expo.out',
       y: '20vh',
       stagger: { each: 0.08, from: 'center' }
     }, 0);
     tl.from(girardiChars, {
-      duration: 1.8,
+      duration: 1.3,
       ease: 'expo.out',
       y: '-20vh',
       stagger: { each: 0.08, from: 'center' }
     }, 0.2);
     tl.to(luigiChars, {
       keyframes: { color: colorKeyframesL, ease: 'steps(3)' },
-      duration: 1.2,
+      duration: 1,
       stagger: { each: 0.04, from: 'center' }
     }, 0);
     tl.to(girardiChars, {
       keyframes: { color: colorKeyframesG, ease: 'steps(3)' },
-      duration: 1.4,
+      duration: 1.2,
       stagger: { each: 0.04, from: 'center' }
     }, 0);
     tl.call(() => {
@@ -157,9 +172,18 @@ onMounted(() => {
   ScrollTrigger.create({
     trigger: '.whoAmI',
     start: 'center center',
-    end: '+=2200',
+    end: '+=1000vh',
     pin: true,
-    pinSpacing: false, 
+    pinnedContainer: true,
+    refreshPriority: 1, 
+  });
+
+  ScrollTrigger.create({
+    trigger: '.whoAmI',
+    start: 'bottom center',
+    end: 'bottom center',
+    onEnter: () => gsap.set('.whoAmI', { autoAlpha: 0 }),
+    onLeaveBack: () => gsap.set('.whoAmI', { autoAlpha: 1 }),
   });
 
 
@@ -175,6 +199,7 @@ onMounted(() => {
               end: '+=2500', 
               scrub: true, 
               pin: true,
+              refreshPriority: 1
           }
       });
       
@@ -203,7 +228,7 @@ onMounted(() => {
       });
 
       const animDuration = tlIntro.duration();
-      const pauseDuration = animDuration * (1000 / 2000);
+      const pauseDuration = animDuration * (1000 / 4000);
       tlIntro.to({}, { duration: pauseDuration });
   }
 
@@ -215,6 +240,17 @@ onMounted(() => {
         showStroke.value = true;
       }
     });
+
+    gsap.to(gradientStrokeRef.value.$el, {
+      y: "20%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: gradientStrokeRef.value.$el,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 0.5 
+      }
+    });
   }
 
   if (whatIDoRef.value) {
@@ -224,6 +260,7 @@ onMounted(() => {
       end: "+=700",
       pin: true,
       pinSpacing: true,
+      refreshPriority: 1
     });
   }
 
@@ -234,9 +271,14 @@ onMounted(() => {
         end: "+=600",
         pin: true,
         pinSpacing: true,
-        pinReparent: true
+        pinReparent: true,
+        refreshPriority: 1
       });
   }
+
+  setTimeout(() => {
+   ScrollTrigger.refresh();
+  }, 100);
 });
 </script>
 

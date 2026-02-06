@@ -1,4 +1,4 @@
-O Bantads é um sistema bancário, desenvolvido para a disciplina de Desenvolvimento de Aplicações Corporativas. O projeto foi construído utilizando uma arquitetura de microsserviços para garantir escalabilidade modular e manutenção independente. Nesse projeto **fui responsável pelo design da logo e de todas as telas do sistema**. Participei de todo o desenvolvimento com mais 5 colegas durante a duração da disciplina.
+O Bantads é um sistema bancário, desenvolvido para a disciplina de Desenvolvimento de Aplicações Corporativas. O projeto foi construído utilizando uma arquitetura de microsserviços para garantir escalabilidade modular e manutenção independente. Nesse projeto fui responsável pelo design da logo e de todas as telas do sistema, além de ter participado de todo o desenvolvimento com mais 5 colegas durante a duração da disciplina.
 
 ## Arquitetura do Sistema
 ### Microsserviços
