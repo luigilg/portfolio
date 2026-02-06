@@ -97,7 +97,7 @@ const items = {
         //     { src: "/projects/Gasto/logo.png", type: 'image' },
         //     { src: "/projects/Nutriplan/logo.png", type: 'image' }
         // ],
-        route: '/dev'
+        route: '/mobile/dev'
     },
     vids: {
         count: 11,
@@ -107,7 +107,7 @@ const items = {
         //     { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
         //     { src: "/projects/Engepro/logo.jpg", type: 'image' }
         // ],
-        route: '/videos'
+        route: '/mobile/videos'
     },
     desn: {
         count: 13,
@@ -117,12 +117,12 @@ const items = {
         //     { src: "/projects/Squirrel/horizontal1.jpg", type: 'image' },
         //     { src: "/projects/Nutriplan/logo.png", type: 'image' }
         // ],
-        route: '/designs'
+        route: '/mobile/designs'
     },
     musc: {
         count: 44,
         desc: 'MÚSICA',
-        route: '/music',
+        route: '/mobile/music',
     },
 };
 

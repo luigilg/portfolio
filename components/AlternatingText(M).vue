@@ -56,6 +56,7 @@ const createAnimation = () => {
 
         masterTl.from(split.chars, {
             y: fromY,
+            scale: 0.3,
             duration: 0.6,
             ease: 'expo.out',
             stagger: { each: 0.03, from: props.position }
@@ -68,11 +69,11 @@ const createAnimation = () => {
             const isFirst = index === 0 ? '0' : '-=0.5';
 
             masterTl.from(split.chars, {
-                y: fromY, duration: 0.7, ease: 'expo.out', stagger: { each: 0.05, from: props.position }
+                y: fromY, scale: 0.3, duration: 0.7, ease: 'expo.out', stagger: { each: 0.05, from: props.position }
             }, isFirst);
 
             masterTl.to(split.chars, {
-                y:  fromY2, duration: 0.7, ease: 'expo.in', stagger: { each: 0.05, from: props.position }
+                y:  fromY2, scale: 0.3, duration: 0.7, ease: 'expo.in', stagger: { each: 0.05, from: props.position }
             }, "+=0.8");
         });
     }

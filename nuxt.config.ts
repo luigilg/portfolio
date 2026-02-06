@@ -8,5 +8,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   modules: [
     '@nuxtjs/tailwindcss'
-  ]
+  ],
+  nitro: {
+    preset: 'vercel',
+  },
 })

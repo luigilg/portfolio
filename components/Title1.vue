@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center gabarito font-extrabold text-[10rem] -tracking-[4px]" ref="titleRef">
+    <div class="text-center gabarito font-extrabold select-none text-[10rem] leading-none" :class=" mobile ? '-tracking-[0.05vw]' : '-tracking-[4px]' " ref="titleRef">
         {{ text }}
     </div>
 </template>
@@ -16,6 +16,18 @@ const props = defineProps({
         required: true
     },
     delay: Number,
+    mobile: {
+        type: Boolean,
+        default: false
+    },
+    start: {
+        type: String,
+        default: 'top 80%'
+    },
+    noScroll: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const titleRef = ref(null);
@@ -26,15 +38,15 @@ onMounted(() => {
     if (titleRef.value) {
         gsap.set(titleRef.value, { visibility: 'hidden' });
 
-        const split = new SplitText(titleRef.value, { type: 'chars' });
+        const split = new SplitText(titleRef.value, { type: 'words, chars' });
         const chars = split.chars;
         
         gsap.set(titleRef.value, { visibility: 'visible' });
 
-        const tl = gsap.timeline({
+        const tl = gsap.timeline(props.noScroll ? {} : {
             scrollTrigger: {
                 trigger: titleRef.value,
-                start: 'top 80%',
+                start: props.start,
                 toggleActions: 'play none none reverse',
                 refreshPriority: -1
             }

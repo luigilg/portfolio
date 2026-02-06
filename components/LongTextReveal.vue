@@ -1,6 +1,6 @@
 <template>
     <div class="reveal-container w-full">
-        <p ref="textElement" class="invisible funnel font-normal text-2xl" :class="'text-' + position">
+        <p ref="textElement" class="invisible funnel font-normal" :class="`text-${position} ${size}`">
             {{ texto }}
         </p>
     </div>
@@ -16,6 +16,10 @@ const props = defineProps({
     texto: {
         type: String,
         required: true
+    },
+    size: {
+        type: String,
+        default: "text-2xl"
     },
     position: String,
 });
