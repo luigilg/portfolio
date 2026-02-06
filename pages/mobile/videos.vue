@@ -71,7 +71,7 @@
 
     <!-- Hero Title (Moves from Center to Top) -->
     <div class="hero-title fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center pointer-events-none origin-top">
-        <Title1 text="ANIMAÇÕES" class="text-[17vw] text-white mix-blend-overlay whitespace-nowrap" />
+        <Title1 text="VÍDEOS" class="text-[17vw] text-white mix-blend-overlay whitespace-nowrap" />
     </div>
 
     <!-- Scroll Prompt -->
@@ -99,6 +99,7 @@
                      <div class="flex flex-col items-center text-center"
                           :class="getItemVisualClass(index)"
                           :ref="el => visualRefs[index] = el"
+                          @click="handleItemClick(item)"
                           style="width: 90vw;"
                      >
                          <span class="gabarito font-black text-[12vw] text-white uppercase leading-[0.9] drop-shadow-xl">
@@ -139,9 +140,9 @@ const visualRefs = ref([]);
 let stInstances = [];
 
 const items = projects
-    .filter(p => p.categories && p.categories.includes('animation'))
+    .filter(p => p.categories && p.categories.includes('videos'))
     .map(p => {
-        const preview = p.previews?.animation || p.preview;
+        const preview = p.previews?.videos || p.preview;
         return {
             id: p.id,
             name: p.title,
@@ -149,9 +150,7 @@ const items = projects
             link: p.hasPage,
             speed: preview.speed,
             start: preview.start,
-            transparent: preview.transparent,
-            color: p.color,
-            id: p.id
+            transparent: preview.transparent
         };
     });
 

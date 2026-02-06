@@ -27,17 +27,10 @@
         <transition name="fade">
             <div :key="'fg-' + activeItemIndex" class="absolute inset-0 w-full h-full flex items-center justify-center p-[5vw]">
                  <template v-if="activeItemIndex !== null && items[activeItemIndex]">
-                     <video 
-                        v-if="isVideo(items[activeItemIndex].src)"
-                        :src="resolvePath(items[activeItemIndex].src)"
-                        autoplay loop muted playsinline 
-                        class="w-auto h-auto max-w-full max-h-[50vh] object-contain shadow-2xl rounded-lg mx-auto"
-                     ></video>
                      <img 
-                        v-else 
                         :src="resolvePath(items[activeItemIndex].src)" 
                         :class="{ 'shadow-2xl': !items[activeItemIndex].transparent }"
-                        class="w-auto h-auto max-w-full max-h-[50vh] object-contain rounded-lg mx-auto"
+                        class="w-auto h-auto max-w-full max-h-[40vh] object-contain rounded-lg mx-auto"
                      />
                  </template>
             </div>
@@ -71,7 +64,7 @@
 
     <!-- Hero Title (Moves from Center to Top) -->
     <div class="hero-title fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center pointer-events-none origin-top">
-        <Title1 text="ANIMAÇÕES" class="text-[17vw] text-white mix-blend-overlay whitespace-nowrap" />
+        <Title1 text="DESIGN" class="text-[17vw] text-white mix-blend-overlay whitespace-nowrap" />
     </div>
 
     <!-- Scroll Prompt -->
@@ -99,9 +92,10 @@
                      <div class="flex flex-col items-center text-center"
                           :class="getItemVisualClass(index)"
                           :ref="el => visualRefs[index] = el"
+                          @click="handleItemClick(item)"
                           style="width: 90vw;"
                      >
-                         <span class="gabarito font-black text-[12vw] text-white uppercase leading-[0.9] drop-shadow-xl">
+                         <span class="gabarito font-black text-[12vw] text-white uppercase leading-[0.9]">
                             {{ item.name }}
                          </span>
                      </div>
@@ -139,9 +133,9 @@ const visualRefs = ref([]);
 let stInstances = [];
 
 const items = projects
-    .filter(p => p.categories && p.categories.includes('animation'))
+    .filter(p => p.categories && p.categories.includes('design'))
     .map(p => {
-        const preview = p.previews?.animation || p.preview;
+        const preview = p.previews?.design || p.preview;
         return {
             id: p.id,
             name: p.title,
@@ -149,9 +143,7 @@ const items = projects
             link: p.hasPage,
             speed: preview.speed,
             start: preview.start,
-            transparent: preview.transparent,
-            color: p.color,
-            id: p.id
+            transparent: preview.transparent
         };
     });
 
@@ -174,7 +166,8 @@ const isVideo = (path) => {
 const getItemVisualClass = (index) => {
     if (activeItemIndex.value === null) {
         // Initial state for all items before any scrolling
-        return 'opacity-50 blur-[0.6vw] scale-90'; 
+        // return 'opacity-50 blur-[0.6vw] scale-90'; 
+        return ''; 
     }
     
     if (index === activeItemIndex.value) {
@@ -183,7 +176,8 @@ const getItemVisualClass = (index) => {
         return '!opacity-0 pointer-events-none';
     } else if (index > activeItemIndex.value) {
         // Next (Rising): Visible - GSAP handles styles, but base class here
-        return 'opacity-90 blur-[0.6vw] scale-90';
+        // return 'opacity-90 blur-[0.6vw] scale-90';
+        return '';
     } else {
         // Previous (Done): Hidden
         return '!opacity-0 pointer-events-none';
@@ -200,6 +194,15 @@ onMounted(() => {
 
     gsap.registerPlugin(ScrollTrigger);
 
+    // 1. HERO ANIMATION: Slide Title from Center to Top
+    // Initial entrance
+    // gsap.from('.hero-title', {
+    //     y: 50,
+    //     opacity: 0,
+    //     duration: 1.5,
+    //     ease: 'power3.out'
+    // });
+    
     // Scroll Scrub - Title
     const stHero = gsap.to('.hero-title', {
         top: '8vh', // Adjusted per user request (was 3vh)
@@ -266,15 +269,15 @@ onMounted(() => {
         stInstances.push(stActive);
         
         if (visualRefs.value[index]) {
-             const tw = gsap.fromTo(visualRefs.value[index], 
+            const tw = gsap.fromTo(visualRefs.value[index], 
                 { 
-                    opacity: 0.1, 
+                    opacity: 0, 
                     scale: 2.2, 
                     filter: "blur(3vw)", 
                     // letterSpacing: "10vw" 
                 },
                 {
-                    opacity: 0.8, 
+                    opacity: 1, 
                     scale: 1, 
                     filter: "blur(0vw)",
                     // letterSpacing: "0vw",
@@ -285,11 +288,11 @@ onMounted(() => {
                         scrub: true,
                     }
                 }
-             );
+            );
             const tw2 = gsap.fromTo(visualRefs.value[index], 
                 {
-                    opacity: 0.8,
-                    scale: 1
+                     opacity: 0.8,
+                     scale: 1
                 },
                 {
                     opacity: 0,
@@ -297,7 +300,7 @@ onMounted(() => {
                     scrollTrigger: {
                         trigger: `.item-trigger-${index}`,
                         start: "top 25%",
-                        end: "top 5%",
+                        end: "top 0%",
                         scrub: true,
                     }
                 }

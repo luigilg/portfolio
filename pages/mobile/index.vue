@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-col items-center w-full min-h-screen px-5 pb-20">
+  <div class="flex flex-col items-center w-full min-h-screen">
     <div class="flex flex-col justify-center items-center w-full h-[100vh]">
-      <div class="flex flex-col justify-center items-center gap-2 px-5 text-[26vw] -tracking-[1vw]">
+      <div class="maintitle flex flex-col justify-center items-center gap-[1.5vh] text-[26vw] -tracking-[1vw]">
         <div class="text-start w-full flex flex-row justify-center items-center z-[1] pb-[10vh] overflow-hidden -mb-[10vh]">
           <h1 ref="luigiRef" class="invisible gabarito font-black text-b-dark select-none whitespace-nowrap">LUIGI</h1>
         </div>
-        <AlternatingText(M)  class="z-[2]" :texts="['creative']" position="center" :start="startAltText" from="bottom" />
-        <div class="w-full h-[7vh] gradbar rounded-lg"></div>
+        <AlternatingText(M) ref="altTextTop" class="z-[2]" :texts="['creative']" position="center" :start="startAltText" from="bottom" />
+        <div ref="gradBarRef" class="w-full h-[7vh] gradbar rounded-lg"></div>
         <!-- <div class="w-full h-[7vh] gradblur rounded-lg"></div> -->
-        <AlternatingText(M)  class="z-[2]" :texts="['developer', 'designer', 'composer', 'animator', 'artist']" position="center" from="top" :start="startAltText" />
+        <AlternatingText(M) ref="altTextBottom" class="z-[2]" :texts="['developer', 'designer', 'composer', 'animator', 'artist']" position="center" from="top" :start="startAltText" />
         <div class="text-end w-full flex flex-row justify-center items-center z-[1] pt-[10vh] overflow-hidden -mt-[10vh]" >
           <h1 ref="girardiRef" class="invisible gabarito font-black text-b-dark select-none whitespace-nowrap">GIRARDI</h1>
         </div>
@@ -34,9 +34,12 @@
         text="TRABALHOS QUE JÁ FIZ"
     />
     <WhatIDo(M) ref="whatIDoRef"/> 
-    <div class="mt-10">
-      <p class="text-sm text-center funnel text-gray-500 mb-10">Versão mobile ainda em desenvolvimento... Acesse pelo computador!</p>
-    </div> 
+    <Title1 
+        class="text-[16vw] worksIdid relative z-[6]"
+        text="MY TECH STACK"
+    />
+    <TechStack(M)/>
+    <Footer(M)  class="mt-[20vh]"/>
   </div>
 </template>
 
@@ -73,7 +76,9 @@ const startAltText = ref(false);
 const gradientStrokeRef = ref(null);
 const showStroke = ref(false);
 const whatIDoRef = ref(null);
-const techStackRef = ref(null);
+const altTextTop = ref(null);
+const altTextBottom = ref(null);
+const gradBarRef = ref(null);
 
 onMounted(() => {
   let allChars = [];
@@ -97,12 +102,6 @@ onMounted(() => {
     CustomEase.create("fast", "M0,0 C0.126,0.382 0.32,0.925 0.634,0.971 0.788,0.993 0.731,0.984 1,1 ");
     CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
     
-    window.addEventListener('mousemove', e => {
-      mousePos.x = e.clientX;
-      mousePos.y = e.clientY;
-      updateCharPositions();
-    });
-    window.addEventListener('resize', debouncedRecalculate);
   }
 
   if (luigiRef.value && girardiRef.value) {
@@ -124,14 +123,16 @@ onMounted(() => {
     tl.from(luigiChars, {
       duration: 1.3,
       ease: 'expo.out',
+      scale: 0.3,
       y: '20vh',
-      stagger: { each: 0.08, from: 'center' }
+      stagger: { each: 0.08, from: 'center', scale: 1 }
     }, 0);
     tl.from(girardiChars, {
       duration: 1.3,
       ease: 'expo.out',
+      scale: 0.3,
       y: '-20vh',
-      stagger: { each: 0.08, from: 'center' }
+      stagger: { each: 0.08, from: 'center', scale: 1 }
     }, 0.2);
     tl.to(luigiChars, {
       keyframes: { color: colorKeyframesL, ease: 'steps(3)' },
@@ -167,7 +168,35 @@ onMounted(() => {
         }
       });
     }
+
+
+    const tlHeroExit = gsap.timeline({
+      scrollTrigger: {
+          trigger: '.maintitle',
+          start: 'center 45%', 
+          end: 'bottom 6%', 
+          scrub: 1
+      }
+    });
+
+    tlHeroExit
+      .to(luigiRef.value, { x: '-30vw', opacity: 0, scale: 0.1, rotation: -5 }, 0)
+      .to(girardiRef.value, { x: '30vw', opacity: 0, scale: 0.1, rotation: 5 }, 0)
+      .to(gradBarRef.value, { scale: 0, opacity: 0 }, 0);
+      
+    if (altTextTop.value) {
+       tlHeroExit.to(altTextTop.value.$el, { x: '10vh', opacity: 0, scale: 0 }, 0);
+    }
+    if (altTextBottom.value) {
+       tlHeroExit.to(altTextBottom.value.$el, { x: '-10vh', opacity: 0, scale: 0 }, 0);
+    }
   }
+
+  ScrollTrigger.create({
+    trigger: '.maintitle',
+    start: 'center center',
+    end: 'bottom top',
+  })
 
   ScrollTrigger.create({
     trigger: '.whoAmI',
@@ -264,17 +293,6 @@ onMounted(() => {
     });
   }
 
-  if (techStackRef.value) {
-      ScrollTrigger.create({
-        trigger: techStackRef.value,
-        start: "center center",
-        end: "+=600",
-        pin: true,
-        pinSpacing: true,
-        pinReparent: true,
-        refreshPriority: 1
-      });
-  }
 
   setTimeout(() => {
    ScrollTrigger.refresh();
