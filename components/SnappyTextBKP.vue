@@ -72,7 +72,6 @@ export default {
         CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
 
         gsap.set(['.t1b', '.t1a', '.t2a', '.t2b', '.t3a', '.t3b', '.t4a', '.t4b'], { opacity: 0 });
-        gsap.set('.ball', { opacity: 0 });
 
         const entryTl = gsap.timeline({
             scrollTrigger: {

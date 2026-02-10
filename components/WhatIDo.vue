@@ -64,44 +64,44 @@ const items = {
     anim: {
         count: 26,
         desc: 'ANIMAÇÕES',
-        imgs: [
-            // { src: "/projects/ProCubo/S1.mp4", type: 'video' },
-            // { src: "/projects/MiniDrinks/LogoAnim.mp4", type: 'video' },
-            // { src: "/projects/ElasticTypo/1.mp4", type: 'video' }
-            { src: "/projects/Conversu/logo.png", type: 'image' },
-            { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
-            { src: "/projects/Engepro/logo.jpg", type: 'image' }
-        ],
+        // imgs: [
+        //     // { src: "/projects/ProCubo/S1.mp4", type: 'video' },
+        //     // { src: "/projects/MiniDrinks/LogoAnim.mp4", type: 'video' },
+        //     // { src: "/projects/ElasticTypo/1.mp4", type: 'video' }
+        //     { src: "/projects/Conversu/logo.png", type: 'image' },
+        //     { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
+        //     { src: "/projects/Engepro/logo.jpg", type: 'image' }
+        // ],
         route: '/animations'
     },
     syst: {
         count: 7,
         desc: 'SITES E APPS',
-        imgs: [
-            { src: "/projects/Bantads/logo.png", type: 'image' },
-            { src: "/projects/Gasto/logo.png", type: 'image' },
-            { src: "/projects/Nutriplan/logo.png", type: 'image' }
-        ],
+        // imgs: [
+        //     { src: "/projects/Bantads/logo.png", type: 'image' },
+        //     { src: "/projects/Gasto/logo.png", type: 'image' },
+        //     { src: "/projects/Nutriplan/logo.png", type: 'image' }
+        // ],
         route: '/dev'
     },
     vids: {
         count: 11,
         desc: 'VÍDEOS',
-        imgs: [
-            { src: "/projects/Conversu/logo.png", type: 'image' },
-            { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
-            { src: "/projects/Engepro/logo.jpg", type: 'image' }
-        ],
+        // imgs: [
+        //     { src: "/projects/Conversu/logo.png", type: 'image' },
+        //     { src: "/projects/Vzion/logo_full.jpg", type: 'image' },
+        //     { src: "/projects/Engepro/logo.jpg", type: 'image' }
+        // ],
         route: '/videos'
     },
     desn: {
         count: 13,
         desc: 'DESIGN',
-        imgs: [
-            { src: "/projects/Abelino/Logo.jpg", type: 'image' },
-            { src: "/projects/Squirrel/horizontal1.jpg", type: 'image' },
-            { src: "/projects/Nutriplan/logo.png", type: 'image' }
-        ],
+        // imgs: [
+        //     { src: "/projects/Abelino/Logo.jpg", type: 'image' },
+        //     { src: "/projects/Squirrel/horizontal1.jpg", type: 'image' },
+        //     { src: "/projects/Nutriplan/logo.png", type: 'image' }
+        // ],
         route: '/designs'
     },
     musc: {
@@ -115,10 +115,10 @@ onMounted(() => {
     gsap.registerPlugin(CustomEase);
     CustomEase.create("fast", "M0,0 C0.039,0.356 0.05,0.675 0.228,0.837 0.406,1 0.489,1 1,1 ");
 
-    gsap.set(".image-group", {
-        opacity: 0,
-        scale: 1,
-    });
+    // gsap.set(".image-group", {
+    //     opacity: 0,
+    //     scale: 1,
+    // });
 });
 
 const colorSequence = () => {
@@ -211,7 +211,7 @@ const animateIn = (key, color, yDirection) => {
     }
 
     const textSelector = `.${key}`;
-    const groupSelector = `.${key}-imgs`;
+    // const groupSelector = `.${key}-imgs`;
     
     const textLength = items[key].desc.length;
     const textCharWidth = 60;
@@ -226,28 +226,28 @@ const animateIn = (key, color, yDirection) => {
     const randomRotation2 = (Math.random() - 0.5) * 20;
     const randomRotation3 = (Math.random() - 0.5) * 20;
 
-    gsap.set(groupSelector, { opacity: 1 });
+    // gsap.set(groupSelector, { opacity: 1 });
     gsap.to(textSelector, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
-    gsap.to(groupSelector, { scale: 1, duration: 1, ease: 'elastic.out(1.25, 0.8)', overwrite: true });
+    // gsap.to(groupSelector, { scale: 1, duration: 1, ease: 'elastic.out(1.25, 0.8)', overwrite: true });
 
-    gsap.fromTo(`.${key}-img-0`,
-        { x: 0, y: (initialYOffset - 200), scale: 0.6, rotation: 0, },
-        { x: 0, y: -200, scale: 1, rotation: randomRotation1, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
-    );
-    gsap.fromTo(`.${key}-img-1`,
-        { x: finalX_img1, y: initialYOffset, scale: 0.6, rotation: 0, },
-        { x: finalX_img1, y: 0, scale: 1, rotation: randomRotation2, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
-    );
-    gsap.fromTo(`.${key}-img-2`,
-        { x: finalX_img2, y: initialYOffset, scale: 0.6, rotation: 0, },
-        { x: finalX_img2, y: 0, scale: 1, rotation: randomRotation3, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
-    );
+    // gsap.fromTo(`.${key}-img-0`,
+    //     { x: 0, y: (initialYOffset - 200), scale: 0.6, rotation: 0, },
+    //     { x: 0, y: -200, scale: 1, rotation: randomRotation1, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
+    // );
+    // gsap.fromTo(`.${key}-img-1`,
+    //     { x: finalX_img1, y: initialYOffset, scale: 0.6, rotation: 0, },
+    //     { x: finalX_img1, y: 0, scale: 1, rotation: randomRotation2, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
+    // );
+    // gsap.fromTo(`.${key}-img-2`,
+    //     { x: finalX_img2, y: initialYOffset, scale: 0.6, rotation: 0, },
+    //     { x: finalX_img2, y: 0, scale: 1, rotation: randomRotation3, duration: 0.9, ease: "elastic.out(1,0.8)", overwrite: true }
+    // );
 };
 
 const animateOut = (key, isFinalLeave = false, yDirection) => {
     const textSelector = `.${key}`;
-    const groupSelector = `.${key}-imgs`;
-    const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
+    // const groupSelector = `.${key}-imgs`;
+    // const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
     const finalTextColor = isFinalLeave ? '' : '#aaa';
 
     if (!items[key].imgs) {
@@ -258,9 +258,9 @@ const animateOut = (key, isFinalLeave = false, yDirection) => {
     const exitYOffset = 100 * -yDirection;
 
     gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
-    gsap.to(groupSelector, { scale: 1, duration: 0.4, ease: 'fast', overwrite: true });
-    gsap.to(groupSelector, { opacity: 0, duration: 0 });
-    gsap.to(allImgsSelector, { y: exitYOffset, rotation: 0, duration: 0.4, ease: 'fast', overwrite: true });
+    // gsap.to(groupSelector, { scale: 1, duration: 0.4, ease: 'fast', overwrite: true });
+    // gsap.to(groupSelector, { opacity: 0, duration: 0 });
+    // gsap.to(allImgsSelector, { y: exitYOffset, rotation: 0, duration: 0.4, ease: 'fast', overwrite: true });
 };
 
 const navigate = async (route) => {

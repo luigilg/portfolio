@@ -68,7 +68,7 @@ export const projects = [
         id: 'vzion', 
         title: 'VZION', 
         categories: ['animation', 'videos', 'design'], 
-        description: "A Vzion (se lê vision, do inglês) foi um pequeno negócio de videomaking que criei com meu amigo, Raphael Chung. Fizemos vídeos promocionais e animações para clientes variados (MiniDrinks | EngePro | Ejeq | Bruna Gazolla | Futegol | CoemJR | Estação Central). Tudo que foi criado com a Vzion está incluso aqui no meu site, nos trabalhos que já fiz.",
+        description: "A Vzion (se lê vision, do inglês) foi um pequeno negócio de videomaking que criei com meu amigo, Raphael Chung. Fizemos vídeos promocionais e animações para clientes variados (MiniDrinks | EngePro | Ejeq | Bruna Gazolla | Futegol | CoemJR | Estação Central). Criei a ideia e o design da logo e, nos trabalhos que fizemos, eu era repsonsável pela parte do motion (animações). Tudo que foi criado com a Vzion está incluso aqui no meu site, nos trabalhos que já fiz.",
         hasPage: true, 
         preview: { src: '/projects/Vzion/LogoAnim.mp4', type: 'video', speed: 1.4, start: 0 },
         previews: {
