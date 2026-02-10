@@ -48,7 +48,7 @@ const techList = ref([
     { logo: 'nodejs', color: '#82cd2a' },
     { logo: 'java', color: '#f0931c' },
     { logo: 'python',  color: '#ffd341' },
-    { logo: 'c', color: '#A8B9CC' }, 
+    { logo: 'C', color: '#A8B9CC' }, 
     { logo: 'mysql', color: '#00618a' },
     { logo: 'oracle', color: '#f70000' },
     { logo: 'bootstrap', color: '#910bfe', color2: '#6a07f3' },
