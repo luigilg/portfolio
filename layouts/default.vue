@@ -36,7 +36,10 @@ const pageTransition = {
       xPercent: 50,
       duration: 0.6,
       ease: 'power2.inOut',
-      onComplete: done,
+      onComplete: () => {
+        ScrollTrigger.refresh();
+        done();
+      },
     });
   },
   onLeave(el, done) {

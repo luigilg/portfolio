@@ -106,6 +106,7 @@ const scrollContainer = ref(null);
 const previewBox = ref(null);
 const contentReady = ref(false);
 let stInstance = null;
+let ctx;
 
 
 const onMediaLoaded = (e) => {
@@ -119,10 +120,14 @@ const onMediaLoaded = (e) => {
     }
     
     contentReady.value = true;
-    gsap.fromTo('.preview-content', 
-        { scale: 0},
-        { scale: 1, duration: 0.3, ease: 'fast', overwrite: true }
-    );
+    if (ctx) {
+        ctx.add(() => {
+            gsap.fromTo('.preview-content', 
+                { scale: 0},
+                { scale: 1, duration: 0.3, ease: 'fast', overwrite: true }
+            );
+        });
+    }
 };
 
 watch(activeItemIndex, () => {
@@ -163,30 +168,36 @@ const isVideo = (path) => {
 };
 
 onMounted(() => {
-    gsap.registerPlugin(CustomEase, ScrollTrigger, SplitText);
-    CustomEase.create("fast", "M0,0 C0.039,0.356 0.05,0.675 0.228,0.837 0.406,1 0.489,1 1,1 ");
-    
-    stInstance = ScrollTrigger.create({
-        trigger: scrollContainer.value,
-        start: "top center-=300px", 
-        end: "bottom center+=300px",
-        pin: previewBox.value,
-    });
+    ctx = gsap.context(() => {
+        gsap.registerPlugin(CustomEase, ScrollTrigger, SplitText);
+        CustomEase.create("fast", "M0,0 C0.039,0.356 0.05,0.675 0.228,0.837 0.406,1 0.489,1 1,1 ");
+        
+        stInstance = ScrollTrigger.create({
+            trigger: scrollContainer.value,
+            start: "top center-=300px", 
+            end: "bottom center+=300px",
+            pin: previewBox.value,
+        });
 
-    gsap.set('.anim-item', { transition: 'none' });
-    gsap.from('.anim-item', {
-        opacity: 0,
-        x: 200,
-        duration: 0.8,
-        stagger: 0.05,
-        delay: 0.3,
-        ease: 'elastic.out(1.10,0.8)',
-        clearProps: 'all'
+        gsap.set('.anim-item', { transition: 'none' });
+        gsap.from('.anim-item', {
+            opacity: 0,
+            x: 200,
+            duration: 0.8,
+            stagger: 0.05,
+            delay: 0.3,
+            ease: 'elastic.out(1.10,0.8)',
+            clearProps: 'all'
+        });
     });
 });
 
 onUnmounted(() => {
+    if (ctx) ctx.revert();
     if (stInstance) stInstance.kill();
+    // Force cleanup
+    activeItemIndex.value = null;
+    visualActiveIndex.value = null;
 });
 
 const colorSequence = () => {
@@ -208,29 +219,30 @@ const onItemEnter = (index) => {
     const nextColor = colorSequence();
     activeColor.value = nextColor;
 
-    gsap.to(`.item-text-${index}`, {
-        color: nextColor,
-        x: 0,
-        scale: 1.6,
-        duration: 0.8,
-        ease: 'fast',
-        overwrite: true
-    });
+    if (ctx) {
+        ctx.add(() => {
+             gsap.to(`.item-text-${index}`, {
+                color: nextColor,
+                x: 0,
+                scale: 1.6,
+                duration: 0.8,
+                ease: 'fast',
+                overwrite: true
+            });
 
-    gsap.fromTo(`.arrow-left-${index}`, 
-        { x: -50, opacity: 1},
-        { x: 15, opacity: 1, duration: 1, ease: 'fast', overwrite: true }
-    );
-
-    gsap.to(`.arrow-right-${index}`, { 
-        opacity: 1, 
-        y: -5,
-        rotate: 0,
-        duration: 1, 
-        scale: 1,
-        ease: 'fast', 
-        overwrite: true 
-    });
+            if (items[index].link) {
+                gsap.to(`.arrow-right-${index}`, { 
+                    opacity: 1, 
+                    y: -5,
+                    rotate: 0,
+                    duration: 1, 
+                    scale: 1,
+                    ease: 'fast', 
+                    overwrite: true 
+                });
+            }
+        });
+    }
 
     if (hoverTimeout) clearTimeout(hoverTimeout);
     
@@ -240,28 +252,40 @@ const onItemEnter = (index) => {
 };
 
 const onItemDown = (index) => {
-    gsap.to(`.arrow-right-${index}`, { 
-        x: 5,
-        y: 0,
-        rotate: 45,
-        opacity: 1,
-        scale: 1.6, 
-        duration: 0.4, 
-        ease: 'fast',
-        overwrite: true
-    });
+    if (items[index].link) {
+        if(ctx) {
+            ctx.add(() => {
+                 gsap.to(`.arrow-right-${index}`, { 
+                    x: 5,
+                    y: 0,
+                    rotate: 45,
+                    opacity: 1,
+                    scale: 1.6, 
+                    duration: 0.4, 
+                    ease: 'fast',
+                    overwrite: true
+                });
+            });
+        }
+    }
 };
 
 const onItemUp = (index) => {
-    gsap.to(`.arrow-right-${index}`, { 
-        x: 0, 
-        y: 0,
-        rotate: 0,
-        scale: 1,
-        duration: 0.4, 
-        ease: 'fast',
-        overwrite: true
-    });
+    if (items[index].link) {
+         if(ctx) {
+            ctx.add(() => {
+                 gsap.to(`.arrow-right-${index}`, { 
+                    x: 0, 
+                    y: 0,
+                    rotate: 0,
+                    scale: 1,
+                    duration: 0.4, 
+                    ease: 'fast',
+                    overwrite: true
+                });
+            });
+        }
+    }
 };
 
 const onListLeave = () => {
@@ -275,31 +299,32 @@ const onListLeave = () => {
 };
 
 const animateOut = (index) => {
-    gsap.to(`.item-text-${index}`, {
-        color: '#B0B0B0',
-        x: 0,
-        scale: 1,
-        duration: 0.4,
-        ease: 'fast',
-        overwrite: true
-    });
+    if(!items[index]) return;
 
-    gsap.to(`.arrow-left-${index}`, {
-        x: -50,
-        opacity: 0,
-        duration: 0.25,
-        ease: 'fast',
-        overwrite: true
-    });
-    gsap.to(`.arrow-right-${index}`, {
-        opacity: 0,
-        rotate: 45,
-        scale: 1/2,
-        x: 0,
-        y: 0,
-        duration: 0.25,
-        ease: 'fast',
-        overwrite: true
-    });
+    if(ctx) {
+        ctx.add(() => {
+            gsap.to(`.item-text-${index}`, {
+                color: '#B0B0B0',
+                x: 0,
+                scale: 1,
+                duration: 0.4,
+                ease: 'fast',
+                overwrite: true
+            });
+
+            if (items[index].link) {
+                gsap.to(`.arrow-right-${index}`, {
+                    opacity: 0,
+                    rotate: 45,
+                    scale: 1/2,
+                    x: 0,
+                    y: 0,
+                    duration: 0.25,
+                    ease: 'fast',
+                    overwrite: true
+                });
+            }
+        });
+    }
 };
 </script>

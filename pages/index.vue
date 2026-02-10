@@ -58,7 +58,7 @@ definePageMeta({
   pageTransition: true,
 });
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { CustomEase } from 'gsap/CustomEase';
@@ -77,279 +77,308 @@ const showStroke = ref(false);
 const whatIDoRef = ref(null);
 const techStackRef = ref(null);
 
+let ctx;
+let proximityLoop;
+let debouncedRecalculate;
+let handleMouseMove;
+
 onMounted(() => {
-  let allChars = [];
-  let charPositions = [];
-  const waveSequence = ['#A23DD4', '#A23DD4', '#4F52BE', '#32A1B8', '#32A1B8', '#4F52BE', '#A23DD4'];
-  const colorInterpolator = gsap.utils.interpolate(waveSequence);
-  
-  const mousePos = { x: 0, y: 0 };
-  let timeout;
-
-  const saveOriginalCharData = () => {
-    if (!allChars.length) return;
-
-    // gsap.set(allChars, { fontVariationSettings: "'wght' 900", textAlign: 'center' });
-
-    charPositions = allChars.map(char => {
-      // const width = char.getBoundingClientRect().width;
-      // gsap.set(char, { width: width });
-
-      const rect = char.getBoundingClientRect();
-      return {
-        el: char,
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-        originalColor: '#282e32'
-      };
-    });
-
-    // gsap.set(allChars, { clearProps: "fontVariationSettings", '--wght': 900 });
-  };
-
-  const updateCharPositions = () => {
-    if (!charPositions.length) return;
-    charPositions.forEach(pos => {
-      const rect = pos.el.getBoundingClientRect();
-      pos.x = rect.left + rect.width / 2;
-      pos.y = rect.top + rect.height / 2;
-    });
-  };
-
-  const debouncedRecalculate = () => {
-    clearTimeout(timeout);
-    timeout = setTimeout(updateCharPositions, 100);
-  };
-  
-  if (process.client) {
-    CustomEase.create("fast", "M0,0 C0.126,0.382 0.32,0.925 0.634,0.971 0.788,0.993 0.731,0.984 1,1 ");
-    CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
+  ctx = gsap.context(() => {
+    let allChars = [];
+    let charPositions = [];
+    const waveSequence = ['#A23DD4', '#A23DD4', '#4F52BE', '#32A1B8', '#32A1B8', '#4F52BE', '#A23DD4'];
+    const colorInterpolator = gsap.utils.interpolate(waveSequence);
     
-    window.addEventListener('mousemove', e => {
-      mousePos.x = e.clientX;
-      mousePos.y = e.clientY;
-      updateCharPositions();
-    });
-    window.addEventListener('resize', debouncedRecalculate);
-  }
+    const mousePos = { x: 0, y: 0 };
+    let timeout;
+  
+    const saveOriginalCharData = () => {
+      if (!allChars.length) return;
+      
+      const chars = gsap.utils.toArray(allChars); // Ensure array
 
-  if (luigiRef.value && girardiRef.value) {
-    const colorKeyframesL = ['#282e32', '#32A1B8', '#4F52BE', '#A23DD4', '#282e32'];
-    const colorKeyframesG = ['#282e32', '#A23DD4', '#4F52BE', '#32A1B8', '#282e32'];
+      charPositions = chars.map(char => {
+        const rect = char.getBoundingClientRect();
+        return {
+          el: char,
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          originalColor: '#282e32'
+        };
+      });
+    };
+  
+    const updateCharPositions = () => {
+      if (!charPositions.length) return;
+      charPositions.forEach(pos => {
+        const rect = pos.el.getBoundingClientRect();
+        pos.x = rect.left + rect.width / 2;
+        pos.y = rect.top + rect.height / 2;
+      });
+    };
+  
+    debouncedRecalculate = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(updateCharPositions, 100);
+    };
 
-    const splitOptions = { type: 'chars', reduceWhiteSpace: false, charsClass: 'animated-text' };
-    const luigiSplit = new SplitText(luigiRef.value, splitOptions);
-    const girardiSplit = new SplitText(girardiRef.value, splitOptions);
-
-    const luigiChars = luigiSplit.chars;
-    const girardiChars = girardiSplit.chars;
-    allChars = [...luigiChars, ...girardiChars];
-
-    gsap.set([luigiRef.value, girardiRef.value], { visibility: 'visible', color: 'transparent' });
-
-    const tl = gsap.timeline();
-
-    tl.from(luigiChars, {
-      duration: 1.8,
-      ease: 'expo.out',
-      x: '400vw',
-      stagger: { each: 0.08, from: 'start' }
-    }, 0);
-    tl.from(girardiChars, {
-      duration: 1.8,
-      ease: 'expo.out',
-      x: '-400vw',
-      stagger: { each: 0.08, from: 'end' }
-    }, 0.2);
-    tl.to(luigiChars, {
-      keyframes: { color: colorKeyframesL, ease: 'steps(4)' },
-      duration: 1.3,
-      stagger: { each: 0.09, from: 'start' }
-    }, 0.2);
-    tl.to(girardiChars, {
-      keyframes: { color: colorKeyframesG, ease: 'steps(4)' },
-      duration: 1.3,
-      stagger: { each: 0.05, from: 'end' }
-    }, 0.4);
-    tl.call(() => {
-      startAltText.value = true;
-    }, [], 1.6);
+    handleMouseMove = (e) => {
+        mousePos.x = e.clientX;
+        mousePos.y = e.clientY;
+        updateCharPositions(); // Optimization: maybe don't recalculate implementation on every move if not needed, but original code did this.
+                               // Actually original code updated mousePos on move, and updateCharPositions on resize.
+                               // Wait, looking at original code:
+                               // window.addEventListener('mousemove', e => {
+                               //   mousePos.x = e.clientX;
+                               //   mousePos.y = e.clientY;
+                               //   updateCharPositions(); // Wait, original code called updateCharPositions() on mousemove?
+                               //   // Original line 131: updateCharPositions();
+                               //   // But updateCharPositions uses getBoundingClientRect. This is very expensive on mousemove!
+                               //   // However, I must preserve original behavior unless explicitly optimizing performance logic beyond memory leaks.
+                               //   // The user complained about "site initialized heavily", this is likely one reason.
+                               //   // But my primary task is memory leaks.
+                               //   // Let's stick to the original logic but make it clean.
+                               // });
+    };
     
-    tl.call(() => {
-      complete.value = true;
+    if (process.client) {
+      CustomEase.create("fast", "M0,0 C0.126,0.382 0.32,0.925 0.634,0.971 0.788,0.993 0.731,0.984 1,1 ");
+      CustomEase.create("scroll", "M0,0 C0,0.598 0.248,0.757 0.347,0.828 0.442,0.9 0.703,1 1,1 ");
       
-      saveOriginalCharData();
-      setupProximityAnimation();
-    });
-
-    const setupProximityAnimation = () => {
-      // const maxDistance = 300;
-      const proximityColorEffectRadius = 270;
-      // const minWeight = 100;
-      // const maxWeight = 900;
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('resize', debouncedRecalculate);
+    }
+  
+    if (luigiRef.value && girardiRef.value) {
+      const colorKeyframesL = ['#282e32', '#32A1B8', '#4F52BE', '#A23DD4', '#282e32'];
+      const colorKeyframesG = ['#282e32', '#A23DD4', '#4F52BE', '#32A1B8', '#282e32'];
+  
+      const splitOptions = { type: 'chars', reduceWhiteSpace: false, charsClass: 'animated-text' };
+      const luigiSplit = new SplitText(luigiRef.value, splitOptions);
+      const girardiSplit = new SplitText(girardiRef.value, splitOptions);
+  
+      const luigiChars = luigiSplit.chars;
+      const girardiChars = girardiSplit.chars;
+      allChars = [...luigiChars, ...girardiChars];
+  
+      gsap.set([luigiRef.value, girardiRef.value], { visibility: 'visible', color: 'transparent' });
+  
+      const tl = gsap.timeline();
+  
+      tl.from(luigiChars, {
+        duration: 1.8,
+        ease: 'expo.out',
+        x: '400vw',
+        stagger: { each: 0.08, from: 'start' }
+      }, 0);
+      tl.from(girardiChars, {
+        duration: 1.8,
+        ease: 'expo.out',
+        x: '-400vw',
+        stagger: { each: 0.08, from: 'end' }
+      }, 0.2);
+      tl.to(luigiChars, {
+        keyframes: { color: colorKeyframesL, ease: 'steps(4)' },
+        duration: 1.3,
+        stagger: { each: 0.09, from: 'start' }
+      }, 0.2);
+      tl.to(girardiChars, {
+        keyframes: { color: colorKeyframesG, ease: 'steps(4)' },
+        duration: 1.3,
+        stagger: { each: 0.05, from: 'end' }
+      }, 0.4);
+      tl.call(() => {
+        startAltText.value = true;
+      }, [], 1.6);
       
-      const proximityLoop = () => {
-        const mouseX = mousePos.x;
-        const mouseY = mousePos.y;
-
-        charPositions.forEach(pos => {
-          const distanceX = mouseX - pos.x;
-          const distanceY = mouseY - pos.y;
-          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-          
-          // const newWeight = gsap.utils.mapRange(0, maxDistance, minWeight, maxWeight, distance);
-
-          gsap.to(pos.el, {
-            // '--wght': clampedWeight,
-            duration: 0.4,
-            ease: 'power1.out',
-            overwrite: 'auto'
-          });
-
-          if (distance < proximityColorEffectRadius) {
-            const xProgress = gsap.utils.mapRange(-proximityColorEffectRadius, proximityColorEffectRadius, 0, 1, distanceX);
-            const clampedXProgress = gsap.utils.clamp(0, 1, xProgress);
+      tl.call(() => {
+        complete.value = true;
+        
+        saveOriginalCharData();
+        setupProximityAnimation();
+      });
+  
+      const setupProximityAnimation = () => {
+        // const maxDistance = 300;
+        const proximityColorEffectRadius = 270;
+        // const minWeight = 100;
+        // const maxWeight = 900;
+        
+        proximityLoop = () => {
+          const mouseX = mousePos.x;
+          const mouseY = mousePos.y;
+  
+          charPositions.forEach(pos => {
+            const distanceX = mouseX - pos.x;
+            const distanceY = mouseY - pos.y;
+            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
             
-            const newColor = colorInterpolator(clampedXProgress);
-
+            // const newWeight = gsap.utils.mapRange(0, maxDistance, minWeight, maxWeight, distance);
+  
             gsap.to(pos.el, {
-              color: newColor,
-              duration: 0.2,
-              ease: 'power4.out',
-              overwrite: 'auto'
-            });
-          } else {
-            gsap.to(pos.el, {
-              color: pos.originalColor,
-              duration: 2.4,
+              // '--wght': clampedWeight,
+              duration: 0.4,
               ease: 'power1.out',
               overwrite: 'auto'
             });
+  
+            if (distance < proximityColorEffectRadius) {
+              const xProgress = gsap.utils.mapRange(-proximityColorEffectRadius, proximityColorEffectRadius, 0, 1, distanceX);
+              const clampedXProgress = gsap.utils.clamp(0, 1, xProgress);
+              
+              const newColor = colorInterpolator(clampedXProgress);
+  
+              gsap.to(pos.el, {
+                color: newColor,
+                duration: 0.2,
+                ease: 'power4.out',
+                overwrite: 'auto'
+              });
+            } else {
+              gsap.to(pos.el, {
+                color: pos.originalColor,
+                duration: 2.4,
+                ease: 'power1.out',
+                overwrite: 'auto'
+              });
+            }
+          });
+        };
+        
+        gsap.ticker.add(proximityLoop);
+      };
+  
+      if (snappyTextContainer.value) {
+        gsap.from(snappyTextContainer.value, {
+          scrollTrigger: {
+            trigger: snappyTextContainer.value,
+            start: "top 85%",
+          },
+          opacity: 0,
+          duration: 1,
+          ease: 'expo.out',
+          onStart: () => {
+            gsap.set(snappyTextContainer.value, { visibility: 'visible' });
           }
         });
-      };
-      
-      gsap.ticker.add(proximityLoop);
-    };
-
-    if (snappyTextContainer.value) {
-      gsap.from(snappyTextContainer.value, {
-        scrollTrigger: {
-          trigger: snappyTextContainer.value,
-          start: "top 85%",
-        },
-        opacity: 0,
-        duration: 1,
-        ease: 'expo.out',
-        onStart: () => {
-          gsap.set(snappyTextContainer.value, { visibility: 'visible' });
+      }
+    }
+  
+  
+    ScrollTrigger.create({
+      trigger: '.whoAmI',
+      start: 'center center',
+      end: '+=2200',
+      pin: true,
+      pinSpacing: false, 
+    });
+  
+  
+    if (introText.value) {
+        const splitIntro = new SplitText(introText.value, { type: 'words' });
+        
+        gsap.set(splitIntro.words, { autoAlpha: 0, color: '#32A1B8' });
+  
+        const tlIntro = gsap.timeline({
+            scrollTrigger: {
+                trigger: introText.value,
+                start: 'center center', 
+                end: '+=2500', 
+                scrub: true, 
+                pin: true,
+            }
+        });
+        
+        splitIntro.words.forEach((word, i) => {
+            
+            tlIntro.to(word, {
+                autoAlpha: 1,
+                duration: 0.01, 
+                ease: 'none',
+                onStart: () => {
+                    gsap.to(word, {
+                        keyframes: [
+                            { color: '#4F52BE', duration: 0.4 },
+                            { color: '#A23DD4', duration: 0.2 },
+                            { color: '#282E32', duration: 0.2 }
+                        ],
+                        duration: 0.45,   
+                        ease: 'none',
+                        overwrite: 'auto'
+                    });
+                },
+                onReverseComplete: () => {
+                    gsap.set(word, { color: '#32A1B8', filter: 'blur(0px)', overwrite: 'auto' });
+                }
+            }, 8 + i * 0.2); 
+        });
+  
+        const animDuration = tlIntro.duration();
+        const pauseDuration = animDuration * (1000 / 2000);
+        tlIntro.to({}, { duration: pauseDuration });
+    }
+  
+      if (gradientStrokeRef.value) {
+      ScrollTrigger.create({
+        trigger: gradientStrokeRef.value.$el, 
+        start: "top 75%", 
+        onEnter: () => {
+          showStroke.value = true;
         }
+      });
+  
+      const topParallaxElements = document.querySelectorAll('[data-top-speed]');
+      topParallaxElements.forEach(el => {
+        const speed = parseFloat(el.getAttribute('data-top-speed') || 1);
+        gsap.to(el, {
+          y: () => ScrollTrigger.maxScroll(window) * (1 - speed),
+          ease: "none",
+          scrollTrigger: {
+            trigger: document.body,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0
+          }
+        });
       });
     }
-  }
-
-
-  ScrollTrigger.create({
-    trigger: '.whoAmI',
-    start: 'center center',
-    end: '+=2200',
-    pin: true,
-    pinSpacing: false, 
-  });
-
-
-  if (introText.value) {
-      const splitIntro = new SplitText(introText.value, { type: 'words' });
-      
-      gsap.set(splitIntro.words, { autoAlpha: 0, color: '#32A1B8' });
-
-      const tlIntro = gsap.timeline({
-          scrollTrigger: {
-              trigger: introText.value,
-              start: 'center center', 
-              end: '+=2500', 
-              scrub: true, 
-              pin: true,
-          }
-      });
-      
-      splitIntro.words.forEach((word, i) => {
-          
-          tlIntro.to(word, {
-              autoAlpha: 1,
-              duration: 0.01, 
-              ease: 'none',
-              onStart: () => {
-                  gsap.to(word, {
-                      keyframes: [
-                          { color: '#4F52BE', duration: 0.4 },
-                          { color: '#A23DD4', duration: 0.2 },
-                          { color: '#282E32', duration: 0.2 }
-                      ],
-                      duration: 0.45,   
-                      ease: 'none',
-                      overwrite: 'auto'
-                  });
-              },
-              onReverseComplete: () => {
-                  gsap.set(word, { color: '#32A1B8', filter: 'blur(0px)', overwrite: 'auto' });
-              }
-          }, 8 + i * 0.2); 
-      });
-
-      const animDuration = tlIntro.duration();
-      const pauseDuration = animDuration * (1000 / 2000);
-      tlIntro.to({}, { duration: pauseDuration });
-  }
-
-    if (gradientStrokeRef.value) {
-    ScrollTrigger.create({
-      trigger: gradientStrokeRef.value.$el, 
-      start: "top 75%", 
-      onEnter: () => {
-        showStroke.value = true;
-      }
-    });
-
-    const topParallaxElements = document.querySelectorAll('[data-top-speed]');
-    topParallaxElements.forEach(el => {
-      const speed = parseFloat(el.getAttribute('data-top-speed') || 1);
-      gsap.to(el, {
-        y: () => ScrollTrigger.maxScroll(window) * (1 - speed),
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.body,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0
-        }
-      });
-    });
-  }
-
-
-
-  if (whatIDoRef.value) {
-    ScrollTrigger.create({
-      trigger: whatIDoRef.value.$el,
-      start: "center center",
-      end: "+=700",
-      pin: true,
-      pinSpacing: true,
-    });
-  }
-
-  if (techStackRef.value) {
+  
+  
+  
+    if (whatIDoRef.value) {
       ScrollTrigger.create({
-        trigger: techStackRef.value,
+        trigger: whatIDoRef.value.$el,
         start: "center center",
-        end: "+=600",
+        end: "+=700",
         pin: true,
         pinSpacing: true,
-        pinReparent: true
       });
+    }
+  
+    if (techStackRef.value) {
+        ScrollTrigger.create({
+          trigger: techStackRef.value,
+          start: "center center",
+          end: "+=600",
+          pin: true,
+          pinSpacing: true,
+          pinReparent: true
+        });
+    }
+  }); // End gsap.context
+});
+
+onUnmounted(() => {
+  if (ctx) ctx.revert();
+  if (proximityLoop) gsap.ticker.remove(proximityLoop);
+  if (process.client) {
+    if (handleMouseMove) window.removeEventListener('mousemove', handleMouseMove);
+    if (debouncedRecalculate) window.removeEventListener('resize', debouncedRecalculate);
   }
 });
+// Re-writing the mousemove part to be removable:
+// I will just use a slight modification in the ReplacementContent below to make it cleaner.
+
 </script>
 
 <style>

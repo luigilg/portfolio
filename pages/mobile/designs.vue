@@ -130,7 +130,7 @@ useHead({
 const router = useRouter();
 const activeItemIndex = ref(null);
 const visualRefs = ref([]);
-let stInstances = [];
+let ctx;
 
 const items = projects
     .filter(p => p.categories && p.categories.includes('design'))
@@ -185,6 +185,7 @@ const getItemVisualClass = (index) => {
 };
 
 onMounted(() => {
+  ctx = gsap.context(() => {
     // FORCE SCROLL RESET
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
@@ -204,7 +205,7 @@ onMounted(() => {
     // });
     
     // Scroll Scrub - Title
-    const stHero = gsap.to('.hero-title', {
+    gsap.to('.hero-title', {
         top: '8vh', // Adjusted per user request (was 3vh)
         scale: 0.4, 
         y: 0, 
@@ -218,7 +219,7 @@ onMounted(() => {
 
     // Scroll Scrub - Back Button Morph (Pill -> Circle)
     // 1. Animate Wrapper (Gap & Padding)
-    const stBackWrapper = gsap.to('.back-btn-wrapper', {
+    gsap.to('.back-btn-wrapper', {
         gap: '0vw',
         paddingLeft: '2.5vw', // Assuming py is 2vw, aiming for circle
         paddingRight: '2vw',
@@ -231,7 +232,7 @@ onMounted(() => {
     });
 
     // 2. Animate Text (Width & Opacity)
-    const stBackText = gsap.to('.voltartxt', {
+    gsap.to('.voltartxt', {
         width: 0,
         opacity: 0,
         marginLeft: 0,
@@ -243,19 +244,17 @@ onMounted(() => {
         }
     });
 
-    stInstances.push(stHero.scrollTrigger, stBackWrapper.scrollTrigger, stBackText.scrollTrigger);
 
     // Scroll Prompt Fade Out
-    const stPrompt = ScrollTrigger.create({
+    ScrollTrigger.create({
         start: 10, // Absolute scroll 10px
         onEnter: () => gsap.to('.scroll-prompt', { opacity: 0, duration: 0.5, overwrite: true }),
         onLeaveBack: () => gsap.to('.scroll-prompt', { opacity: 1, duration: 0.5, overwrite: true })
     });
-    stInstances.push(stPrompt);
 
 
     items.forEach((item, index) => {
-        const stActive = ScrollTrigger.create({
+        ScrollTrigger.create({
             trigger: `.item-trigger-${index}`,
             start: "top 10%", 
             end: "bottom 50%",
@@ -266,10 +265,9 @@ onMounted(() => {
                 else activeItemIndex.value = null; // Reset to null if going back to Hero
             }
         });
-        stInstances.push(stActive);
         
         if (visualRefs.value[index]) {
-            const tw = gsap.fromTo(visualRefs.value[index], 
+            gsap.fromTo(visualRefs.value[index], 
                 { 
                     opacity: 0, 
                     scale: 2.2, 
@@ -289,10 +287,10 @@ onMounted(() => {
                     }
                 }
             );
-            const tw2 = gsap.fromTo(visualRefs.value[index], 
+            gsap.fromTo(visualRefs.value[index], 
                 {
-                     opacity: 0.8,
-                     scale: 1
+                    opacity: 0.8,
+                    scale: 1
                 },
                 {
                     opacity: 0,
@@ -305,15 +303,17 @@ onMounted(() => {
                     }
                 }
             );
-            stInstances.push(tw.scrollTrigger, tw2.scrollTrigger);
         }
     });
     
     setTimeout(() => ScrollTrigger.refresh(), 200);
+  });
 });
 
 onUnmounted(() => {
-    stInstances.forEach(st => st.kill());
+    if (ctx) ctx.revert();
+    activeItemIndex.value = null;
+    contentReady.value = false;
 });
 </script>
 
