@@ -2,7 +2,7 @@
     <div class="w-[150px] h-[150px] relative group" @mouseenter="handleMouseEnter">
         <div ref="cardRef" class="flex flex-col justify-center items-center w-full h-full rounded-xl transition-shadow duration-300 shadow-xl" :style="cardStyle">
             <div class="w-[80px] h-[80px] flex items-center justify-center">
-                <img :src="`/_nuxt/public/icons/${logo}.png`" class="logo-white h-full w-full object-contain group-hover:scale-[0.8] group-hover:-translate-y-3 transition duration-300">
+                <img :src="`/icons/${logo}.png`" class="logo-white h-full w-full object-contain group-hover:scale-[0.8] group-hover:-translate-y-3 transition duration-300">
             </div>
             <p class="text-white text-[1.4rem] select-none cursor-default scale-0 
                 gabarito font-black absolute translate-y-[40px] opacity-0 group-hover:opacity-100 

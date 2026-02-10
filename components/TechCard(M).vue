@@ -2,7 +2,7 @@
     <div class="w-[20vw] h-[20vw] relative group" @click="toggle">
         <div ref="cardRef" class="flex flex-col justify-center items-center w-full h-full rounded-xl transition-shadow duration-300 shadow-xl" :style="cardStyle">
             <div class="w-[10vw] h-[10vw] flex items-center justify-center">
-                <img :src="`/_nuxt/public/icons/${logo}.png`" 
+                <img :src="`/icons/${logo}.png`" 
                     class="logo-white h-full w-full object-contain transition select-none noselect duration-300"
                     :class="{ 'scale-[0.8] -translate-y-3': isActive }"
                 >
