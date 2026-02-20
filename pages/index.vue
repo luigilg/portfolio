@@ -1,5 +1,10 @@
 <template>
   <div>
+    <ClientOnly>
+      <Teleport to="body">
+        <Nav />
+      </Teleport>
+    </ClientOnly>
     <div class="relative grid place-items-end h-[95vh]">
       <div class="w-full col-start-1 row-start-1">
         <div class="flex flex-col justify-center items-center gap-10 px-5">
@@ -21,7 +26,7 @@
     </div>
     <Title1 class="whoAmI relative z-0 -mt-[400px]" text="MAS O QUE EU SOU?"/>
     <StripesWAI  class="-mt-[100px] relative z-[1]"/>
-    <div class="relative mx-10 -mt-[1600px] px-[10rem] z-[2] bg-transparent">
+    <div id="sobre" class="relative mx-10 -mt-[1600px] px-[10rem] z-[2] bg-transparent">
       <p ref="introText" data-lag="0.4" class="funnel font-normal text-[2.2rem] text-b-dark">
       Sou um <span class="font-extrabold text-pu">generalista criativo</span> com formação em Análise e Desenvolvimento de Sistemas pela UFPR. 
       Trabalho com animação e edição de vídeo, design, composição musical e mais recentemente, desenvolvimento de sites e apps. 
@@ -37,10 +42,11 @@
         class="mt-[650px] -mb-[50px] worksIdid relative z-[4]"
         text="TRABALHOS QUE JÁ FIZ"
     />
-    <WhatIDo data-lag="0.4" ref="whatIDoRef" class="scale-[75%] z-[5]"/> 
+    <WhatIDo id="work" data-lag="0.4" ref="whatIDoRef" class="scale-[75%] z-[5]"/> 
     <Title1 
         data-lag="0.4" 
         class=""
+        id="tech"
         text="LUIGI'S TECH STACK"
     />
      <!-- <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" /> -->
@@ -48,7 +54,8 @@
        <TechStack/>
       </div> 
       <!-- <RibbonText data-lag="0.4" text="OI" ball class="-mt-[300px]" /> -->
-      <Footer1 class="mt-20" data-lag="0.4"/>
+      <Footer1 class="mt-20" data-lag="0.4" />
+      <div id="contact" class="h-0"></div>
     <!-- <div class="h-screen"></div> -->
   </div>
 </template>
