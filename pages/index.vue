@@ -13,7 +13,14 @@
             <!-- <AlternatingText :texts="['creative', 'professional','innovative', 'passionate']" position="start" :start="startAltText" from="bottom"  /> -->
             <AlternatingText :texts="['creative']" position="start" :start="startAltText" from="bottom" data-speed="0.97"  />
           </div>
-          <div class="w-full h-[50px] gradbar rounded-xl" data-top-speed="0.94"></div>
+          <div class="w-full flex flex-col justify-center items-center relative">
+            <Transition name="fade">
+              <span v-if="loadingProgress < 100 && !siteLoaded" class="absolute -top-[160px] funnel font-bold text-[5rem] text-b-dark">
+                {{ Math.round(loadingProgress) }}%
+              </span>
+            </Transition>
+            <div ref="gradbarRef" class="h-[50px] gradbar rounded-xl" :style="{ width: siteLoaded ? '100%' : '0%' }" data-top-speed="0.94"></div>
+          </div>
           <div class="text-end w-full flex flex-row justify-end items-start gap-12" >
             <AlternatingText :texts="['developer', 'designer', 'composer', 'animator', 'artist']" position="end" from="top" data-top-speed="0.91" :start="startAltText" />
             <h1 ref="girardiRef" data-top-speed="0.88" class="invisible text-[20rem] gabarito font-black text-b-dark select-none whitespace-nowrap -tracking-[12px]">GIRARDI</h1>
@@ -54,7 +61,7 @@
       <TechStack/>
     </div> 
     <div data-lag="0.4" class="w-full flex flex-col justify-center z-[2] gap-5 items-center mt-[120px]">
-      <p class="text-b-dark text-4xl gabarito">e também programas:</p>
+      <p class="text-b-dark text-4xl font-bold hikasami">e também programas:</p>
       <TechStack second />
     </div> 
     <RibbonText data-lag="0.4" text="I'M OPEN TO WORK!" ball class="mt-0 z-[1]" />
@@ -87,6 +94,9 @@ const gradientStrokeRef = ref(null);
 const showStroke = ref(false);
 const whatIDoRef = ref(null);
 const techStackRef = ref(null);
+const gradbarRef = ref(null);
+const loadingProgress = ref(0);
+const siteLoaded = useState('siteLoaded', () => false);
 
 let ctx;
 let proximityLoop;
@@ -161,7 +171,7 @@ onMounted(() => {
   
       gsap.set([luigiRef.value, girardiRef.value], { visibility: 'visible', color: 'transparent' });
   
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ paused: true });
   
       tl.from(luigiChars, {
         duration: 1.8,
@@ -200,7 +210,6 @@ onMounted(() => {
         // const maxDistance = 300;
         const proximityColorEffectRadius = 270;
         // const minWeight = 100;
-        // const maxWeight = 900;
         
         proximityLoop = () => {
           const mouseX = mousePos.x;
@@ -245,6 +254,56 @@ onMounted(() => {
         
         gsap.ticker.add(proximityLoop);
       };
+
+      // -------------------------------
+      // Loading Sequence Logic
+      // -------------------------------
+      if (!siteLoaded.value) {
+        // Hide text initially while loading
+        gsap.set([luigiRef.value, girardiRef.value], { autoAlpha: 0 });
+        gsap.set(gradbarRef.value, { width: 0 });
+
+        const progressObj = { value: 0 };
+        const loadTl = gsap.timeline();
+        
+        loadTl.to(progressObj, {
+          value: 85,
+          duration: 1.5,
+          ease: "power2.out",
+          onUpdate: () => {
+            loadingProgress.value = progressObj.value;
+            gsap.set(gradbarRef.value, { width: loadingProgress.value + '%' });
+          }
+        });
+
+        const finishLoading = () => {
+          loadTl.to(progressObj, {
+            value: 100,
+            duration: 0.5,
+            ease: "power1.inOut",
+            onUpdate: () => {
+              loadingProgress.value = progressObj.value;
+              gsap.set(gradbarRef.value, { width: loadingProgress.value + '%' });
+            },
+            onComplete: () => {
+              siteLoaded.value = true;
+              // Reveal text wrappers
+              gsap.set([luigiRef.value, girardiRef.value], { autoAlpha: 1 });
+              // Play main animation timeline
+              tl.play();
+            }
+          });
+        };
+
+        if (document.readyState === 'complete') {
+          setTimeout(finishLoading, 400); 
+        } else {
+          window.addEventListener('load', finishLoading);
+        }
+      } else {
+        // Already loaded previously
+        tl.play();
+      }
   
       if (snappyTextContainer.value) {
         gsap.from(snappyTextContainer.value, {
@@ -378,6 +437,14 @@ onUnmounted(() => {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .gradbar {
     position: relative;
     --d:120vw;

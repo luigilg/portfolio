@@ -354,7 +354,7 @@ export const projects = [
         title: 'DEHALL', 
         categories: ['animation'], 
         hasPage: false, 
-        preview: { src: '/projects/ANIMAÇÕES/DeHall.mp4', type: 'video', speed: 1, start: 0 } 
+        preview: { src: '/projects/ANIMAÇÕES/dehall.mp4', type: 'video', speed: 1, start: 0 } 
     },
     { 
         id: 'arassaem', 

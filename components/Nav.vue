@@ -33,23 +33,23 @@
         class="relative z-10 flex items-center whitespace-nowrap overflow-hidden w-0"
       >
         <div 
-          class="flex items-center text-b-light font-normal gabarito gap-[1.5vw] pr-[2vw] pl-[0.5vw] text-[1.2vw] pb-[0.2vh]" 
+          class="flex items-center text-b-light font-bold gabarito gap-[1.5vw] pr-[2vw] pl-[0.5vw] text-[1.2vw] pb-[0.2vh]" 
           ref="linksInner"
         >
-          <NuxtLink to="#sobre" class="nav-link group tracking-wide inline-block">
-            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">sobre mim</span>
+          <NuxtLink to="#sobre" class="nav-link group inline-block">
+            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">SOBRE MIM</span>
           </NuxtLink>
           <span class="nav-dot rounded-full bg-b-light inline-block w-[0.4vw] h-[0.4vw]"></span>
-          <NuxtLink to="#work" class="nav-link group tracking-wide inline-block">
-            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">projetos</span>
+          <NuxtLink to="#work" class="nav-link group inline-block">
+            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">PROJETOS</span>
           </NuxtLink>
           <span class="nav-dot rounded-full bg-b-light inline-block w-[0.4vw] h-[0.4vw]"></span>
-          <NuxtLink to="#tech" class="nav-link group tracking-wide inline-block">
-            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">tech stack</span>
+          <NuxtLink to="#tech" class="nav-link group inline-block">
+            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">TECH STACK</span>
           </NuxtLink>
           <span class="nav-dot rounded-full bg-b-light inline-block w-[0.4vw] h-[0.4vw]"></span>
-          <NuxtLink to="#contato" class="nav-link group tracking-wide inline-block">
-            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">contato</span>
+          <NuxtLink to="#contato" class="nav-link group inline-block">
+            <span class="inline-block transition-all duration-300 ease-out origin-center group-hover:scale-110 group-hover:text-white">CONTATO</span>
           </NuxtLink>
         </div>
       </div>

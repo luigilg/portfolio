@@ -4,10 +4,10 @@
             <div class="w-[80px] h-[80px] flex items-center justify-center">
                 <img :src="`/icons/${logo}.png`" class="logo-white h-full w-full object-contain group-hover:scale-[0.8] group-hover:-translate-y-3 transition duration-300">
             </div>
-            <p class="text-white text-[1.4rem] select-none cursor-default scale-0 
+            <p class="text-white text-[1.3rem] select-none cursor-default scale-0 
                 gabarito font-black absolute translate-y-[40px] opacity-0 group-hover:opacity-100 
                 group-hover:scale-100 transition"
-                :class="{ 'text-[1.1rem]': logo === 'aftereffects' || logo === 'illustrator' }"
+                :class="{ 'text-[1.15rem]': logo === 'aftereffects' || logo === 'illustrator' }"
             >
                 {{ logo.toUpperCase() }}
             </p>
