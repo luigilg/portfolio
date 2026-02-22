@@ -18,6 +18,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const props = defineProps({
+    second: {
+        type: Boolean,
+        default: false
+    }
+})
+
 const gridRef = ref(null)
 
 onMounted(() => {
@@ -25,7 +32,7 @@ onMounted(() => {
         gsap.to(gridRef.value.children, {
             scrollTrigger: {
                 trigger: gridRef.value,
-                start: "top 85%", // Start animation when top of grid hits 85% of viewport height
+                start: "top 85%", 
                 toggleActions: "play none none reverse"
             },
             opacity: 1,
@@ -37,7 +44,7 @@ onMounted(() => {
     }
 })
 
-const techList = ref([
+const techList = ref(!props.second ? [
     { logo: 'html', color: '#fe4d13' },
     { logo: 'css', color: '#1370b4' },
     { logo: 'javascript', color: '#ffde24' },
@@ -53,5 +60,11 @@ const techList = ref([
     { logo: 'oracle', color: '#f70000' },
     { logo: 'bootstrap', color: '#910bfe', color2: '#6a07f3' },
     { logo: 'tailwind', color: '#00b9d8' }
+] : [
+    { logo: 'aftereffects', color: '#44008b' },
+    { logo: 'illustrator', color: '#f79500' },
+    { logo: 'premiere', color: '#00005b' },
+    { logo: 'figma', color: '#ff7362' },
+    { logo: 'flstudio', color: '#ef7417' },
 ])
 </script>

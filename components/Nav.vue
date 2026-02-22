@@ -9,14 +9,12 @@
       :class="isActive ? 'shadow-xl border border-white/20' : 'shadow-none border-none bg-transparent'"
       style="width: 7vh; height: 7vh;"
     >
-      <!-- Background (gradient) -->
       <div 
         ref="navBg"
         class="absolute inset-0 w-full h-full opacity-0 rounded-full overflow-hidden"
         style="background: linear-gradient(90deg, #A23DD4, #4F52BE, #32A1B8);"
       ></div>
 
-      <!-- Logo Container -->
       <div 
         ref="logoWrapper"
         class="relative z-10 shrink-0 flex items-center justify-center transition-all duration-300 w-[7vh] h-[7vh] pl-[0.5vh]"
@@ -30,12 +28,10 @@
         </div>
       </div>
 
-      <!-- Links Container -->
       <div 
         ref="linksContainer"
         class="relative z-10 flex items-center whitespace-nowrap overflow-hidden w-0"
       >
-        <!-- Inner wrapper to measure max width -->
         <div 
           class="flex items-center text-b-light font-normal gabarito gap-[1.5vw] pr-[2vw] pl-[0.5vw] text-[1.2vw] pb-[0.2vh]" 
           ref="linksInner"

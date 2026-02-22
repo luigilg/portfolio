@@ -26,11 +26,11 @@
     </div>
     <Title1 class="whoAmI relative z-0 -mt-[400px]" text="MAS O QUE EU SOU?"/>
     <StripesWAI  class="-mt-[100px] relative z-[1]"/>
-    <div id="sobre" class="relative mx-10 -mt-[1600px] px-[10rem] z-[2] bg-transparent">
-      <p ref="introText" data-lag="0.4" class="funnel font-normal text-[2.2rem] text-b-dark">
+    <div class="relative mx-10 -mt-[1600px] px-[10rem] z-[2] bg-transparent">
+      <p id="sobre" ref="introText" data-lag="0.4" class="funnel font-normal text-[2.2rem] text-b-dark">
       Sou um <span class="font-extrabold text-pu">generalista criativo</span> com formação em Análise e Desenvolvimento de Sistemas pela UFPR. 
-      Trabalho com animação e edição de vídeo, design, composição musical e mais recentemente, desenvolvimento de sites e apps. 
-      Tenho experiência prática como Full-Stack, porém prefiro o front-end. 
+      Trabalho com desenvolvimento de sites e apps, animação, edição de vídeo, design e composição musical. 
+      Como desenvolvedor, tenho experiência prática como Full-Stack, porém prefiro o front-end. 
       Atuo há uma década fazendo trabalhos freelance e pessoais, de forma profissional. 
       Sou autodidata, tenho grande facilidade de aprendizado e adaptação, 
       e sou constantemente motivado a encontrar soluções eficientes e práticas para qualquer situação.</p>
@@ -47,15 +47,19 @@
         data-lag="0.4" 
         class=""
         id="tech"
-        text="LUIGI'S TECH STACK"
+        text="MINHA TECH STACK"
     />
      <!-- <RibbonText data-lag="0.4" text=" <TECH STACK/> "  class="-mt-[500px]" /> -->
-     <div ref="techStackRef" data-lag="0.4" class="w-full flex justify-center items-center mt-5">
-       <TechStack/>
-      </div> 
-      <!-- <RibbonText data-lag="0.4" text="OI" ball class="-mt-[300px]" /> -->
-      <Footer1 class="mt-20" data-lag="0.4" />
-      <div id="contact" class="h-0"></div>
+    <div ref="techStackRef" data-lag="0.4" class="w-full flex justify-center items-center mt-5">
+      <TechStack/>
+    </div> 
+    <div data-lag="0.4" class="w-full flex flex-col justify-center z-[2] gap-5 items-center mt-[120px]">
+      <p class="text-b-dark text-4xl gabarito">e também programas:</p>
+      <TechStack second />
+    </div> 
+    <RibbonText data-lag="0.4" text="I'M OPEN TO WORK!" ball class="mt-0 z-[1]" />
+    <Footer1 class="mt-20" data-lag="0.4" />
+    <div id="contato" class="h-0"></div>
     <!-- <div class="h-screen"></div> -->
   </div>
 </template>
@@ -102,7 +106,7 @@ onMounted(() => {
     const saveOriginalCharData = () => {
       if (!allChars.length) return;
       
-      const chars = gsap.utils.toArray(allChars); // Ensure array
+      const chars = gsap.utils.toArray(allChars);
 
       charPositions = chars.map(char => {
         const rect = char.getBoundingClientRect();
@@ -132,20 +136,7 @@ onMounted(() => {
     handleMouseMove = (e) => {
         mousePos.x = e.clientX;
         mousePos.y = e.clientY;
-        updateCharPositions(); // Optimization: maybe don't recalculate implementation on every move if not needed, but original code did this.
-                               // Actually original code updated mousePos on move, and updateCharPositions on resize.
-                               // Wait, looking at original code:
-                               // window.addEventListener('mousemove', e => {
-                               //   mousePos.x = e.clientX;
-                               //   mousePos.y = e.clientY;
-                               //   updateCharPositions(); // Wait, original code called updateCharPositions() on mousemove?
-                               //   // Original line 131: updateCharPositions();
-                               //   // But updateCharPositions uses getBoundingClientRect. This is very expensive on mousemove!
-                               //   // However, I must preserve original behavior unless explicitly optimizing performance logic beyond memory leaks.
-                               //   // The user complained about "site initialized heavily", this is likely one reason.
-                               //   // But my primary task is memory leaks.
-                               //   // Let's stick to the original logic but make it clean.
-                               // });
+        updateCharPositions();
     };
     
     if (process.client) {
@@ -383,8 +374,6 @@ onUnmounted(() => {
     if (debouncedRecalculate) window.removeEventListener('resize', debouncedRecalculate);
   }
 });
-// Re-writing the mousemove part to be removable:
-// I will just use a slight modification in the ReplacementContent below to make it cleaner.
 
 </script>
 

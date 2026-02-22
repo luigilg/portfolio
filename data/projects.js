@@ -169,10 +169,10 @@ export const projects = [
         title: 'COEMJR', 
         categories: ['animation'], 
         hasPage: true, 
-        preview: { src: '/projects/CoemJr/1.mp4', type: 'video', speed: 1, start: 0.3 },
+        preview: { src: '/projects/CoemJR/1.mp4', type: 'video', speed: 1, start: 0.3 },
         media: [
-            { type: 'video', src: '/projects/CoemJr/1.mp4', cols: 2 },
-            { type: 'video', src: '/projects/CoemJr/2.mp4', cols: 2 },
+            { type: 'video', src: '/projects/CoemJR/1.mp4', cols: 2 },
+            { type: 'video', src: '/projects/CoemJR/2.mp4', cols: 2 },
         ]
     },
     { 
@@ -188,9 +188,9 @@ export const projects = [
         color: '#000094',
         categories: ['animation', 'videos'], 
         hasPage: true, 
-        preview: { src: '/projects/Engepro/LogoAnim.mp4', type: 'video', speed: 1.3, start: 0 },
+        preview: { src: '/projects/Engepro/logoAnim.mp4', type: 'video', speed: 1.3, start: 0 },
         media: [
-            { type: 'video', src: '/projects/Engepro/LogoAnim.mp4', cols: 2, caption: 'Animação de logo',  },
+            { type: 'video', src: '/projects/Engepro/logoAnim.mp4', cols: 2, caption: 'Animação de logo',  },
             { type: 'video', src: '/projects/Engepro/impactar.mp4', cols: 2, caption: 'Vídeo promocional', controls: true, autoplay: true, muted: true},
             { type: 'video', src: '/projects/Engepro/psExpresso.mp4', cols: 2, caption: 'Vídeo promocial de processo seletivo',  },
         ]

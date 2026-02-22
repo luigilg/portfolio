@@ -1,5 +1,5 @@
 <template>
-  <div class="ribbon-container w-full overflow-hidden flex justify-center items-center py-32 relative">
+  <div class="ribbon-container w-full overflow-hidden flex justify-center items-center py-[1vh] relative cursor-default">
     <svg viewBox="0 0 1920 600" class="w-[120%] min-w-[1200px]" preserveAspectRatio="xMidYMid slice">
         <path id="curve" d="M -200,400 C 400,100 1000,700 2200,300" fill="transparent" />
         

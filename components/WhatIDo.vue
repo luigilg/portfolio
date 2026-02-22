@@ -15,7 +15,17 @@
                 active:font-[100] active:scale-90"
                 @click="navigate(item.route)"
                 @mouseenter="onItemEnter(key)">
-                <p :class="key" class="wid-txt leading-none">{{ item.desc }}</p>
+                <p :class="key" class="wid-txt leading-none flex items-start">
+                    {{ item.desc }}
+                    <svg 
+                        :class="`arrow-right-${key}`" 
+                        class="absolute left-full ml-[2rem] mt-[2rem] opacity-0 rotate-45 scale-50"
+                        width="2rem" height="2rem" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M43.7883 -5.44358e-06V37.6507L29.2602 37.4456V24.7605L10.0267 43.9939L0.000196677 33.9674L19.4394 14.5281L6.34344 14.5288L6.13835 0.00068509L43.7883 -5.44358e-06Z" 
+                        fill="#282E32"/>
+                    </svg>
+                </p>
                 <!-- <ClientOnly>
                     <div v-if="item.imgs != null" :class="key + '-imgs image-group z-20 opacity-0'">
                         <div v-for="(media, i) in items[key].imgs" :key="media.src + i">
@@ -205,12 +215,23 @@ const onListLeave = () => {
 };
 
 const animateIn = (key, color, yDirection) => {
+    const textSelector = `.${key}`;
+    
+    gsap.to(textSelector, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
+    gsap.to(`.arrow-right-${key}`, { 
+        y: '-1.2vh',
+        rotate: 0,
+        opacity: 1,
+        scale: 1.2, 
+        duration: 0.4, 
+        ease: 'fast',
+        overwrite: true
+    });
+
     if (!items[key].imgs) {
-        gsap.to(`.${key}`, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
         return;
     }
 
-    const textSelector = `.${key}`;
     // const groupSelector = `.${key}-imgs`;
     
     const textLength = items[key].desc.length;
@@ -227,7 +248,6 @@ const animateIn = (key, color, yDirection) => {
     const randomRotation3 = (Math.random() - 0.5) * 20;
 
     // gsap.set(groupSelector, { opacity: 1 });
-    gsap.to(textSelector, { color: color, duration: 0.8, ease: 'elastic.out(1.25,0.8)', overwrite: true, scale: 1.15 });
     // gsap.to(groupSelector, { scale: 1, duration: 1, ease: 'elastic.out(1.25, 0.8)', overwrite: true });
 
     // gsap.fromTo(`.${key}-img-0`,
@@ -246,18 +266,28 @@ const animateIn = (key, color, yDirection) => {
 
 const animateOut = (key, isFinalLeave = false, yDirection) => {
     const textSelector = `.${key}`;
-    // const groupSelector = `.${key}-imgs`;
-    // const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
     const finalTextColor = isFinalLeave ? '' : '#aaa';
 
+    gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
+    gsap.to(`.arrow-right-${key}`, {
+        opacity: 0,
+        rotate: 45,
+        scale: 0.5,
+        x: 0,
+        y: 0,
+        duration: 0.25,
+        ease: 'fast',
+        overwrite: true
+    });
+
     if (!items[key].imgs) {
-        gsap.to(`.${key}`, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
         return;
     }
 
+    // const groupSelector = `.${key}-imgs`;
+    // const allImgsSelector = `.${key}-img-0, .${key}-img-1, .${key}-img-2`;
     const exitYOffset = 100 * -yDirection;
 
-    gsap.to(textSelector, { color: finalTextColor, duration: 0.4, ease: 'fast', overwrite: true, scale: 1 });
     // gsap.to(groupSelector, { scale: 1, duration: 0.4, ease: 'fast', overwrite: true });
     // gsap.to(groupSelector, { opacity: 0, duration: 0 });
     // gsap.to(allImgsSelector, { y: exitYOffset, rotation: 0, duration: 0.4, ease: 'fast', overwrite: true });

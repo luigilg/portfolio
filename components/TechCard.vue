@@ -7,6 +7,7 @@
             <p class="text-white text-[1.4rem] select-none cursor-default scale-0 
                 gabarito font-black absolute translate-y-[40px] opacity-0 group-hover:opacity-100 
                 group-hover:scale-100 transition"
+                :class="{ 'text-[1.1rem]': logo === 'aftereffects' || logo === 'illustrator' }"
             >
                 {{ logo.toUpperCase() }}
             </p>
