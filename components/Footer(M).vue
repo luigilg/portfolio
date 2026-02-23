@@ -198,24 +198,12 @@ onUnmounted(() => {
         var(--d));
     background-size: calc(var(--d)/sin(90deg)) 100%;
     animation: sweep-right 5s linear infinite reverse;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translateZ(0); 
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
-
-/* .gradbar::before {
-    content: '';
-    position: absolute;
-    top: 0px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: inherit;
-    background-size: inherit;
-    animation: inherit;
-    filter: blur(25px);
-    z-index: -1;
-    border-radius: inherit;
-    opacity: 0.6;
-    box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.5);
-} */
 
 @keyframes sweep-right {
     0% {
